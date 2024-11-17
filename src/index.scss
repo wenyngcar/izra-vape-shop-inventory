@@ -1,0 +1,19 @@
+// utilities.scss
+@use 'sass:map';
+
+@mixin button-styles {
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    @include button-styles;
+    background-color: map-get($colors, 'primary');
+    color: map-get($colors, 'white');
+}
+
+.btn-secondary {
+    @include button-styles;
+    background-color: map-get($colors, 'secondary');
+    color: map-get($colors, 'white');
+}
