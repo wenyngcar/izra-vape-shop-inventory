@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Inventory System</title>
+    <!-- General CSS styles. -->
+    <link rel="stylesheet" href="../styles/container.css">
+    <link rel="stylesheet" href="../styles/input.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+
+    <!-- Specific CSS styles. -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav>
+        <h1>Izra Vapeshop Inventory System</h1>
+    </nav>
+
+    <div id="body-container">
+        <section id="search-bar-container" class="container">
+            <input type="text" id="search-bar" name="search-bar" placeholder="Search brands...">
+            <button id="search-button">Submit</button>
+            <select>
+                <option>All Categories</option>
+                <option>Device</option>
+                <option>E-Liquid</option>
+                <option>Accessory</option>
+            </select>
+            <button id="add-brand-button">Add Brand</button>
+        </section>
+    </div>
+
+    <div id="new-brand-modal" class="modal-background">
+        <div class="modal">
+            <span id="new-brand-modal-close-button" class="modal-close-button">&times;</span>
+            <h2>Add New Brand</h2>
+            <p>Enter the details for the new brand.<p>
+            
+            <div id="new-brand-modal-input-container">
+                <div>
+                    <label for="brand-name">Brand Name</label>
+                    <label for="category">Category</label>
+                </div>
+                <div>
+                    <input type="text" id="brand-name" name="brand-name">
+                    <select>
+                        <option>Device</option>
+                        <option>E-Liquid</option>
+                        <option>Accessory</option>
+                    </select>
+                </div>
+            <div>
+        </div>
+    </div>
+    
+    <script src="../scripts/database.js" type="module"></script>
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>

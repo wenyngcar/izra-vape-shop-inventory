@@ -1,0 +1,74 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Navigation bar */
+
+nav {
+    background-color: black;
+    padding: 15px 15px 15px 45px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+nav > h1 {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+/* Body container */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#body-container {
+    width: min(80em, 90%);
+}
+
+/* Search bar */
+
+#search-bar-container {
+    display: flex;
+    gap: 10px;
+}
+
+#search-bar {
+    flex-grow: 1;
+}
+
+#search-button:active {
+    background-color: #efefef;
+}
+
+#add-brand-button {
+    background-color: black;
+    color: white;
+}
+
+#add-brand-button:active {
+    background-color: #3f3f3f;
+}
+
+/* Add Brand Modal */
+
+#new-brand-modal-input-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#new-brand-modal-input-container > div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
