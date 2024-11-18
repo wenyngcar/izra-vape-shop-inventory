@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import InventoryFormDialog from "./inventory-form-dialog";
+import InventoryFormDialog from "./inventory-form-dialog_addBrand";
 
 import {
   ColumnDef,
@@ -66,6 +66,7 @@ export function DataTable<TData, TValue>({
         />
         <InventoryFormDialog />
       </div>
+      
       <div className="rounded-md border">
         <Table>
           <TableHeader>
