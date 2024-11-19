@@ -37,6 +37,7 @@ export async function createBrand(options) {
  * @param {Object} options The JSON passed to the server.
  * @param {String} options.brandName The name of the product's brand.
  * @param {String} options.brandCategory The name of the product's category.
+ * @param {String} options.variantName The name of the product's variant.
  * @param {String} options.name The name of the product.
  * @param {Number} options.price The price of the product.
  * @param {Number} options.quantity The quantity of the product.
@@ -47,6 +48,8 @@ export async function createProduct(options) {
         throw new Error("Product's brand name must be specified.");
     else if (!options.brandCategory)
         throw new Error("Product's brand category must be specified.");
+    else if (!options.variantName)
+        throw new Error("Product's variant name must be specified.");
     else if (!options.name)
         throw new Error("Product's name must be specified.");
     else if (!options.price)
@@ -55,16 +58,25 @@ export async function createProduct(options) {
         throw new Error("Product's quantity must be specified.");
     
     const brands = await Brand.find({ 
-        name: optoins.brandName,
+        name: options.brandName,
         category: options.brandCategory,
     });
 
     if (brands.length === 0)
         throw new Error("Brand is not found.");
 
+    const variants = await Variant.find({
+        name: options.name,
+    });
+    
+    if (variants.length === 0)
+        throw new Error("Variant is not found.");
+
     const brand = brands[0];
+    const variant = variants[0];
     const product = new Product({
         brandId: brand._id,
+        variantId: variant._id,
         name: options.name,
         price: options.price,
         quantity: options.quantity,
