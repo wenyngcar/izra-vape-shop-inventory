@@ -20,7 +20,7 @@ const formSchema = z.object({
   item: z
     .string()
     .min(2, {
-      message: "Brand name must contain 2 - 50 characters.",
+      message: "Item name must contain 2 - 50 characters.",
     })
     .max(50),
   quantity: z
