@@ -1,4 +1,4 @@
-import {Plus} from 'lucide-react'
+import { Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -8,22 +8,22 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import InventoryForm from "./inventory-form_addBrand";
+import InventoryForm from "./form-add-item";
 
 export default function InventoryFormDialog() {
   return (
     <Dialog>
-      <DialogTrigger asChild className="flex items-center">
-      <button className="flex items-center">
-        <Plus className="mr-2 h-4 w-4" />
-        <span>Add Brand</span>
-      </button>
+      <DialogTrigger asChild>
+        <button className="flex items-center space-x-2">
+          <Plus className="h-4 w-4" />
+          <span>Add Item</span>
+        </button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add New Brand</DialogTitle>
+          <DialogTitle>Add New Item</DialogTitle>
           <DialogDescription>
-            Enter the details for the new brand.
+            Enter the details for the new item.
           </DialogDescription>
         </DialogHeader>
         <InventoryForm />
