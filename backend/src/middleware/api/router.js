@@ -27,4 +27,13 @@ router.post("/create-product", async (req, res) => {
     }
 });
 
+router.post("/create-variant", async (req, res) => {
+    try {
+        await database.createVariant(req.body);
+        res.json(message.success("Succeeded in creating variant."));
+    } catch (error) {
+        res.json(message.failure(error.message));
+    }
+});
+
 export default router;
