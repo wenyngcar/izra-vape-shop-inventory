@@ -5,7 +5,7 @@ import url from "url";
 import express from "express";
 import mongoose from "mongoose";
 
-import inventoryRouter from "./middleware/api/inventory/router.js";
+import apiRouter from "./middleware/api/router.js";
 
 // This gets the file and folder name of this JavaScript file.
 // This is needed for serving static files.
@@ -29,7 +29,7 @@ mongoose.connect(mongodbString);
 // Middleware goes here...
 server.application.use(express.json());
 server.application.use(express.static(path.join(__dirname, "public")));
-server.application.use("/api/inventory", inventoryRouter);
+server.application.use("/api", apiRouter);
 
 server.application.get("/", (req, res) => {
     res.redirect("/main");
