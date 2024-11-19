@@ -5,31 +5,6 @@ import DisposableVape from "../../../database/models/DisposableVape.js"
 import Pod from "../../../database/models/Pod.js";
 import Product from "../../../database/models/Product.js";
 
-/////////////////////////////////
-// HELPER METHODS FOR MESSAGES //
-/////////////////////////////////
-
-/**
- * This returns an object containing the message in the 'message' key.
- * This is for sending a success message to the user through JSON.
- *
- * @param {String} message 
- * @returns 
- */
-export function success(message) {
-    return { message };
-}
-
-/**
- * This returns an object containing the message in the 'error' key.
- * This is for sending a failure message to the user through JSON.
- *
- * @param {String} message 
- * @returns 
- */
-export function failure(message) {
-    return { error: message };
-}
 
 ////////////////////////////////////////
 // HELPER METHODS FOR CREATING MODELS //
