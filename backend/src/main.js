@@ -22,10 +22,6 @@ const database = {
     name: "test",
 };
 
-// Connecting to the MongoDB database.
-const mongodbString = `mongodb://${database.host}:${database.port}/${database.name}`;
-mongoose.connect(mongodbString);
-
 // Middleware goes here...
 server.application.use(express.json());
 server.application.use(express.static(path.join(__dirname, "public")));
@@ -36,6 +32,11 @@ server.application.get("/", (req, res) => {
 });
 
 // Starting the server.
-server.application.listen(server.port, () => {
+server.application.listen(server.port, async () => {
     console.log(`Application is listening on port ${server.port}`);
+
+    // Connecting to the MongoDB database.
+    const mongodbString = `mongodb://${database.host}:${database.port}/${database.name}`;
+    await mongoose.connect(mongodbString);
+    console.log(`Application has successfully connected to MongoDB.`);
 });
