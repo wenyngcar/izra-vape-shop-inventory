@@ -86,3 +86,29 @@ export async function createProduct(options) {
     return product;
 }
 
+/**
+ * Creates a new variant in the database.
+ * 
+ * @param {Object} options The JSON passed to the server.
+ * @param {String} options.name The name of the variant.
+ * @param {String} options.description The description of the variant.
+ * @param {String} options.category The category of the variant.
+ * @returns {Variant} The variant object created.
+ */
+export async function createVariant(options) {
+    if (!options.name)
+        throw new Error("Variant's name should be specified.");
+    else if (!options.description)
+        throw new Error("Variant's description should be specified.");
+    else if (!options.category)
+        throw new Error("Variant's category should be specified.");
+    
+    const variant = new Variant({
+        name: options.name,
+        description: options.description,
+        category: options.category,
+    });
+    
+    await variant.save();
+    return variant;
+}
