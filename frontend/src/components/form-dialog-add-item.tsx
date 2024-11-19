@@ -10,7 +10,13 @@ import {
 
 import InventoryForm from "./form-add-item";
 
-export default function InventoryFormDialog() {
+interface InventoryFormDialogProps {
+  brandName: string;
+}
+
+export default function InventoryFormDialog({
+  brandName,
+}: InventoryFormDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
