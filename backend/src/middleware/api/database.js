@@ -1,14 +1,12 @@
 
-import Brand from "../../../database/models/Brand.js";
-import ClosedPod from "../../../database/models/ClosedPod.js";
-import DisposableVape from "../../../database/models/DisposableVape.js"
-import Pod from "../../../database/models/Pod.js";
-import Product from "../../../database/models/Product.js";
+import Brand from "../../database/models/Brand.js";
+import Product from "../../database/models/Product.js";
+import Variant from "../../database/models/Variant.js";
 
 
-////////////////////////////////////////
-// HELPER METHODS FOR CREATING MODELS //
-////////////////////////////////////////
+/////////////////////
+// CREATING MODELS //
+/////////////////////
 
 /**
  * Creates a new brand in the database.
@@ -76,66 +74,3 @@ export async function createProduct(options) {
     return product;
 }
 
-/**
- * Creates a new closed pod in the database.
- * 
- * @param {Object} options The JSON passed to the server.
- * @see createProduct for the required properties of the options object.
- * @returns {ClosedPod} The closed pod object created.
- */
-export async function createClosedPod(options) {
-    const product = await createProduct(options);
-    const closedPod = new ClosedPod({ productId: product._id });
-    await closedPod.save();
-    return closedPod;
-}
-
-/**
- * Creates a new disposable vape in the database.
- * 
- * @param {Object} options The JSON passed to the server.
- * @param {String} options.flavor The flavor of the disposable vape.
- * @see createProduct for more required properties of the options object.
- * @returns {DisposableVape} The disposable vape object created.
- */
-export async function createDisposableVape(options) {
-    const product = await createProduct(options);
-
-    if (!options.flavor)
-        throw new Error("Disposable Vape should have a flavor.");
-
-    const disposableVape = new DisposableVape({
-        productId: product._id,
-        flavor: options.flavor,
-    });
-    await disposableVape.save();
-    return disposableVape;
-}
-
-/**
- * Creates a new pod in the database.
- * 
- * @param {Object} options The JSON passed to the server.
- * @param {String} options.flavor The flavor of the pod.
- * @see createProduct for more required properties of the options object.
- * @see createClosedPod for more required properties of the options object.
- * @returns {Pod} The pod object created.
- */
-export async function createPod(options) {
-    const product = await createProduct(options);
-    const closedPod = await createClosedPod(options);
-
-    if (!options.flavor)
-        throw new Error("Pod should have a flavor.");
-    else if (!options.expirationDate)
-        throw new Error("Pod should have an expiration date.");
-    
-    const pod = new Pod({
-        productId: product._id,
-        closedPodId: closedPod._id,
-        flavor: options.flavor,
-        expirationDate: options.expirationDate,
-    });
-    await pod.save();
-    return pod;
-}
