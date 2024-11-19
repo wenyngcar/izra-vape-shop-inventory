@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import InventoryFormDialog from "./inventory-form-dialog";
+import InventoryFormDialog from "./form-dialog-add-brand";
 
 import {
   ColumnDef,
