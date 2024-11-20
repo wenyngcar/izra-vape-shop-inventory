@@ -2,6 +2,7 @@
 import path from "path";
 import url from "url";
 
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
@@ -22,8 +23,15 @@ const database = {
     name: "test",
 };
 
-// Middleware goes here...
+// Automatically converts request body to JSON.
 server.application.use(express.json());
+
+// Deals with the CORS policy, that prevents connecting the frontend to the backend.
+server.application.use(cors({
+    origin: true,
+    credentials: true,
+}));
+
 server.application.use(express.static(path.join(__dirname, "public")));
 server.application.use("/api", apiRouter);
 
