@@ -28,6 +28,9 @@ export async function createBrand(options) {
     });
 
     await brand.save();
+    console.log("Created brand:");
+    console.log(JSON.stringify(brand));
+
     return brand;
 }
 
@@ -83,6 +86,9 @@ export async function createProduct(options) {
     });
 
     await product.save();
+    console.log("Created product:");
+    console.log(JSON.stringify(product));
+
     return product;
 }
 
@@ -110,5 +116,8 @@ export async function createVariant(options) {
     });
     
     await variant.save();
+    console.log("Created variant:");
+    console.log(JSON.stringify(variant));
+
     return variant;
 }

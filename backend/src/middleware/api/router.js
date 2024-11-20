@@ -10,6 +10,11 @@ const router = express.Router();
 router.use(express.json());
 
 router.post("/create-brand", async (req, res) => {
+    console.log();
+    console.log("Creating brand with the following information:");
+    console.log(req.body);
+    console.log();
+
     try {
         await database.createBrand(req.body);
         res.json(message.success("Succeeded in creating brand."));
@@ -19,6 +24,11 @@ router.post("/create-brand", async (req, res) => {
 });
 
 router.post("/create-product", async (req, res) => {
+    console.log();
+    console.log("Creating product with the following information:");
+    console.log(req.body);
+    console.log();
+
     try {
         await database.createProduct(req.body);
         res.json(message.success("Succeeded in creating product."));
@@ -28,6 +38,11 @@ router.post("/create-product", async (req, res) => {
 });
 
 router.post("/create-variant", async (req, res) => {
+    console.log();
+    console.log("Creating variant with the following information:");
+    console.log(req.body);
+    console.log();
+
     try {
         await database.createVariant(req.body);
         res.json(message.success("Succeeded in creating variant."));
