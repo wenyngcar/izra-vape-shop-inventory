@@ -15,6 +15,9 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AppleIcon } from "lucide-react";
+
+import * as api from "@/utils/api.js";
 
 const formSchema = z.object({
   item: z
@@ -53,6 +56,17 @@ export default function ProfileForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+
+    // TODO: Remove manually added values.
+    api.createProduct({
+      brandName: "Something",
+      brandCategory: "E-liquid",
+      variantName: "Closed Pod",
+      name: values.item,
+      price: values.price,
+      quantity: values.quantity,
+      expiration: values.expirationDate,
+    });
   }
 
   return (
@@ -130,8 +144,8 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-      </form>
       <Button type="submit">Submit</Button>
+      </form>
     </Form>
   );
 }
