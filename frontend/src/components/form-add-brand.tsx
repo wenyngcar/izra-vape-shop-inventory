@@ -24,6 +24,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import * as api from "@/utils/api";
+
 const formSchema = z.object({
   brand: z
     .string()
@@ -51,6 +53,10 @@ export default function ProfileForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    api.createBrand({
+      name: values.brand,
+      category: values.category,
+    });
   }
 
   return (
