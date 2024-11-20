@@ -44,6 +44,7 @@ export async function createBrand(options) {
  * @param {String} options.name The name of the product.
  * @param {Number} options.price The price of the product.
  * @param {Number} options.quantity The quantity of the product.
+ * @param {Date} options.date The expiration date of the product.
  * @returns {Product} The product object created.
  */
 export async function createProduct(options) {
@@ -59,6 +60,8 @@ export async function createProduct(options) {
         throw new Error("Product's price must be specified.");
     else if (!options.quantity)
         throw new Error("Product's quantity must be specified.");
+    else if (!options.expiration)
+        throw new Error("Product's expiration date must be specified.");
     
     const brands = await Brand.find({ 
         name: options.brandName,
@@ -69,7 +72,7 @@ export async function createProduct(options) {
         throw new Error("Brand is not found.");
 
     const variants = await Variant.find({
-        name: options.name,
+        name: options.variantName,
     });
     
     if (variants.length === 0)
@@ -83,6 +86,7 @@ export async function createProduct(options) {
         name: options.name,
         price: options.price,
         quantity: options.quantity,
+        expiration: options.expiration,
     });
 
     await product.save();
