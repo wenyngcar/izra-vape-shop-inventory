@@ -1,4 +1,18 @@
 /**
+ * @returns {Object} The request object for GET requests.
+ */
+function createGETRequest() {
+    const request = {
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+        },
+    };
+
+    return request;
+}
+
+/**
  * Creates a POST request object to be sent using fetch API.
  * 
  * @param {Object} body The body of the request object.
@@ -15,6 +29,7 @@ function createPOSTRequest(body) {
 
     return request;
 }
+
 
 /**
  * 
@@ -38,6 +53,23 @@ export async function post(api, body, {
     const url = `${baseUrl}/${api}`;
 
     const request = createPOSTRequest(body);
+    const response = await fetch(url, request);
+    return response;
+}
+
+export async function get(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
+    if (!api)
+        throw new Error("Provide an API to use.");
+
+    const baseUrl = `http://localhost:${port}/${path}`;
+    const url = `${baseUrl}/${api}`;
+
+    // Add query parameters to the URL
+    Object.entries(queryParams).forEach(([key, value]) => {
+        url.searchParams.append(key, value);
+    });
+
+    const request = createGETRequest();
     const response = await fetch(url, request);
     return response;
 }
