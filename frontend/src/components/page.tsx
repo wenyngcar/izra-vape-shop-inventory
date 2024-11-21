@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table";
+import { readBrands } from "@/utils/api";
+
+interface Brand {
+  id: string;
+  name: string;
+  category: string;
+}
 
 async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      brand: "Relx",
-      category: "Device",
-    },
-    {
-      id: "skd8212d",
-      brand: "Voopoo",
-      category: "E-liquid",
-    },
-    // ...
-  ];
+  try {
+    // Fetch data from your API here.
+    const data = await readBrands({});
+
+    const brands = data.map((brand: Brand) => ({
+      id: brand.id,
+      brand: brand.name,
+      category: brand.category, // Use category from brand
+    }));
+
+    return brands;
+  } catch (error) {
+    // Handle the error (e.g., log it, return an empty array, or show a message)
+    console.error("Error fetching brands:", error);
+    return []; // Returning an empty array as a fallback
+  }
 }
 
 export default function DemoPage() {
