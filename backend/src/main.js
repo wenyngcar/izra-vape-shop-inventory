@@ -49,16 +49,16 @@ server.application.listen(server.port, async () => {
     const mongodbString = `mongodb://${database.host}:${database.port}/${database.name}`;
     await mongoose.connect(mongodbString);
     console.log(`Application has successfully connected to MongoDB.`);
-    
+
     // TODO: Fix this.
     const closedPodDetails = {
         name: "Closed Pod",
         description: "This is a closed pod.",
         category: "Device",
     }
-    
+
     const variants = await Variant.find(closedPodDetails);
-    
+
     if (variants.length === 0) {
         const variant = new Variant(closedPodDetails);
         await variant.save();
