@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     name: String,
     price: Number,
     quantity: Number,
+    expiration: Date,
 });
 
 export default productSchema;

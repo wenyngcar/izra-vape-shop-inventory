@@ -16,6 +16,7 @@
         "./src/*"
       ]
     },
+    "allowJs": true,
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
