@@ -9,6 +9,20 @@ const router = express.Router();
 // Automatically parses the "req.body" as a JSON object.
 router.use(express.json());
 
+router.get("/brands", async (req, res) => {
+    try {
+        const filter = {};
+        if (req.query.name) filter.name = req.query.name; // Optional query param
+        if (req.query.category) filter.category = req.query.category; // Optional query param
+
+        const brands = await database.readBrands(filter);
+        res.json(brands);
+    } catch (error) {
+        console.error("Error fetching brands:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+})
+
 router.post("/create-brand", async (req, res) => {
     console.log();
     console.log("Creating brand with the following information:");
