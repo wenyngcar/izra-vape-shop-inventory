@@ -62,8 +62,8 @@ export async function createProduct(options) {
         throw new Error("Product's quantity must be specified.");
     else if (!options.expiration)
         throw new Error("Product's expiration date must be specified.");
-    
-    const brands = await Brand.find({ 
+
+    const brands = await Brand.find({
         name: options.brandName,
         category: options.brandCategory,
     });
@@ -74,7 +74,7 @@ export async function createProduct(options) {
     const variants = await Variant.find({
         name: options.variantName,
     });
-    
+
     if (variants.length === 0)
         throw new Error("Variant is not found.");
 
@@ -112,16 +112,34 @@ export async function createVariant(options) {
         throw new Error("Variant's description should be specified.");
     else if (!options.category)
         throw new Error("Variant's category should be specified.");
-    
+
     const variant = new Variant({
         name: options.name,
         description: options.description,
         category: options.category,
     });
-    
+
     await variant.save();
     console.log("Created variant:");
     console.log(JSON.stringify(variant));
 
     return variant;
+}
+
+/**
+ * Reads all brands or filters them based on the given criteria.
+ * [] For optional
+ * @param {Object} [filter] Optional filter criteria for reading brands.
+ * @param {String} [filter.name] Filter by brand name.
+ * @param {String} [filter.category] Filter by brand category.
+ * @returns {Array<Object>} List of brand documents matching the filter.
+ */
+export async function readBrands(filter = {}) {
+    // Use the Brand model to query the database
+    const brands = await Brand.find(filter);
+
+    // console.log("Fetched brands:");
+    // console.log(JSON.stringify(brands, null, 2));
+
+    return brands;
 }
