@@ -1,4 +1,4 @@
-import { post } from "./helper-functions";
+import { post, get } from "./helper-functions";
 
 /**
  * Creates a brand using the backend API.
@@ -32,3 +32,8 @@ export async function createVariant(options) {
     return post("create-variant", options);
 }
 
+export async function readBrands(filter = {}) {
+    const response = await get("brands", filter);
+    const brands = await response.json();  // Parse the response as JSON
+    return brands;
+}
