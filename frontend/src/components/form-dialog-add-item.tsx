@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { FormAddItemDialogProps } from "./form-add-item";
 import {
   Dialog,
   DialogContent,
@@ -8,15 +9,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import InventoryForm from "./form-add-item";
-
-interface InventoryFormDialogProps {
-  brandName: string;
-}
+import FormAddItem from "./form-add-item";
 
 export default function InventoryFormDialog({
+  brandId,
   brandName,
-}: InventoryFormDialogProps) {
+  brandCategory,
+}: FormAddItemDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,7 +31,11 @@ export default function InventoryFormDialog({
             Enter the details for the new item.
           </DialogDescription>
         </DialogHeader>
-        <InventoryForm />
+        <FormAddItem
+          brandId={brandId}
+          brandName={brandName}
+          brandCategory={brandCategory}
+        />
       </DialogContent>
     </Dialog>
   );
