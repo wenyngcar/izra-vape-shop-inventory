@@ -1,12 +1,13 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import InventoryFormDialog from "./form-dialog-add-item";
+import FormDialogAddItem from "./form-dialog-add-item";
+import mongoose from "mongoose";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Payment = {
-  id: string;
+  id: mongoose.Types.ObjectId;
   brand: string;
   category: "E-liquid" | "Device";
 };
@@ -23,6 +24,12 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "action",
     header: "Action",
-    cell: ({ row }) => <InventoryFormDialog brandName={row.original.brand} />,
+    cell: ({ row }) => (
+      <FormDialogAddItem
+        brandId={row.original.id}
+        brandName={row.original.brand}
+        brandCategory={row.original.category}
+      />
+    ),
   },
 ];

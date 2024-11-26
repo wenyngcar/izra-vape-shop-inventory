@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { readBrands } from "@/utils/api";
+import mongoose from "mongoose";
 
-interface Brand {
-  id: string;
+type Brand = {
+  _id: mongoose.Types.ObjectId;
   name: string;
   category: string;
-}
+};
 
 async function getData(): Promise<Payment[]> {
   try {
@@ -15,7 +16,7 @@ async function getData(): Promise<Payment[]> {
     const data = await readBrands({});
 
     const brands = data.map((brand: Brand) => ({
-      id: brand.id,
+      id: brand._id,
       brand: brand.name,
       category: brand.category, // Use category from brand
     }));
