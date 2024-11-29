@@ -15,9 +15,14 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AppleIcon } from "lucide-react";
-
 import * as api from "@/utils/api.js";
+import mongoose from "mongoose";
+
+export type FormAddItemDialogProps = {
+  brandId: mongoose.Types.ObjectId;
+  brandName: string;
+  brandCategory: string;
+};
 
 const formSchema = z.object({
   item: z
@@ -39,7 +44,11 @@ const formSchema = z.object({
     }),
 });
 
-export default function ProfileForm() {
+export default function FormAddItem({
+  brandId,
+  brandName,
+  brandCategory,
+}: FormAddItemDialogProps) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,8 +68,9 @@ export default function ProfileForm() {
 
     // TODO: Remove manually added values.
     api.createProduct({
-      brandName: "Something",
-      brandCategory: "E-liquid",
+      brandId: brandId,
+      brandName: brandName,
+      brandCategory: brandCategory,
       variantName: "Closed Pod",
       name: values.item,
       price: values.price,
@@ -144,7 +154,7 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-      <Button type="submit">Submit</Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
