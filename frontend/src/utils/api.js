@@ -37,3 +37,9 @@ export async function readBrands(filter = {}) {
     const brands = await response.json();  // Parse the response as JSON
     return brands;
 }
+
+export async function readProducts(filter = {}) {
+    const response = await get("products", filter);
+    const products = await response.json();  // Parse the response as JSON
+    return products;
+}
