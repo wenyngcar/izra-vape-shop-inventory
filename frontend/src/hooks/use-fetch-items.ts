@@ -2,12 +2,13 @@ import { Items } from "@/components/columns";
 import { readProducts } from "@/utils/api";
 import mongoose from "mongoose";
 
+// Types here must match the field name in collections.
 type Item = {
   _id: mongoose.Types.ObjectId;
   name: string;
   price: number;
   quantity: number;
-  date: Date;
+  expiration: Date;
 };
 
 export async function UseFetchItems(): Promise<Items[]> {
@@ -20,7 +21,7 @@ export async function UseFetchItems(): Promise<Items[]> {
       name: item.name,
       price: item.price,
       quantity: item.quantity,
-      date: item.date,
+      date: item.expiration,
     }));
 
     return items;
