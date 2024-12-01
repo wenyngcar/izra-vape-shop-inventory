@@ -2,6 +2,7 @@ import { Brands } from "@/components/columns";
 import { readBrands } from "@/utils/api";
 import mongoose from "mongoose";
 
+// Types here must match the field name in collections.
 type Brand = {
   _id: mongoose.Types.ObjectId;
   name: string;
