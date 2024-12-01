@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import FormDialogAddItem from "./form-dialog-add-item";
 import mongoose from "mongoose";
+import { Button } from "./ui/button";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -13,6 +14,7 @@ export type Brands = {
 };
 
 export type Items = {
+  id: mongoose.Types.ObjectId;
   name: string;
   price: number;
   quantity: number;
@@ -43,33 +45,33 @@ export const columns: ColumnDef<Brands>[] = [
   },
 ];
 
-// export const nestedColumns: ColumnDef<Items>[] = [
-//   {
-//     accessorKey: "name",
-//     header: "Name",
-//   },
-//   {
-//     accessorKey: "price",
-//     header: "Price",
-//   },
-//   {
-//     accessorKey: "quantity",
-//     header: "Quantity",
-//   },
-//   {
-//     accessorKey: "date",
-//     header: "Date",
-//   },
-//   {
-//     accessorKey: "action",
-//     header: "Action",
-//     cell: () => (
-//       // <FormDialogAddItem
-//       //   brandId={row.original.id}
-//       //   brandName={row.original.brand}
-//       //   brandCategory={row.original.category}
-//       // />
-//       <Button>Edit</Button>
-//     ),
-//   },
-// ];
+export const nestedColumns: ColumnDef<Items>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
+    accessorKey: "quantity",
+    header: "Quantity",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    accessorKey: "action",
+    header: "Action",
+    cell: () => (
+      // <FormDialogAddItem
+      //   brandId={row.original.id}
+      //   brandName={row.original.brand}
+      //   brandCategory={row.original.category}
+      // />
+      <Button>Edit</Button>
+    ),
+  },
+];
