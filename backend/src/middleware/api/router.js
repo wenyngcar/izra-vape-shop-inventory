@@ -23,6 +23,20 @@ router.get("/brands", async (req, res) => {
     }
 })
 
+// Maybe subjected to recieve brandId as filter.
+router.get("/products", async (req, res) => {
+    try {
+        const filter = {};
+        if (req.query.name) filter.name = req.query.name; // Optional query param
+
+        const products = await database.readProducts(filter);
+        res.json(products);
+    } catch (error) {
+        console.error("Error fetching products:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+})
+
 router.post("/create-brand", async (req, res) => {
     console.log();
     console.log("Creating brand with the following information:");
