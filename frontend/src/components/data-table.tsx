@@ -72,10 +72,13 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="grid grid-cols-3 px-2 ">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className="last:place-self-center"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -101,10 +104,7 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                <AccordionItem
-                  value={row.id}
-                  className="grid grid-cols-3 px-2 "
-                >
+                <AccordionItem value={row.id} className="grid grid-cols-3 px-2">
                   <AccordionTrigger>
                     {(row.original as Brands).brand}
                   </AccordionTrigger>
@@ -112,11 +112,13 @@ export function DataTable<TData, TValue>({
                     {(row.original as Brands).category}
                     <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
                   </AccordionTrigger>
-                  <FormDialogAddItem
-                    brandId={(row.original as Brands).id}
-                    brandName={(row.original as Brands).brand}
-                    brandCategory={(row.original as Brands).category}
-                  />
+                  <div className="place-self-center">
+                    <FormDialogAddItem
+                      brandId={(row.original as Brands).id}
+                      brandName={(row.original as Brands).brand}
+                      brandCategory={(row.original as Brands).category}
+                    />
+                  </div>
                   <AccordionContent>
                     Yes. It adheres to the WAI-ARIA design pattern.
                   </AccordionContent>
