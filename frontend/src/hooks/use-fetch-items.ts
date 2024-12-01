@@ -1,5 +1,5 @@
 import { Items } from "@/components/columns";
-import { readBrands } from "@/utils/api";
+import { readProducts } from "@/utils/api";
 import mongoose from "mongoose";
 
 type Item = {
@@ -13,7 +13,7 @@ type Item = {
 export async function UseFetchItems(): Promise<Items[]> {
   try {
     // Fetch data from your API here.
-    const data = await readBrands({});
+    const data = await readProducts({});
 
     const items = data.map((item: Item) => ({
       id: item._id,
