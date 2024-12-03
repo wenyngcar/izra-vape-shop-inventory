@@ -5,6 +5,7 @@ import FormDialogAddItem from "./form-dialog-add-item";
 import mongoose from "mongoose";
 import { Button } from "./ui/button";
 
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Brands = {
@@ -23,6 +24,7 @@ export type Items = {
 
 // For the table headers
 export const columns: ColumnDef<Brands>[] = [
+
   {
     accessorKey: "brand",
     header: "Brand",
@@ -51,12 +53,12 @@ export const nestedColumns: ColumnDef<Items>[] = [
     header: "Name",
   },
   {
-    accessorKey: "price",
-    header: "Price",
-  },
-  {
     accessorKey: "quantity",
     header: "Quantity",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
   },
   {
     accessorKey: "date",
@@ -75,3 +77,13 @@ export const nestedColumns: ColumnDef<Items>[] = [
     ),
   },
 ];
+
+import QuantityCell from './Add_subtractQuantity';
+
+const quantityColumn = nestedColumns.find(column => 'accessorKey' in column && column.accessorKey === "quantity");
+if (quantityColumn) {
+  quantityColumn.cell = ({ row }) => {
+    const { quantity } = row.original;
+    return <QuantityCell value={quantity} row={row} />;
+  };
+}

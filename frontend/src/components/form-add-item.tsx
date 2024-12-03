@@ -89,7 +89,12 @@ export default function FormAddItem({
             <FormItem>
               <FormLabel>Item Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter item name here" {...field} />
+                <Input
+                  placeholder="Enter item name here"
+                  {...field}
+                  onFocus={(e) => e.target.placeholder = ""}
+                  onBlur={(e) => e.target.placeholder = "Enter item name here"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -106,6 +111,9 @@ export default function FormAddItem({
                   type="number"
                   placeholder="Enter quantity here"
                   {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  onFocus={(e) => e.target.placeholder = ""}
+                  onBlur={(e) => e.target.placeholder = ""}
                 />
               </FormControl>
               <FormMessage />
@@ -124,6 +132,9 @@ export default function FormAddItem({
                   step="0.01"
                   placeholder="Enter price here"
                   {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  onFocus={(e) => e.target.placeholder = "0.01"}
+                  onBlur={(e) => e.target.placeholder = "Enter price here"}
                 />
               </FormControl>
               <FormMessage />
@@ -148,6 +159,8 @@ export default function FormAddItem({
                       e.target.value ? new Date(e.target.value) : null
                     )
                   }
+                  onFocus={(e) => e.target.placeholder = ""}
+                  onBlur={(e) => e.target.placeholder = "Enter expiration date here"}
                 />
               </FormControl>
               <FormMessage />
