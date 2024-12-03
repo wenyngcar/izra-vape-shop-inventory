@@ -1,8 +1,7 @@
-
+import mongoose from "mongoose";
 import Brand from "../../database/models/Brand.js";
 import Product from "../../database/models/Product.js";
 import Variant from "../../database/models/Variant.js";
-
 
 /////////////////////
 // CREATING MODELS //
@@ -137,7 +136,6 @@ export async function createVariant(options) {
 export async function readBrands(filter = {}) {
     // Use the Brand model to query the database
     const brands = await Brand.find(filter);
-
     // console.log("Fetched brands:");
     // console.log(JSON.stringify(brands, null, 2));
 
@@ -148,15 +146,11 @@ export async function readBrands(filter = {}) {
  * Reads all brands or filters them based on the given criteria.
  * [] For optional
  * @param {Object} [filter] Optional filter criteria for reading products.
- * @param {String} [filter.name] Filter by item name.
+ * @param {mongoose.Types.ObjectId} [filter.brandId] Filter by brandID.
  * @returns {Array<Object>} List of product documents matching the filter.
  */
 export async function readProducts(filter = {}) {
-    // Use the Brand model to query the database
     const products = await Product.find(filter);
-
-    // console.log("Fetched brands:");
-    // console.log(JSON.stringify(brands, null, 2));
 
     return products;
 }

@@ -27,8 +27,7 @@ router.get("/brands", async (req, res) => {
 router.get("/products", async (req, res) => {
     try {
         const filter = {};
-        if (req.query.name) filter.name = req.query.name; // Optional query param
-
+        if (req.query.brandId) filter.brandId = req.query.brandId; // Optional query param
         const products = await database.readProducts(filter);
         res.json(products);
     } catch (error) {
