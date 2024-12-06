@@ -18,9 +18,7 @@ export default function ItemPage({ brandId }: BrandId) {
       setItemData(itemResult);
     }
     fetchData();
-  }, []);
-
-  // console.log(itemData);
+  }, [itemData]);
 
   return (
     <div className="container mx-auto pb-10">
