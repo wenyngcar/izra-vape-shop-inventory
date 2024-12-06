@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import FormDialogAddItem from "./form-dialog-add-item";
 import mongoose from "mongoose";
 import { Button } from "./ui/button";
+import QuantityCell from './Add_subtractQuantity';
 
 
 // This type is used to define the shape of our data.
@@ -77,8 +78,6 @@ export const nestedColumns: ColumnDef<Items>[] = [
     ),
   },
 ];
-
-import QuantityCell from './Add_subtractQuantity';
 
 const quantityColumn = nestedColumns.find(column => 'accessorKey' in column && column.accessorKey === "quantity");
 if (quantityColumn) {
