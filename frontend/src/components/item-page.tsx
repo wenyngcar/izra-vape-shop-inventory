@@ -23,7 +23,7 @@ export default function ItemPage({ brandId }: BrandId) {
   // console.log(itemData);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto pb-10">
       <ItemDataTable columns={nestedColumns} data={itemData} />
     </div>
   );
