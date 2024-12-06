@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DemoPage from "./components/page";
 import { ListChecks, ReceiptRussianRuble } from "lucide-react";
+import ItemPage from "./components/item-page";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         {/* For  inventory*/}
         <TabsContent value="account">
           <DemoPage />
+          <ItemPage />
         </TabsContent>
 
         {/* For sales */}

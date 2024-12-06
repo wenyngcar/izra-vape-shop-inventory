@@ -14,18 +14,20 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 import { Input } from "@/components/ui/input";
+import FormDialogAddItem from "./form-dialog-add-item";
+import { Brands } from "./columns";
+import { ChevronDown } from "lucide-react";
 
-interface DataTableProps<TData, TValue> {
+interface BrandDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
@@ -33,7 +35,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: BrandDataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -70,10 +72,13 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="grid grid-cols-3 px-2 ">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className="last:place-self-center"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -86,35 +91,46 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
         </Table>
+
+        {/* TABLE BODY */}
+        <div>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full"
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                <AccordionItem value={row.id} className="grid grid-cols-3 px-2">
+                  <AccordionTrigger>
+                    {(row.original as Brands).brand}
+                  </AccordionTrigger>
+                  <AccordionTrigger>
+                    {(row.original as Brands).category}
+                    <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+                  </AccordionTrigger>
+                  <div className="place-self-center">
+                    <FormDialogAddItem
+                      brandId={(row.original as Brands).id}
+                      brandName={(row.original as Brands).brand}
+                      brandCategory={(row.original as Brands).category}
+                    />
+                  </div>
+                  <AccordionContent>
+                    Yes. It adheres to the WAI-ARIA design pattern.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))
+          ) : (
+            <div>
+              <div className="h-24 text-center">No results.</div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

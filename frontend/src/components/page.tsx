@@ -1,48 +1,29 @@
 import { useEffect, useState } from "react";
-import { Payment, columns } from "./columns";
+import { Brands, columns } from "./columns";
 import { DataTable } from "./data-table";
-import { readBrands } from "@/utils/api";
-import mongoose from "mongoose";
-
-type Brand = {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  category: string;
-};
-
-async function getData(): Promise<Payment[]> {
-  try {
-    // Fetch data from your API here.
-    const data = await readBrands({});
-
-    const brands = data.map((brand: Brand) => ({
-      id: brand._id,
-      brand: brand.name,
-      category: brand.category, // Use category from brand
-    }));
-
-    return brands;
-  } catch (error) {
-    // Handle the error (e.g., log it, return an empty array, or show a message)
-    console.error("Error fetching brands:", error);
-    return []; // Returning an empty array as a fallback
-  }
-}
+import { UseFetchBrands } from "@/hooks/use-fetch-brands";
+// import { UseFetchItems } from "@/hooks/use-fetch-items";
 
 export default function DemoPage() {
-  const [data, setData] = useState<Payment[]>([]);
+  const [brandData, setBrandData] = useState<Brands[]>([]);
+  // const [itemData, setItemData] = useState<Items[]>([]);
 
+  // Fetching data
   useEffect(() => {
     async function fetchData() {
-      const result = await getData();
-      setData(result);
+      const brandResult = await UseFetchBrands();
+      // const itemResult = await UseFetchItems();
+      setBrandData(brandResult);
+      // setItemData(itemResult);
     }
     fetchData();
   }, []);
 
+  // console.log(brandData);
+
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={brandData} />
     </div>
   );
 }

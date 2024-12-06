@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 
 import FormAddItem from "./form-add-item";
+import { Button } from "./ui/button";
 
 export default function InventoryFormDialog({
   brandId,
@@ -19,10 +20,10 @@ export default function InventoryFormDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex items-center space-x-2">
+        <Button className="flex items-center space-x-2">
           <Plus className="h-4 w-4" />
           <span>Add Item</span>
-        </button>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
