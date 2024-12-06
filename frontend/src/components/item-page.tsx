@@ -2,20 +2,25 @@ import { useEffect, useState } from "react";
 import { Items, nestedColumns } from "./columns";
 import { UseFetchItems } from "@/hooks/use-fetch-items";
 import { ItemDataTable } from "./item-table";
+import mongoose from "mongoose";
 
-export default function ItemPage() {
+type BrandId = {
+  brandId: mongoose.Types.ObjectId;
+};
+
+export default function ItemPage({ brandId }: BrandId) {
   const [itemData, setItemData] = useState<Items[]>([]);
 
   // Fetching data
   useEffect(() => {
     async function fetchData() {
-      const itemResult = await UseFetchItems();
+      const itemResult = await UseFetchItems(brandId);
       setItemData(itemResult);
     }
     fetchData();
   }, []);
 
-  console.log(itemData);
+  // console.log(itemData);
 
   return (
     <div className="container mx-auto py-10">
