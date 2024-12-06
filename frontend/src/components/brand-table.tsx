@@ -33,7 +33,7 @@ interface BrandDataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function BrandTable<TData, TValue>({
   columns,
   data,
 }: BrandDataTableProps<TData, TValue>) {

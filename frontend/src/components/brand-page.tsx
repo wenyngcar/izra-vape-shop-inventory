@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Brands, columns } from "./columns";
-import { DataTable } from "./data-table";
+import { BrandTable } from "./brand-table";
 import { UseFetchBrands } from "@/hooks/use-fetch-brands";
 // import { UseFetchItems } from "@/hooks/use-fetch-items";
 
-export default function DemoPage() {
+export default function BrandPage() {
   const [brandData, setBrandData] = useState<Brands[]>([]);
   // const [itemData, setItemData] = useState<Items[]>([]);
 
@@ -23,7 +23,7 @@ export default function DemoPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={brandData} />
+      <BrandTable columns={columns} data={brandData} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DemoPage from "./components/page";
+import BrandPage from "@/components/brand-page";
 import { ListChecks, ReceiptRussianRuble } from "lucide-react";
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
         </TabsList>
         {/* For  inventory*/}
         <TabsContent value="account">
-          <DemoPage />
+          <BrandPage />
         </TabsContent>
 
         {/* For sales */}
