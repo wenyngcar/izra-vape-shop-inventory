@@ -20,7 +20,7 @@ export default function InventoryFormDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex items-center space-x-2">
+        <Button>
           <Plus className="h-4 w-4" />
           <span>Add Item</span>
         </Button>
