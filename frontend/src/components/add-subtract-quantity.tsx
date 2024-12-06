@@ -8,7 +8,7 @@ interface QuantityCellProps {
   row: any;
 }
 
-const QuantityCell = ({ value, row }: QuantityCellProps) => {
+const QuantityCell = ({ value }: QuantityCellProps) => {
   const [quantity, setQuantity] = useState(value);
 
   function handleIncrement() {
