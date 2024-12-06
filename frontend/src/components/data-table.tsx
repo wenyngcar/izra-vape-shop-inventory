@@ -121,7 +121,6 @@ export function DataTable<TData, TValue>({
                     />
                   </div>
                   <AccordionContent>
-                    Yes. It adheres to the WAI-ARIA design pattern.
                     <ItemPage brandId={(row.original as Brands).id} />
                   </AccordionContent>
                 </AccordionItem>
