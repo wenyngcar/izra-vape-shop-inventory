@@ -120,7 +120,7 @@ export function DataTable<TData, TValue>({
                       brandCategory={(row.original as Brands).category}
                     />
                   </div>
-                  <AccordionContent>
+                  <AccordionContent className="col-span-3 ">
                     <ItemPage brandId={(row.original as Brands).id} />
                   </AccordionContent>
                 </AccordionItem>
