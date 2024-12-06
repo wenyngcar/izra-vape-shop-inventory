@@ -1,7 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import FormDialogAddItem from "./form-dialog-add-item";
 import mongoose from "mongoose";
 import { Button } from "./ui/button";
 import QuantityCell from "./add-subtract-quantity";
@@ -31,18 +30,6 @@ export const columns: ColumnDef<Brands>[] = [
   {
     accessorKey: "category",
     header: "Category",
-  },
-  {
-    // Add item button per row of brand.
-    accessorKey: "action",
-    header: "Action",
-    cell: ({ row }) => (
-      <FormDialogAddItem
-        brandId={row.original.id}
-        brandName={row.original.brand}
-        brandCategory={row.original.category}
-      />
-    ),
   },
 ];
 
