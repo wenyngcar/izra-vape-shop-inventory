@@ -4,8 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import FormDialogAddItem from "./form-dialog-add-item";
 import mongoose from "mongoose";
 import { Button } from "./ui/button";
-import QuantityCell from './Add_subtractQuantity';
-
+import QuantityCell from "./add-subtract-quantity";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -25,7 +24,6 @@ export type Items = {
 
 // For the table headers
 export const columns: ColumnDef<Brands>[] = [
-
   {
     accessorKey: "brand",
     header: "Brand",
@@ -79,7 +77,9 @@ export const nestedColumns: ColumnDef<Items>[] = [
   },
 ];
 
-const quantityColumn = nestedColumns.find(column => 'accessorKey' in column && column.accessorKey === "quantity");
+const quantityColumn = nestedColumns.find(
+  (column) => "accessorKey" in column && column.accessorKey === "quantity"
+);
 if (quantityColumn) {
   quantityColumn.cell = ({ row }) => {
     const { quantity } = row.original;
