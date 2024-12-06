@@ -38,7 +38,11 @@ const formSchema = z.object({
     .min(1, { message: "Category cannot be empty." }),
 });
 
-export default function ProfileForm() {
+export default function ProfileForm({
+  setOpen,
+}: {
+  setOpen: (open: boolean) => void;
+}) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,14 +53,20 @@ export default function ProfileForm() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
-    api.createBrand({
-      name: values.brand,
-      category: values.category,
-    });
+
+    try {
+      api.createBrand({
+        name: values.brand,
+        category: values.category,
+      });
+
+      setOpen(false);
+    } catch (error) {
+      console.error("Error creating brand:", error);
+    }
   }
 
   return (
