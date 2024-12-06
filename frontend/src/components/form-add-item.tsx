@@ -37,16 +37,19 @@ const formSchema = z.object({
     .max(50),
   quantity: z
     .number({ required_error: "Please enter a quantity" })
-    .min(1, { message: "Quantity must be at least 1." }),
+    .min(1, { message: "Quantity must be at least 1." })
+    .optional(), // this allow undefined
   price: z
     .number({ required_error: "Please enter a price" })
-    .min(0.01, { message: "Price must be at least 0.01." }),
+    .min(1, { message: "Price must be at least 1." })
+    .optional(), // his allow undefined
   expirationDate: z
     .date({ required_error: "Please enter an expiration date" })
     .refine((date) => date > new Date(), {
       message: "Expiration date must be in the future.",
     }),
 });
+
 
 export default function FormAddItem({
   brandId,
@@ -59,11 +62,12 @@ export default function FormAddItem({
     resolver: zodResolver(formSchema),
     defaultValues: {
       item: "",
-      quantity: 1,
-      price: 0.01,
-      expirationDate: new Date(),
+      quantity: undefined,
+      price: undefined,
+      expirationDate: undefined,
     },
   });
+  
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -121,10 +125,13 @@ export default function FormAddItem({
                 <Input
                   type="number"
                   placeholder="Enter quantity here"
-                  {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  value={field.value || ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    field.onChange(value ? Number(value) : undefined); // Set undefined when empty
+                  }}
                   onFocus={(e) => (e.target.placeholder = "")}
-                  onBlur={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) => (e.target.placeholder = "Enter quantity here")}
                 />
               </FormControl>
               <FormMessage />
@@ -142,9 +149,12 @@ export default function FormAddItem({
                   type="number"
                   step="0.01"
                   placeholder="Enter price here"
-                  {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
-                  onFocus={(e) => (e.target.placeholder = "0.01")}
+                  value={field.value || ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    field.onChange(value ? Number(value) : undefined); // Set undefined when empty
+                  }}
+                  onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "Enter price here")}
                 />
               </FormControl>
@@ -152,6 +162,7 @@ export default function FormAddItem({
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="expirationDate"
