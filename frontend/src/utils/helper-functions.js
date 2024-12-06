@@ -62,8 +62,8 @@ export async function get(api, queryParams = {}, { port = 3000, path = "api" } =
         throw new Error("Provide an API to use.");
 
     const baseUrl = `http://localhost:${port}/${path}`;
-    const url = `${baseUrl}/${api}`;
-
+    // const url = `${baseUrl}/${api}`;
+    const url = new URL(`${baseUrl}/${api}`); // Use URL object
     // Add query parameters to the URL
     Object.entries(queryParams).forEach(([key, value]) => {
         url.searchParams.append(key, value);
