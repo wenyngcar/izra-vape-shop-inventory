@@ -37,12 +37,12 @@ const formSchema = z.object({
     .max(50),
   quantity: z
     .number({ required_error: "Please enter a quantity" })
-    .min(1, { message: "Quantity must be at least 1." })
-    .optional(), // this allow undefined
+    .min(1, { message: "Quantity must be at least 1." }),
+    // .optional(), // this allow undefined
   price: z
     .number({ required_error: "Please enter a price" })
-    .min(1, { message: "Price must be at least 1." })
-    .optional(), // his allow undefined
+    .min(1, { message: "Price must be at least 1." }),
+    // .optional(), // his allow undefined
   expirationDate: z
     .date({ required_error: "Please enter an expiration date" })
     .refine((date) => date > new Date(), {
