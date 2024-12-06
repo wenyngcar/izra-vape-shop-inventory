@@ -20,10 +20,13 @@ const server = {
     port: 3000,
 };
 const database = {
-    host: "127.0.0.1",
-    port: "27017",
-    name: "test",
+    username: "128team",
+    password: "Pw1tx5J6hkuUNJVI",
+    name: "inventory"
 };
+
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+const mongodbString = `mongodb+srv://${database.username}:${database.password}@128-inventory-system.n4rnz.mongodb.net/${database.name}?retryWrites=true&w=majority&appName=128-inventory-system`;
 
 // Automatically converts request body to JSON.
 server.application.use(express.json());
@@ -46,8 +49,7 @@ server.application.listen(server.port, async () => {
     console.log(`Application is listening on port ${server.port}`);
 
     // Connecting to the MongoDB database.
-    const mongodbString = `mongodb://${database.host}:${database.port}/${database.name}`;
-    await mongoose.connect(mongodbString);
+    await mongoose.connect(mongodbString, clientOptions);
     console.log(`Application has successfully connected to MongoDB.`);
 
     // TODO: Fix this.
