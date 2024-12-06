@@ -11,17 +11,17 @@ interface QuantityCellProps {
 const QuantityCell = ({ value, row }: QuantityCellProps) => {
 const [quantity, setQuantity] = useState(value);
 
-const handleIncrement = () => {
+function handleIncrement() {
     setQuantity(quantity + 1);
-    // Update the quantity in the backedn
-};
+    // Update the quantity in the backend
+}
 
-const handleDecrement = () => {
+function handleDecrement() {
     if (quantity > 0) {
-    setQuantity(quantity - 1);
-    // Update the quantity in the backedn
+        setQuantity(quantity - 1);
+        // Update the quantity in the backend
     }
-};
+}
 
 return (
     <div className="flex items-center">
