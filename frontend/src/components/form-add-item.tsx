@@ -18,11 +18,15 @@ import { Input } from "@/components/ui/input";
 import * as api from "@/utils/api.js";
 import mongoose from "mongoose";
 
-export type FormAddItemDialogProps = {
+export interface FormAddItemDialogProps {
   brandId: mongoose.Types.ObjectId;
   brandName: string;
   brandCategory: string;
-};
+}
+
+export interface FormAddItemDialogWithSetOpen extends FormAddItemDialogProps {
+  setOpen: (open: boolean) => void;
+}
 
 const formSchema = z.object({
   item: z
@@ -48,7 +52,8 @@ export default function FormAddItem({
   brandId,
   brandName,
   brandCategory,
-}: FormAddItemDialogProps) {
+  setOpen,
+}: FormAddItemDialogWithSetOpen) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,19 +69,23 @@ export default function FormAddItem({
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
 
-    // TODO: Remove manually added values.
-    api.createProduct({
-      brandId: brandId,
-      brandName: brandName,
-      brandCategory: brandCategory,
-      variantName: "Closed Pod",
-      name: values.item,
-      price: values.price,
-      quantity: values.quantity,
-      expiration: values.expirationDate,
-    });
+    try {
+      api.createProduct({
+        brandId: brandId,
+        brandName: brandName,
+        brandCategory: brandCategory,
+        variantName: "Closed Pod",
+        name: values.item,
+        price: values.price,
+        quantity: values.quantity,
+        expiration: values.expirationDate,
+      });
+
+      setOpen(false);
+    } catch (error) {
+      console.log("There was an error in creating brand", error);
+    }
   }
 
   return (
@@ -92,8 +101,10 @@ export default function FormAddItem({
                 <Input
                   placeholder="Enter item name here"
                   {...field}
-                  onFocus={(e) => e.target.placeholder = ""}
-                  onBlur={(e) => e.target.placeholder = "Enter item name here"}
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "Enter item name here")
+                  }
                 />
               </FormControl>
               <FormMessage />
@@ -112,8 +123,8 @@ export default function FormAddItem({
                   placeholder="Enter quantity here"
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
-                  onFocus={(e) => e.target.placeholder = ""}
-                  onBlur={(e) => e.target.placeholder = ""}
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) => (e.target.placeholder = "")}
                 />
               </FormControl>
               <FormMessage />
@@ -133,8 +144,8 @@ export default function FormAddItem({
                   placeholder="Enter price here"
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
-                  onFocus={(e) => e.target.placeholder = "0.01"}
-                  onBlur={(e) => e.target.placeholder = "Enter price here"}
+                  onFocus={(e) => (e.target.placeholder = "0.01")}
+                  onBlur={(e) => (e.target.placeholder = "Enter price here")}
                 />
               </FormControl>
               <FormMessage />
@@ -159,8 +170,10 @@ export default function FormAddItem({
                       e.target.value ? new Date(e.target.value) : null
                     )
                   }
-                  onFocus={(e) => e.target.placeholder = ""}
-                  onBlur={(e) => e.target.placeholder = "Enter expiration date here"}
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "Enter expiration date here")
+                  }
                 />
               </FormControl>
               <FormMessage />
