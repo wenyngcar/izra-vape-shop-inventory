@@ -8,25 +8,30 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import InventoryForm from "./form-add-brand";
+import BrandInventoryForm from "./form-add-brand";
+import { Button } from "./ui/button";
+import { useState } from "react";
 
 export default function InventoryFormDialog() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="flex items-center">
-        <button className="flex items-center bg-black text-white px-6 py-3 rounded-md space-x-3">
+        <Button>
           <Plus className="h-4 w-4" />
-          <span>AddBrand</span>
-        </button>
+          <span>Add Brand</span>
+        </Button>
       </DialogTrigger>
-      <DialogContent>
+      {/* onInteractOutside function prevents the dialog from closing when click outside of content. */}
+      <DialogContent onInteractOutside={(event) => event.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Add New Brand</DialogTitle>
           <DialogDescription>
             Enter the details for the new brand.
           </DialogDescription>
         </DialogHeader>
-        <InventoryForm />
+        <BrandInventoryForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );
