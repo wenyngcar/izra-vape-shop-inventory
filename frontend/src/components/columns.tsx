@@ -3,7 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import mongoose from "mongoose";
 import { Button } from "./ui/button";
-import QuantityCell from "./add-subtract-quantity";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -64,12 +63,12 @@ export const nestedColumns: ColumnDef<Items>[] = [
   },
 ];
 
-const quantityColumn = nestedColumns.find(
-  (column) => "accessorKey" in column && column.accessorKey === "quantity"
-);
-if (quantityColumn) {
-  quantityColumn.cell = ({ row }) => {
-    const { quantity } = row.original;
-    return <QuantityCell value={quantity} row={row} />;
-  };
-}
+// const quantityColumn = nestedColumns.find(
+//   (column) => "accessorKey" in column && column.accessorKey === "quantity"
+// );
+// if (quantityColumn) {
+//   quantityColumn.cell = ({ row }) => {
+//     const { quantity } = row.original;
+//     return <QuantityCell value={quantity} row={row} />;
+//   };
+// }
