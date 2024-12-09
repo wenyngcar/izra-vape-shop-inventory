@@ -7,9 +7,10 @@ import express from "express";
 import mongoose from "mongoose";
 
 import apiRouter from "./middleware/api/router.js";
-
 import Variant from "./database/models/Variant.js";
+import dotenv from "dotenv";
 
+dotenv.config()
 // This gets the file and folder name of this JavaScript file.
 // This is needed for serving static files.
 const __filename = url.fileURLToPath(import.meta.url);
@@ -17,12 +18,12 @@ const __dirname = path.dirname(__filename);
 
 const server = {
     application: express(),
-    port: 3000,
+    port: process.env.PORT,
 };
 const database = {
-    username: "128team",
-    password: "Pw1tx5J6hkuUNJVI",
-    name: "inventory"
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    name: process.env.DATABASE_NAME,
 };
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };

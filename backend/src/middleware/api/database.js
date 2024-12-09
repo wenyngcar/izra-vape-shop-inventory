@@ -129,8 +129,6 @@ export async function createVariant(options) {
  * Reads all brands or filters them based on the given criteria.
  * [] For optional
  * @param {Object} [filter] Optional filter criteria for reading brands.
- * @param {String} [filter.name] Filter by brand name.
- * @param {String} [filter.category] Filter by brand category.
  * @returns {Array<Object>} List of brand documents matching the filter.
  */
 export async function readBrands(filter = {}) {
@@ -143,14 +141,23 @@ export async function readBrands(filter = {}) {
 }
 
 /**
- * Reads all brands or filters them based on the given criteria.
+ * Reads products based on brandId.
  * [] For optional
- * @param {Object} [filter] Optional filter criteria for reading products.
+ * @param {Object} [filter] Optional filter criteria for reading brands.
  * @param {mongoose.Types.ObjectId} [filter.brandId] Filter by brandID.
  * @returns {Array<Object>} List of product documents matching the filter.
  */
 export async function readProducts(filter = {}) {
     const products = await Product.find(filter);
-
     return products;
+}
+
+/**
+ * Delete products based on productId
+ * @param {Object} [filter] Optional filter criteria for reading brands.
+ * @param {mongoose.Types.ObjectId} [filter.productId] Filter by brandID.
+ * @returns {Array<Object>} List of product documents matching the filter.
+ */
+export async function deleteProductById(filter = {}) {
+    await Product.deleteOne(filter)
 }

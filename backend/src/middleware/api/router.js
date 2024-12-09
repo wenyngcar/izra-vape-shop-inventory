@@ -9,12 +9,10 @@ const router = express.Router();
 // Automatically parses the "req.body" as a JSON object.
 router.use(express.json());
 
-router.get("/brands", async (req, res) => {
+// Router for fetching all brands.
+router.get("/brands", async (_, res) => {
     try {
         const filter = {};
-        if (req.query.name) filter.name = req.query.name; // Optional query param
-        if (req.query.category) filter.category = req.query.category; // Optional query param
-
         const brands = await database.readBrands(filter);
         res.json(brands);
     } catch (error) {
@@ -23,7 +21,7 @@ router.get("/brands", async (req, res) => {
     }
 })
 
-// Maybe subjected to recieve brandId as filter.
+// Fetch products by id.
 router.get("/products", async (req, res) => {
     try {
         const filter = {};
@@ -36,11 +34,10 @@ router.get("/products", async (req, res) => {
     }
 })
 
+// Create brand
 router.post("/create-brand", async (req, res) => {
-    console.log();
-    console.log("Creating brand with the following information:");
-    console.log(req.body);
-    console.log();
+    console.log("\nCreating brand with the following information:");
+    console.log(`${req.body}\n`);
 
     try {
         await database.createBrand(req.body);
@@ -50,11 +47,10 @@ router.post("/create-brand", async (req, res) => {
     }
 });
 
+// Create product
 router.post("/create-product", async (req, res) => {
-    console.log();
-    console.log("Creating product with the following information:");
-    console.log(req.body);
-    console.log();
+    console.log("\nCreating product with the following information:");
+    console.log(`${req.body}\n`);
 
     try {
         await database.createProduct(req.body);
@@ -64,6 +60,8 @@ router.post("/create-product", async (req, res) => {
     }
 });
 
+// Create variant
+// NOTE: Unused
 router.post("/create-variant", async (req, res) => {
     console.log();
     console.log("Creating variant with the following information:");
@@ -77,5 +75,16 @@ router.post("/create-variant", async (req, res) => {
         res.json(message.failure(error.message));
     }
 });
+
+router.delete("/delete-product", async (req, res) => {
+    const filter = {}
+    try {
+        if (req.query.prodctId) filter.prodctId = req.query.prodctId
+        await database.deleteProductById(filter)
+        res.json(message.success(`${req.body} product successfully deleted`))
+    } catch (error) {
+        res.json(message.failure(error.message));
+    }
+})
 
 export default router;
