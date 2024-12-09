@@ -1,5 +1,6 @@
 
 import express from "express";
+import * as validator from "express-validator";
 
 import * as database from "./database.js";
 import * as message from "../utils/message.js";
@@ -35,46 +36,69 @@ router.get("/products", async (req, res) => {
 })
 
 // Create brand
-router.post("/create-brand", async (req, res) => {
-    console.log("\nCreating brand with the following information:");
-    console.log(`${req.body}\n`);
+router.post("/create-brand", 
+    validator.body("name").notEmpty().escape(),
+    validator.body("category").notEmpty().escape(),
+    async (req, res) => {
+        const result = validator.validationResult(req);
+        
+        if (result.isEmpty()) {
+            console.log("Creating brand.");
+            await database.createBrand(req.body);
+            return res.json(message.success("Succeeded in creating brand."));
+        }
 
-    try {
-        await database.createBrand(req.body);
-        res.json(message.success("Succeeded in creating brand."));
-    } catch (error) {
-        res.json(message.failure(error.message));
+        console.log("Failed to create brand.");
+        res.status(400).json(message.failure(result.array()));
     }
-});
+);
 
 // Create product
-router.post("/create-product", async (req, res) => {
-    console.log("\nCreating product with the following information:");
-    console.log(`${req.body}\n`);
+router.post("/create-product", 
+    validator.body("brandName").notEmpty().escape(),
+    validator.body("brandCategory").notEmpty().escape(),
+    validator.body("variantName").notEmpty().escape(),
+    validator.body("name").notEmpty().escape(),
+    validator.body("price").notEmpty().isInt(),
+    validator.body("quantity").notEmpty().isInt(),
+    validator.body("expiration").notEmpty().escape(),   // No validator for checking if Date is in ISO format.
+    async (req, res) => {
+        const result = validator.validationResult(req);
 
-    try {
-        await database.createProduct(req.body);
-        res.json(message.success("Succeeded in creating product."));
-    } catch (error) {
-        res.json(message.failure(error.message));
+        if (result.isEmpty()) {
+            console.log("Creating product.");
+
+            // Date is originally in ISO string format.
+            req.body.expiration = new Date(req.body.expiration);
+
+            await database.createProduct(req.body);
+            return res.json(message.success("Succeeded in creating product."));
+        }
+
+        console.log("Failed to create product.");
+        res.status(400).json(message.failure(result.array()));
     }
-});
+);
 
 // Create variant
 // NOTE: Unused
-router.post("/create-variant", async (req, res) => {
-    console.log();
-    console.log("Creating variant with the following information:");
-    console.log(req.body);
-    console.log();
+router.post("/create-variant", 
+    validator.body("name").notEmpty().escape(),
+    validator.body("description").notEmpty().escape(),
+    validator.body("category").notEmpty().escape(),
+    async (req, res) => {
+        const result = validator.validationResult(req);
 
-    try {
-        await database.createVariant(req.body);
-        res.json(message.success("Succeeded in creating variant."));
-    } catch (error) {
-        res.json(message.failure(error.message));
+        if (result.isEmpty()) {
+            console.log("Creating variant.");
+            await database.createVariant(req.body);
+            res.json(message.success("Succeeded in creating variant."));
+        }
+
+        console.log("Failed to create variant.");
+        res.status(400).json(message.failure(result.array()));
     }
-});
+);
 
 router.delete("/delete-product", async (req, res) => {
     const filter = {}

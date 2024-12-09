@@ -16,11 +16,6 @@ import Variant from "../../database/models/Variant.js";
  * @returns {Brand} The brand object created.
  */
 export async function createBrand(options) {
-    if (!options.name)
-        throw new Error("Brand should have a name");
-    else if (!options.category)
-        throw new Error("Brand should have a category.");
-
     const brand = new Brand({
         name: options.name,
         category: options.category,
@@ -47,21 +42,6 @@ export async function createBrand(options) {
  * @returns {Product} The product object created.
  */
 export async function createProduct(options) {
-    if (!options.brandName)
-        throw new Error("Product's brand name must be specified.");
-    else if (!options.brandCategory)
-        throw new Error("Product's brand category must be specified.");
-    else if (!options.variantName)
-        throw new Error("Product's variant name must be specified.");
-    else if (!options.name)
-        throw new Error("Product's name must be specified.");
-    else if (!options.price)
-        throw new Error("Product's price must be specified.");
-    else if (!options.quantity)
-        throw new Error("Product's quantity must be specified.");
-    else if (!options.expiration)
-        throw new Error("Product's expiration date must be specified.");
-
     const brands = await Brand.find({
         name: options.brandName,
         category: options.brandCategory,
@@ -105,13 +85,6 @@ export async function createProduct(options) {
  * @returns {Variant} The variant object created.
  */
 export async function createVariant(options) {
-    if (!options.name)
-        throw new Error("Variant's name should be specified.");
-    else if (!options.description)
-        throw new Error("Variant's description should be specified.");
-    else if (!options.category)
-        throw new Error("Variant's category should be specified.");
-
     const variant = new Variant({
         name: options.name,
         description: options.description,
