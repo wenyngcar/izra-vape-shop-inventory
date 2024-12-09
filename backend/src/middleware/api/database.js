@@ -16,11 +16,6 @@ import Variant from "../../database/models/Variant.js";
  * @returns {Brand} The brand object created.
  */
 export async function createBrand(options) {
-    if (!options.name)
-        throw new Error("Brand should have a name");
-    else if (!options.category)
-        throw new Error("Brand should have a category.");
-
     const brand = new Brand({
         name: options.name,
         category: options.category,

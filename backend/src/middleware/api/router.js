@@ -1,5 +1,6 @@
 
 import express from "express";
+import * as validator from "express-validator";
 
 import * as database from "./database.js";
 import * as message from "../utils/message.js";
@@ -35,17 +36,22 @@ router.get("/products", async (req, res) => {
 })
 
 // Create brand
-router.post("/create-brand", async (req, res) => {
-    console.log("\nCreating brand with the following information:");
-    console.log(`${req.body}\n`);
+router.post("/create-brand", 
+    validator.body("name").notEmpty().escape(),
+    validator.body("category").notEmpty().escape(),
+    async (req, res) => {
+        const result = validator.validationResult(req);
+        
+        if (result.isEmpty()) {
+            console.log("Creating brand.");
+            await database.createBrand(req.body);
+            return res.json(message.success("Succeeded in creating brand."));
+        }
 
-    try {
-        await database.createBrand(req.body);
-        res.json(message.success("Succeeded in creating brand."));
-    } catch (error) {
-        res.json(message.failure(error.message));
+        console.log("Failed to create brand.");
+        res.status(400).json(message.failure(result.array()));
     }
-});
+);
 
 // Create product
 router.post("/create-product", async (req, res) => {
