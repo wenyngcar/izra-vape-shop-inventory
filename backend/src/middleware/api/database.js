@@ -42,21 +42,6 @@ export async function createBrand(options) {
  * @returns {Product} The product object created.
  */
 export async function createProduct(options) {
-    if (!options.brandName)
-        throw new Error("Product's brand name must be specified.");
-    else if (!options.brandCategory)
-        throw new Error("Product's brand category must be specified.");
-    else if (!options.variantName)
-        throw new Error("Product's variant name must be specified.");
-    else if (!options.name)
-        throw new Error("Product's name must be specified.");
-    else if (!options.price)
-        throw new Error("Product's price must be specified.");
-    else if (!options.quantity)
-        throw new Error("Product's quantity must be specified.");
-    else if (!options.expiration)
-        throw new Error("Product's expiration date must be specified.");
-
     const brands = await Brand.find({
         name: options.brandName,
         category: options.brandCategory,

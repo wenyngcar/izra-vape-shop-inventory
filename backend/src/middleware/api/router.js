@@ -54,17 +54,31 @@ router.post("/create-brand",
 );
 
 // Create product
-router.post("/create-product", async (req, res) => {
-    console.log("\nCreating product with the following information:");
-    console.log(`${req.body}\n`);
+router.post("/create-product", 
+    validator.body("brandName").notEmpty().escape(),
+    validator.body("brandCategory").notEmpty().escape(),
+    validator.body("variantName").notEmpty().escape(),
+    validator.body("name").notEmpty().escape(),
+    validator.body("price").notEmpty().isInt(),
+    validator.body("quantity").notEmpty().isInt(),
+    validator.body("expiration").notEmpty().escape(),   // No validator for checking if Date is in ISO format.
+    async (req, res) => {
+        const result = validator.validationResult(req);
 
-    try {
-        await database.createProduct(req.body);
-        res.json(message.success("Succeeded in creating product."));
-    } catch (error) {
-        res.json(message.failure(error.message));
+        if (result.isEmpty()) {
+            console.log("Creating product.");
+
+            // Date is originally in ISO string format.
+            req.body.expiration = new Date(req.body.expiration);
+
+            await database.createProduct(req.body);
+            return res.json(message.success("Succeeded in creating product."));
+        }
+
+        console.log("Failed to create product.");
+        res.status(400).json(message.failure(result.array()));
     }
-});
+);
 
 // Create variant
 // NOTE: Unused
