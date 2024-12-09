@@ -85,13 +85,6 @@ export async function createProduct(options) {
  * @returns {Variant} The variant object created.
  */
 export async function createVariant(options) {
-    if (!options.name)
-        throw new Error("Variant's name should be specified.");
-    else if (!options.description)
-        throw new Error("Variant's description should be specified.");
-    else if (!options.category)
-        throw new Error("Variant's category should be specified.");
-
     const variant = new Variant({
         name: options.name,
         description: options.description,

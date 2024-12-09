@@ -82,19 +82,23 @@ router.post("/create-product",
 
 // Create variant
 // NOTE: Unused
-router.post("/create-variant", async (req, res) => {
-    console.log();
-    console.log("Creating variant with the following information:");
-    console.log(req.body);
-    console.log();
+router.post("/create-variant", 
+    validator.body("name").notEmpty().escape(),
+    validator.body("description").notEmpty().escape(),
+    validator.body("category").notEmpty().escape(),
+    async (req, res) => {
+        const result = validator.validationResult(req);
 
-    try {
-        await database.createVariant(req.body);
-        res.json(message.success("Succeeded in creating variant."));
-    } catch (error) {
-        res.json(message.failure(error.message));
+        if (result.isEmpty()) {
+            console.log("Creating variant.");
+            await database.createVariant(req.body);
+            res.json(message.success("Succeeded in creating variant."));
+        }
+
+        console.log("Failed to create variant.");
+        res.status(400).json(message.failure(result.array()));
     }
-});
+);
 
 router.delete("/delete-product", async (req, res) => {
     const filter = {}
