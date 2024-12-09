@@ -30,6 +30,10 @@ export const columns: ColumnDef<Brands>[] = [
     accessorKey: "category",
     header: "Category",
   },
+  {
+    accessorKey: "action",
+    header: "Action",
+  },
 ];
 
 export const nestedColumns: ColumnDef<Items>[] = [
@@ -58,7 +62,10 @@ export const nestedColumns: ColumnDef<Items>[] = [
       //   brandName={row.original.brand}
       //   brandCategory={row.original.category}
       // />
-      <Button>Edit</Button>
+      <div className="space-x-2">
+        <Button>Edit</Button>
+        <Button>Delete</Button>
+      </div>
     ),
   },
 ];
