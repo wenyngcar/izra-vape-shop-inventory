@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,11 +9,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 
 export function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Card className="w-[350px]">
@@ -58,7 +59,9 @@ export function Login() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button>Log In</Button>
+          <Button>
+            <Link to="/Home">Log In</Link>
+          </Button>
           <a
             href="/forgot-password"
             className="text-sm text-blue-500 hover:underline"
