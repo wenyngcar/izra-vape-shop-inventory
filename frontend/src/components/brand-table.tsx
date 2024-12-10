@@ -120,7 +120,7 @@ export function BrandTable<TData, TValue>({
                       brandCategory={(row.original as Brands).category}
                     />
                   </div>
-                  <AccordionContent className="col-span-3 ">
+                  <AccordionContent className="col-span-3">
                     <ItemPage brandId={(row.original as Brands).id} />
                   </AccordionContent>
                 </AccordionItem>
@@ -128,7 +128,7 @@ export function BrandTable<TData, TValue>({
             ))
           ) : (
             <div>
-              <div className="p-14 text-center">No results.</div>
+              <div className="text-2xl p-14 text-center">No results.</div>
             </div>
           )}
         </div>
