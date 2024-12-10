@@ -160,4 +160,6 @@ export async function readProducts(filter = {}) {
  */
 export async function deleteProductById(filter = {}) {
     await Product.deleteOne(filter)
+
+    console.log(`Product with id ${filter.productId} has been deleted.`)
 }
