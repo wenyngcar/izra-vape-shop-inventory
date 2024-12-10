@@ -6,15 +6,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Items } from "./columns";
+import { Button } from "./ui/button";
 
 interface ItemDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,50 +24,74 @@ export function ItemDataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
+  function formatDate(unformattedDate: Date | any) {
+    const date = new Date(unformattedDate);
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    return formattedDate;
+  }
+
   return (
     <div className="pl-3">
-      <Table>
-        <TableHeader>
+      {/* TABLE */}
+      <div>
+        {/* TABLE HEADER */}
+        <div className=" w-full py-3">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            // HEADER CELL
+            <div
+              key={headerGroup.id}
+              className="grid grid-cols-5 w-full text-muted-foreground font-medium"
+            >
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <div key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                  </TableHead>
+                  </div>
                 );
               })}
-            </TableRow>
+            </div>
           ))}
-        </TableHeader>
-        <TableBody>
+        </div>
+
+        {/* TABLE BODY */}
+        <div>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
+              // TABLE ROW
+              <div
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="grid grid-cols-5 border border-y border-x-0 py-3 *:flex *:items-center"
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
+                <div>{(row.original as Items).name}</div>
+                <div>{(row.original as Items).quantity}</div>
+                <div>&#8369; {(row.original as Items).price}</div>
+                <div>{formatDate((row.original as Items).date)}</div>
+                <div className="space-x-2">
+                  <Button>Edit</Button>
+                  <Button>Delete</Button>
+                </div>
+              </div>
             ))
           ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
+            <div className="text-2xl p-14 text-center">
+              {/* colSpan={columns.length} */}
+              No results.
+            </div>
           )}
-        </TableBody>
-      </Table>
+        </div>
+      </div>
     </div>
   );
 }
