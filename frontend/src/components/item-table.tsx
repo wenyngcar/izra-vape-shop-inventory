@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-table";
 import { Items } from "./columns";
 import { Button } from "./ui/button";
+import DeleteItem from "./delete-single-product";
 
 interface ItemDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -80,7 +81,7 @@ export function ItemDataTable<TData, TValue>({
                 <div>{formatDate((row.original as Items).date)}</div>
                 <div className="space-x-2">
                   <Button>Edit</Button>
-                  <Button>Delete</Button>
+                  <DeleteItem itemId={(row.original as Items).id} />
                 </div>
               </div>
             ))

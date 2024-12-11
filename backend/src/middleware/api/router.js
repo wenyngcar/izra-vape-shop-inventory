@@ -77,12 +77,16 @@ router.post("/create-variant", async (req, res) => {
 });
 
 router.delete("/delete-product", async (req, res) => {
-    const filter = {}
     try {
-        if (req.query.prodctId) filter.prodctId = req.query.prodctId
-        await database.deleteProductById(filter)
-        res.json(message.success(`${req.body} product successfully deleted`))
+        const _id = req.query
+
+        // Check if there are id pass in the query parameters.
+        if (!_id) return res.json(message.failure("Product ID (_id) is requried."))
+
+        await database.deleteProductById(_id)
+        res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
     } catch (error) {
+        console.error("Error deleting product:", error);
         res.json(message.failure(error.message));
     }
 })

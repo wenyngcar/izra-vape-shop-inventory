@@ -154,10 +154,11 @@ export async function readProducts(filter = {}) {
 
 /**
  * Delete products based on productId
- * @param {Object} [filter] Optional filter criteria for reading brands.
- * @param {mongoose.Types.ObjectId} [filter.productId] Filter by brandID.
- * @returns {Array<Object>} List of product documents matching the filter.
+ * @param {mongoose.Types.ObjectId | string} id by product.
  */
-export async function deleteProductById(filter = {}) {
-    await Product.deleteOne(filter)
+export async function deleteProductById(id) {
+
+    await Product.findByIdAndDelete(id)
+
+    console.log(`Product with ID ${JSON.stringify(id)} successfully deleted.`)
 }
