@@ -35,6 +35,7 @@ function createDELETERequest() {
         method: "DELETE",
         headers: {
             "Accept": "application/json",
+            "Content-Type": "application/json",
         },
     };
 
@@ -85,7 +86,7 @@ export async function get(api, queryParams = {}, { port = 3000, path = "api" } =
     return response;
 }
 
-export async function deleteReq(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
+export async function deleteSingleProduct(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
     if (!api)
         throw new Error("Provide an API to use.");
 
@@ -97,7 +98,7 @@ export async function deleteReq(api, queryParams = {}, { port = 3000, path = "ap
         url.searchParams.append(key, value);
     });
 
-    const request = createGETRequest();
+    const request = createDELETERequest();
     const response = await fetch(url, request);
     return response;
 }
