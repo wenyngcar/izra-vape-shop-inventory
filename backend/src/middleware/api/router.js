@@ -111,7 +111,7 @@ router.post("/create-product",
             // Date is originally in ISO string format.
             req.body.expiration = new Date(req.body.expiration);
 
-            // await database.createProduct(req.body);
+            await database.createProduct(req.body);
             return res.json(message.success("Succeeded in creating product."));
         }
 
