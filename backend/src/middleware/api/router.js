@@ -65,13 +65,43 @@ router.post("/create-brand",
 
 // Create product
 router.post("/create-product", 
-    validator.body("brandName").notEmpty().escape(),
-    validator.body("brandCategory").notEmpty().escape(),
-    validator.body("variantName").notEmpty().escape(),
-    validator.body("name").notEmpty().escape(),
-    validator.body("price").notEmpty().isInt(),
-    validator.body("quantity").notEmpty().isInt(),
-    validator.body("expiration").notEmpty().escape(),   // No validator for checking if Date is in ISO format.
+    validator.checkSchema({
+        brandName: {
+            errorMessage: "Invalid brand name for product",
+            notEmpty: true,
+            escape: true,
+        },
+        brandCategory: {
+            errorMessage: "Invalid brand category for product",
+            notEmpty: true,
+            escape: true,
+        },
+        variantName: {
+            errorMessage: "Invalid variant name for product",
+            notEmpty: true,
+            escape: true,
+        },
+        name: {
+            errorMessage: "Invalid product name",
+            notEmpty: true,
+            escape: true,
+        },
+        price: {
+            errorMessage: "Invalid product price",
+            notEmpty: true,
+            isInt: true,
+        },
+        quantity: {
+            errorMessage: "Invalid product quantity",
+            notEmpty: true,
+            isInt: true,
+        },
+        expiration: {   // No validator for checking if Date is in ISO format.
+            errorMessage: "Invalid product expiration date",
+            notEmpty: true,
+            escape: true, 
+        },
+    }),
     async (req, res) => {
         const result = validator.validationResult(req);
 
@@ -81,7 +111,7 @@ router.post("/create-product",
             // Date is originally in ISO string format.
             req.body.expiration = new Date(req.body.expiration);
 
-            await database.createProduct(req.body);
+            // await database.createProduct(req.body);
             return res.json(message.success("Succeeded in creating product."));
         }
 
