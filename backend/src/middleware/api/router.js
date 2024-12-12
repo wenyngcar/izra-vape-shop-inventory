@@ -37,8 +37,18 @@ router.get("/products", async (req, res) => {
 
 // Create brand
 router.post("/create-brand", 
-    validator.body("name").notEmpty().escape(),
-    validator.body("category").notEmpty().escape(),
+    validator.checkSchema({
+        name: {
+            errorMessage: "Invalid brand name",
+            notEmpty: true,
+            escape: true,
+        },
+        category: {
+            errorMessage: "Invalid brand category",
+            notEmpty: true,
+            escape: true,
+        }
+    }),
     async (req, res) => {
         const result = validator.validationResult(req);
         
