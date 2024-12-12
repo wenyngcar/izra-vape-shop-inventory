@@ -123,9 +123,23 @@ router.post("/create-product",
 // Create variant
 // NOTE: Unused
 router.post("/create-variant", 
-    validator.body("name").notEmpty().escape(),
-    validator.body("description").notEmpty().escape(),
-    validator.body("category").notEmpty().escape(),
+    validator.checkSchema({
+        name: {
+            errorMessage: "Invalid variant name",
+            notEmpty: true,
+            escape: true,
+        },
+        description: {
+            errorMessage: "Invalid variant description",
+            notEmpty: true,
+            escape: true,
+        },
+        category: {
+            errorMessage: "Invalid variant category",
+            notEmpty: true,
+            escape: true,
+        }
+    }),
     async (req, res) => {
         const result = validator.validationResult(req);
 
