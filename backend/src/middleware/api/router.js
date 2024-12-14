@@ -90,6 +90,17 @@ router.post("/create-variant", checkSchema(validateSchema.createVariantValidatio
     }
 );
 
+router.post("/create-sale", async (req, res) => {
+    try {
+        await database.createSale(req.body)
+        res.json(message.success("Succeeded in creating sale."));
+    } catch (error) {
+        console.error("Error creating sale:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
+
 // For deleting item/product
 router.delete("/delete-product", async (req, res) => {
     try {
@@ -109,7 +120,6 @@ router.delete("/delete-product", async (req, res) => {
 //  For editing item/product
 router.put("/edit-product", async (req, res) => {
     try {
-        // const _id = req.params.id
         req.body.expiration = new Date(req.body.expiration);
 
         await database.editProductById(req.body)
@@ -119,5 +129,17 @@ router.put("/edit-product", async (req, res) => {
         res.json(message.failure(error.message));
     }
 })
+
+//  For editing item/product
+router.patch("/subtract-quantity", async (req, res) => {
+    try {
+        await database.editProductById(req.body)
+        return res.json(message.success("Succeeded in editing item."));
+    } catch (error) {
+        console.error("Error editing product:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
 
 export default router;

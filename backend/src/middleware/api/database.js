@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Brand from "../../database/models/Brand.js";
 import Product from "../../database/models/Product.js";
 import Variant from "../../database/models/Variant.js";
+import Sale from "../../database/models/Sale.js"
 
 /////////////////////
 // CREATING MODELS //
@@ -147,4 +148,40 @@ export async function editProductById(filter) {
     await Product.findOneAndUpdate({ _id: filter.id },
         { $set: { ...filterWithoutId } }, // Update: Change the email
         { returnDocument: "after" })
+}
+
+/**
+ * Creates a new sale in the database.
+ * 
+ * @param {Object} filter The JSON passed to the server.
+ * @param {String} filter.brandId 
+ * @param {String} filter.productId.
+ */
+export async function createSale(filter) {
+    const brand = await Brand.findOne({ _id: filter.brandId });
+    const product = await Product.findOne({ _id: filter.productId });
+
+    const totalSale = filter.sale * product["price"]
+
+    const sale = new Sale({
+        brandId: filter.brandId,
+        productId: filter.productId,
+        name: product["name"],
+        category: brand["category"],
+        quantity: filter.sale,
+        price: product["price"],
+        total: totalSale,
+        Date: new Date(),
+    });
+
+    await sale.save()
+
+    console.log("brand", brand)
+    console.log("product", product)
+
+    // await sale.save();
+    console.log("Created sale:");
+    console.log(JSON.stringify(sale));
+
+    return sale;
 }

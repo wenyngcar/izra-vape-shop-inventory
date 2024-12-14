@@ -1,4 +1,4 @@
-import { post, get, deleteSingleProduct, put } from "./helper-functions";
+import { post, get, deleteSingleProduct, put, patch } from "./helper-functions";
 
 /**
  * Creates a brand using the backend API.
@@ -50,4 +50,12 @@ export async function deleteOneItem(filter) {
 
 export async function editOneItem(filter) {
     await put("edit-product", filter)
+}
+
+export async function createSale(filter) {
+    return post("create-sale", filter);
+}
+
+export async function subtractQuantity(filter) {
+    await patch("subtract-quantity", filter)
 }

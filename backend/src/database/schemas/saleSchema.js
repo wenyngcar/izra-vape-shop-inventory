@@ -2,8 +2,13 @@
 import mongoose from "mongoose";
 
 const saleSchema = new mongoose.Schema({
-    productId: mongoose.ObjectId,
+    brandId: mongoose.Types.ObjectId,
+    productId: mongoose.Types.ObjectId,
+    name: String,
+    category: String,
     quantity: Number,
+    price: Number,
+    total: Number,
     Date: Date,
 });
 

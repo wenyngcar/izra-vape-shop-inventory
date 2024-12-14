@@ -9,15 +9,19 @@ import {
 import { Items } from "./columns";
 import ItemEditFormDialog from "./form-dialog-edit-item";
 import DeleteItem from "./delete-single-product";
+import AddSaleDialog from "./form-dialog-create-sale";
+import mongoose from "mongoose";
 
 interface ItemDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  brandId: mongoose.Types.ObjectId;
 }
 
 export function ItemDataTable<TData, TValue>({
   columns,
   data,
+  brandId,
 }: ItemDataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -88,6 +92,11 @@ export function ItemDataTable<TData, TValue>({
                     itemDate={(row.original as Items).date}
                   />
                   <DeleteItem itemId={(row.original as Items).id} />
+                  <AddSaleDialog
+                    brandId={brandId}
+                    productId={(row.original as Items).id}
+                    quantity={(row.original as Items).quantity}
+                  />
                 </div>
               </div>
             ))
