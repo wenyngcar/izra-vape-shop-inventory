@@ -51,3 +51,7 @@ export async function deleteOneItem(filter) {
 export async function editOneItem(filter) {
     await put("edit-product", filter)
 }
+
+export async function createSale(filter) {
+    return post("create-sale", filter);
+}
