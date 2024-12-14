@@ -161,14 +161,14 @@ export async function createSale(filter) {
     const brand = await Brand.find({ _id: filter.brandId });
     const product = await Product.find({ _id: filter.productId });
 
-    const totalSale = filter.quantity * product[0]["price"]
+    const totalSale = filter.sale * product[0]["price"]
 
     const sale = new Sale({
         brandId: filter.brandId,
         productId: filter.productId,
         name: product[0]["name"],
         category: brand[0]["category"],
-        quantity: filter.quantity,
+        quantity: filter.sale,
         price: product[0]["price"],
         total: totalSale,
         Date: new Date(),
