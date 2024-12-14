@@ -130,4 +130,16 @@ router.put("/edit-product", async (req, res) => {
     }
 })
 
+//  For editing item/product
+router.patch("/subtract-quantity", async (req, res) => {
+    try {
+        await database.editProductById(req.body)
+        return res.json(message.success("Succeeded in editing item."));
+    } catch (error) {
+        console.error("Error editing product:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
+
 export default router;
