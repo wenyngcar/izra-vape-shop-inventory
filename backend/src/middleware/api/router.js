@@ -1,7 +1,6 @@
-
-import express from "express";
-import * as validator from "express-validator";
-
+import express, { query } from "express";
+import { checkSchema, validationResult } from 'express-validator'
+import * as validateSchema from '../utils/validationSchema.js'
 import * as database from "./database.js";
 import * as message from "../utils/message.js";
 
@@ -36,22 +35,10 @@ router.get("/products", async (req, res) => {
 })
 
 // Create brand
-router.post("/create-brand", 
-    validator.checkSchema({
-        name: {
-            errorMessage: "Invalid brand name",
-            notEmpty: true,
-            escape: true,
-        },
-        category: {
-            errorMessage: "Invalid brand category",
-            notEmpty: true,
-            escape: true,
-        }
-    }),
+router.post("/create-brand", checkSchema(validateSchema.createBrandValidationSchema),
     async (req, res) => {
-        const result = validator.validationResult(req);
-        
+        const result = validationResult(req);
+
         if (result.isEmpty()) {
             console.log("Creating brand.");
             await database.createBrand(req.body);
@@ -64,52 +51,18 @@ router.post("/create-brand",
 );
 
 // Create product
-router.post("/create-product", 
-    validator.checkSchema({
-        brandName: {
-            errorMessage: "Invalid brand name for product",
-            notEmpty: true,
-            escape: true,
-        },
-        brandCategory: {
-            errorMessage: "Invalid brand category for product",
-            notEmpty: true,
-            escape: true,
-        },
-        variantName: {
-            errorMessage: "Invalid variant name for product",
-            notEmpty: true,
-            escape: true,
-        },
-        name: {
-            errorMessage: "Invalid product name",
-            notEmpty: true,
-            escape: true,
-        },
-        price: {
-            errorMessage: "Invalid product price",
-            notEmpty: true,
-            isInt: true,
-        },
-        quantity: {
-            errorMessage: "Invalid product quantity",
-            notEmpty: true,
-            isInt: true,
-        },
-        expiration: {   // No validator for checking if Date is in ISO format.
-            errorMessage: "Invalid product expiration date",
-            notEmpty: true,
-            escape: true, 
-        },
-    }),
+router.post("/create-product", checkSchema(validateSchema.createProductValidationSchema),
     async (req, res) => {
-        const result = validator.validationResult(req);
+        const result = validationResult(req);
 
         if (result.isEmpty()) {
             console.log("Creating product.");
 
+            console.log(req.body)
             // Date is originally in ISO string format.
             req.body.expiration = new Date(req.body.expiration);
+
+            console.log(req.body)
 
             await database.createProduct(req.body);
             return res.json(message.success("Succeeded in creating product."));
@@ -122,26 +75,9 @@ router.post("/create-product",
 
 // Create variant
 // NOTE: Unused
-router.post("/create-variant", 
-    validator.checkSchema({
-        name: {
-            errorMessage: "Invalid variant name",
-            notEmpty: true,
-            escape: true,
-        },
-        description: {
-            errorMessage: "Invalid variant description",
-            notEmpty: true,
-            escape: true,
-        },
-        category: {
-            errorMessage: "Invalid variant category",
-            notEmpty: true,
-            escape: true,
-        }
-    }),
+router.post("/create-variant", checkSchema(validateSchema.createVariantValidationSchema),
     async (req, res) => {
-        const result = validator.validationResult(req);
+        const result = validationResult(req);
 
         if (result.isEmpty()) {
             console.log("Creating variant.");
@@ -154,6 +90,7 @@ router.post("/create-variant",
     }
 );
 
+// For deleting item/product
 router.delete("/delete-product", async (req, res) => {
     try {
         const _id = req.query
@@ -165,6 +102,20 @@ router.delete("/delete-product", async (req, res) => {
         res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
     } catch (error) {
         console.error("Error deleting product:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
+//  For editing item/product
+router.put("/edit-product", async (req, res) => {
+    try {
+        // const _id = req.params.id
+        req.body.expiration = new Date(req.body.expiration);
+
+        await database.editProductById(req.body)
+        return res.json(message.success("Succeeded in editing item."));
+    } catch (error) {
+        console.error("Error editing product:", error);
         res.json(message.failure(error.message));
     }
 })

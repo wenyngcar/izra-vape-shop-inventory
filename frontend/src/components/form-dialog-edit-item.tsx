@@ -1,5 +1,3 @@
-import { Plus } from "lucide-react";
-import { FormAddItemDialogProps } from "./form-add-item";
 import {
   Dialog,
   DialogContent,
@@ -9,25 +7,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import FormAddItem from "./form-add-item";
+import FormEditItem from "./form-edit-item";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { FormEditItemDialogProps } from "./form-edit-item";
 
-export default function InventoryFormDialog({
-  brandId,
-  brandName,
-  brandCategory,
-}: FormAddItemDialogProps) {
-  // Submit button is inside another component, setOpen will be pass
-  // as props for the dialog to get close.
+export default function ItemEditFormDialog({
+  itemId,
+  itemName,
+  itemQuantity,
+  itemPrice,
+  itemDate,
+}: FormEditItemDialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <Plus className="h-4 w-4" />
-          <span>Add Item</span>
+          <span>Edit</span>
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
@@ -37,13 +35,12 @@ export default function InventoryFormDialog({
             Enter the details for the new item.
           </DialogDescription>
         </DialogHeader>
-
-        {/* brandName and brandCategory is needed as props for backend validation. */}
-        {/* setOpen is for the dialog to close. */}
-        <FormAddItem
-          brandId={brandId}
-          brandName={brandName}
-          brandCategory={brandCategory}
+        <FormEditItem
+          itemId={itemId}
+          itemName={itemName}
+          itemQuantity={itemQuantity}
+          itemPrice={itemPrice}
+          itemDate={itemDate}
           setOpen={setOpen}
         />
       </DialogContent>

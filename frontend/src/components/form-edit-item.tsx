@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import * as api from "../utils/api";
 
 import {
   Form,
@@ -15,17 +16,17 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import * as api from "@/utils/api.js";
 import mongoose from "mongoose";
 
-// brandName and brandCategory is needed as props for backend validation.
-export interface FormAddItemDialogProps {
-  brandId: mongoose.Types.ObjectId;
-  brandName: string;
-  brandCategory: string;
+export interface FormEditItemDialogProps {
+  itemId: mongoose.Types.ObjectId;
+  itemName: string;
+  itemQuantity: number;
+  itemPrice: number;
+  itemDate: Date;
 }
 
-export interface FormAddItemDialogWithSetOpen extends FormAddItemDialogProps {
+export interface FormEditItemDialogWithSetOpen extends FormEditItemDialogProps {
   setOpen: (open: boolean) => void;
 }
 
@@ -51,44 +52,38 @@ const formSchema = z.object({
     }),
 });
 
-// brandName and brandCategory is needed for backend validation
-// set Open is for dialog to close.
-export default function FormAddItem({
-  brandId,
-  brandName,
-  brandCategory,
+export default function FormEditItem({
+  itemId,
+  itemName,
+  itemQuantity,
+  itemPrice,
+  itemDate,
   setOpen,
-}: FormAddItemDialogWithSetOpen) {
-  // Define form.
+}: FormEditItemDialogWithSetOpen) {
+  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      item: "",
-      quantity: undefined,
-      price: undefined,
-      expirationDate: undefined,
+      item: itemName,
+      quantity: itemQuantity,
+      price: itemPrice,
+      expirationDate: new Date(itemDate),
     },
   });
 
-  // Define submit handler.
+  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    // brandName and brandCategory is needed for backend validation.
     try {
-      api.createProduct({
-        brandId: brandId,
-        brandName: brandName,
-        brandCategory: brandCategory,
-        variantName: "Closed Pod",
+      api.editOneItem({
+        id: itemId,
         name: values.item,
         price: values.price,
         quantity: values.quantity,
         expiration: values.expirationDate,
       });
-
-      // setOpen is for the dialog to close.
       setOpen(false);
     } catch (error) {
       console.log("There was an error in creating brand", error);
@@ -131,7 +126,7 @@ export default function FormAddItem({
                   value={field.value || ""}
                   onChange={(e) => {
                     const value = e.target.value;
-                    field.onChange(value ? Number(value) : undefined); // Set undefined when empty
+                    field.onChange(value ? Number(value) : ""); // Set undefined when empty
                   }}
                   onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "Enter quantity here")}
@@ -155,7 +150,7 @@ export default function FormAddItem({
                   value={field.value || ""}
                   onChange={(e) => {
                     const value = e.target.value;
-                    field.onChange(value ? Number(value) : undefined); // Set undefined when empty
+                    field.onChange(value ? Number(value) : ""); // Set undefined when empty
                   }}
                   onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "Enter price here")}

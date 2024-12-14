@@ -7,7 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Items } from "./columns";
-import { Button } from "./ui/button";
+import ItemEditFormDialog from "./form-dialog-edit-item";
 import DeleteItem from "./delete-single-product";
 
 interface ItemDataTableProps<TData, TValue> {
@@ -80,7 +80,13 @@ export function ItemDataTable<TData, TValue>({
                 <div>&#8369; {(row.original as Items).price}</div>
                 <div>{formatDate((row.original as Items).date)}</div>
                 <div className="space-x-2">
-                  <Button>Edit</Button>
+                  <ItemEditFormDialog
+                    itemId={(row.original as Items).id}
+                    itemName={(row.original as Items).name}
+                    itemQuantity={(row.original as Items).quantity}
+                    itemPrice={(row.original as Items).price}
+                    itemDate={(row.original as Items).date}
+                  />
                   <DeleteItem itemId={(row.original as Items).id} />
                 </div>
               </div>

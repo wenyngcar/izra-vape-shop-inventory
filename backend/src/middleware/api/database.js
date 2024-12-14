@@ -135,3 +135,16 @@ export async function deleteProductById(id) {
 
     console.log(`Product with ID ${JSON.stringify(id)} successfully deleted.`)
 }
+
+/**
+ * Edit products based on productId
+ * @param {Object} [filter] Optional filter criteria for reading brands.
+ * @param {mongoose.Types.ObjectId | string} filter.id by product.
+ * @param {String}
+ */
+export async function editProductById(filter) {
+    const { id, ...filterWithoutId } = filter;
+    await Product.findOneAndUpdate({ _id: filter.id },
+        { $set: { ...filterWithoutId } }, // Update: Change the email
+        { returnDocument: "after" })
+}
