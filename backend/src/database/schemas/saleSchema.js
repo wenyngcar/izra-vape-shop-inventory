@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 const saleSchema = new mongoose.Schema({
-    productId: mongoose.ObjectId,
+    productId: mongoose.Types.ObjectId,
     quantity: Number,
     Date: Date,
 });
