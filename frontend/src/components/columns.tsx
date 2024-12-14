@@ -80,6 +80,7 @@ export const nestedColumns: ColumnDef<Items>[] = [
 //   };
 // }
 export type Sales = {
+  id: mongoose.Types.ObjectId;
   brandId: mongoose.Types.ObjectId;
   productId: mongoose.Types.ObjectId;
   name: string;
