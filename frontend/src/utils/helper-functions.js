@@ -110,10 +110,8 @@ export async function put(api, body, {
 
     const baseUrl = `http://localhost:${port}/${path}`;
     const url = `${baseUrl}/${api}`;
-    console.log(body)
     const request = createPUTRequest(body);
     const response = await fetch(url, request);
-    console.log("Succeeded editing item")
     return response;
 }
 
