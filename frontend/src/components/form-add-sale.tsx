@@ -22,6 +22,7 @@ import mongoose from "mongoose";
 export interface FormAddSaleDialogProps {
   brandId: mongoose.Types.ObjectId;
   productId: mongoose.Types.ObjectId;
+  quantity: number;
 }
 
 export interface FormAddSaleDialogWithSetOpen extends FormAddSaleDialogProps {
@@ -37,6 +38,7 @@ const formSchema = z.object({
 export default function AddSaleForm({
   brandId,
   productId,
+  quantity,
   setOpen,
 }: FormAddSaleDialogWithSetOpen) {
   // 1. Define your form.
@@ -51,13 +53,17 @@ export default function AddSaleForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
     try {
       api.createSale({
         brandId: brandId,
         productId: productId,
         sale: values.sale,
       });
+      api.subtractQuantity({
+        id: productId,
+        quantity: quantity - values.sale,
+      });
+
       setOpen(false);
     } catch (error) {
       console.error("Error adding sale:", error);
