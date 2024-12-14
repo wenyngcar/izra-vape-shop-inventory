@@ -34,6 +34,16 @@ router.get("/products", async (req, res) => {
     }
 })
 
+router.get("/sales", async (req, res) => {
+    try {
+        const sales = await database.readSales();
+        res.json(sales);
+    } catch (error) {
+        console.error("Error fetching sales:", error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Create brand
 router.post("/create-brand", checkSchema(validateSchema.createBrandValidationSchema),
     async (req, res) => {
