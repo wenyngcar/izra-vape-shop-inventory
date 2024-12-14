@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import * as api from "../utils/api";
 
 import {
   Form,
@@ -76,6 +77,13 @@ export default function FormEditItem({
     // ✅ This will be type-safe and validated.
 
     try {
+      api.editOneItem({
+        id: itemId,
+        name: values.item,
+        price: values.price,
+        quantity: values.quantity,
+        expiration: values.expirationDate,
+      });
       setOpen(false);
     } catch (error) {
       console.log("There was an error in creating brand", error);
@@ -118,7 +126,7 @@ export default function FormEditItem({
                   value={field.value || ""}
                   onChange={(e) => {
                     const value = e.target.value;
-                    field.onChange(value ? Number(value) : undefined); // Set undefined when empty
+                    field.onChange(value ? Number(value) : ""); // Set undefined when empty
                   }}
                   onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "Enter quantity here")}
@@ -142,7 +150,7 @@ export default function FormEditItem({
                   value={field.value || ""}
                   onChange={(e) => {
                     const value = e.target.value;
-                    field.onChange(value ? Number(value) : undefined); // Set undefined when empty
+                    field.onChange(value ? Number(value) : ""); // Set undefined when empty
                   }}
                   onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "Enter price here")}
