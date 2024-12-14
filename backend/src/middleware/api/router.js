@@ -100,6 +100,7 @@ router.post("/create-sale", async (req, res) => {
     }
 })
 
+
 // For deleting item/product
 router.delete("/delete-product", async (req, res) => {
     try {
@@ -119,7 +120,6 @@ router.delete("/delete-product", async (req, res) => {
 //  For editing item/product
 router.put("/edit-product", async (req, res) => {
     try {
-        // const _id = req.params.id
         req.body.expiration = new Date(req.body.expiration);
 
         await database.editProductById(req.body)

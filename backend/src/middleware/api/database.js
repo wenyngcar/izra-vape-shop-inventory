@@ -158,27 +158,28 @@ export async function editProductById(filter) {
  * @param {String} filter.productId.
  */
 export async function createSale(filter) {
-    const brand = await Brand.find({ _id: filter.brandId });
-    const product = await Product.find({ _id: filter.productId });
+    const brand = await Brand.findOne({ _id: filter.brandId });
+    const product = await Product.findOne({ _id: filter.productId });
 
-    const totalSale = filter.sale * product[0]["price"]
+    const totalSale = filter.sale * product["price"]
 
     const sale = new Sale({
         brandId: filter.brandId,
         productId: filter.productId,
-        name: product[0]["name"],
-        category: brand[0]["category"],
+        name: product["name"],
+        category: brand["category"],
         quantity: filter.sale,
-        price: product[0]["price"],
+        price: product["price"],
         total: totalSale,
         Date: new Date(),
     });
 
+    await sale.save()
 
     console.log("brand", brand)
     console.log("product", product)
 
-    await sale.save();
+    // await sale.save();
     console.log("Created sale:");
     console.log(JSON.stringify(sale));
 
