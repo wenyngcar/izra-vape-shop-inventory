@@ -176,7 +176,7 @@ export async function createSale(filter) {
         quantity: filter.sale,
         price: product["price"],
         total: totalSale,
-        date: new Date(),
+        Date: new Date(),
     });
 
     await sale.save()
