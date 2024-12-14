@@ -30,10 +30,8 @@ export default function ItemEditFormDialog({
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Add New Item</DialogTitle>
-          <DialogDescription>
-            Enter the details for the new item.
-          </DialogDescription>
+          <DialogTitle>Edit Current Item</DialogTitle>
+          <DialogDescription>Enter new details for the item.</DialogDescription>
         </DialogHeader>
         <FormEditItem
           itemId={itemId}
