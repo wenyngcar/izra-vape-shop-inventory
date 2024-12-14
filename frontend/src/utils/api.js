@@ -44,6 +44,12 @@ export async function readProducts(filter) {
     return products;
 }
 
+export async function readSales(filter) {
+    const response = await get("sales", filter);
+    const sales = await response.json();  // Parse the response as JSON
+    return sales;
+}
+
 export async function deleteOneItem(filter) {
     await deleteSingleProduct("delete-product", filter)
 }

@@ -10,6 +10,8 @@ import {
 import AddSaleForm, { FormAddSaleDialogProps } from "./form-add-sale";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { PhilippinePeso } from 'lucide-react';
+
 
 export default function AddSaleDialog({
   brandId,
@@ -23,14 +25,14 @@ export default function AddSaleDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <span>Sale</span>
+        <Button variant="outline" className="hover:bg-gray-200">
+          <PhilippinePeso className="w-6 h-8 mr-2" />
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Create a Sale</DialogTitle>
-          <DialogDescription>Create a sale</DialogDescription>
+          <DialogTitle>Confirm Sale</DialogTitle>
+          <DialogDescription>Are you sure you want to mark this item as sold?</DialogDescription>
         </DialogHeader>
 
         {/* brandName and brandCategory is needed as props for backend validation. */}

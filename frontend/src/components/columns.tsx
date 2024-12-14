@@ -79,3 +79,52 @@ export const nestedColumns: ColumnDef<Items>[] = [
 //     return <QuantityCell value={quantity} row={row} />;
 //   };
 // }
+export type Sales = {
+  id: mongoose.Types.ObjectId;
+  brandId: mongoose.Types.ObjectId;
+  productId: mongoose.Types.ObjectId;
+  name: string;
+  category: string;
+  quantity: number;
+  price: number;
+  total: number;
+  date: Date;
+};
+
+export const columns_sale: ColumnDef<Sales>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+  },
+  {
+    accessorKey: "quantity",
+    header: "Quantity",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
+    accessorKey: "total",
+    header: "Total",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    // cell: ({ row }) => (
+    //   <Button onClick={() => handleDelete(row.original)}>Delete</Button>
+    // ),
+  },
+];
+
+// const handleDelete = (item: SaleItem) => {
+//   // Implement delete functionality here
+// };

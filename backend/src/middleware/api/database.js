@@ -126,6 +126,11 @@ export async function readProducts(filter = {}) {
     return products;
 }
 
+export async function readSales(filter = {}) {
+    const sales = await Sale.find(filter);
+    return sales;
+}
+
 /**
  * Delete products based on productId
  * @param {mongoose.Types.ObjectId | string} id by product.

@@ -12,6 +12,7 @@ import {
 import { Button } from "./ui/button";
 import mongoose from "mongoose";
 import { deleteOneItem } from "@/utils/api";
+import { Trash2 } from 'lucide-react';
 
 type deleteProduct = {
   itemId: mongoose.Types.ObjectId;
@@ -31,7 +32,9 @@ export default function DeleteItem({ itemId }: deleteProduct) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Delete</Button>
+        <Button variant="outline" className="hover:bg-gray-200">
+          <Trash2 className="w-6 h-8 mr-2" />
+        </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
         <DialogHeader>

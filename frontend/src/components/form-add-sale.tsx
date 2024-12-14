@@ -78,11 +78,11 @@ export default function AddSaleForm({
           name="sale"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Sale Amount</FormLabel>
+              <FormLabel>Quantity</FormLabel>
               <FormControl>
                 <Input
                   type="number"
-                  step="0.01"
+                  step="1"
                   placeholder="Enter amount of sale"
                   value={field.value || ""}
                   onChange={(e) => {
@@ -90,7 +90,7 @@ export default function AddSaleForm({
                     field.onChange(value ? Number(value) : undefined); // Set undefined when empty
                   }}
                   onFocus={(e) => (e.target.placeholder = "")}
-                  onBlur={(e) => (e.target.placeholder = "Enter price here")}
+                  onBlur={(e) => (e.target.placeholder = "Enter a number here")}
                 />
               </FormControl>
               <FormMessage />
