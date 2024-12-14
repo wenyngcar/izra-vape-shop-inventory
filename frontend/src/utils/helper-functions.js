@@ -30,6 +30,19 @@ function createPOSTRequest(body) {
     return request;
 }
 
+function createPATCHRequest(body) {
+    const request = {
+        method: "PATCH",
+        body: JSON.stringify(body),
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    };
+
+    return request;
+}
+
 function createPUTRequest(body) {
     const request = {
         method: "PUT",
@@ -95,6 +108,22 @@ export async function get(api, queryParams = {}, { port = 3000, path = "api" } =
     });
 
     const request = createGETRequest();
+    const response = await fetch(url, request);
+    return response;
+}
+
+export async function patch(api, body, {
+    port = 3000,
+    path = "api"
+} = {}) {
+    if (!api)
+        throw new Error("Provide an API to use.");
+    else if (!body)
+        throw new Error("Provide a body for the POST request.");
+
+    const baseUrl = `http://localhost:${port}/${path}`;
+    const url = `${baseUrl}/${api}`;
+    const request = createPATCHRequest(body);
     const response = await fetch(url, request);
     return response;
 }
