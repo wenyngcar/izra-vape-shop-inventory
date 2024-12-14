@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 import apiRouter from "./middleware/api/router.js";
 import Variant from "./database/models/Variant.js";
-import Admin from "./database/models/Admin.js";
+// import Admin from "./database/models/Admin.js";
 
 import dotenv from "dotenv";
 
@@ -49,11 +49,6 @@ server.application.use("/api", apiRouter);
 
 server.application.get("/", (req, res) => {
   res.redirect("/main");
-});
-server.application.get("/login", (req, res) => {
-  Admin.create(req, body)
-    .then((Admin) => res.json(Admin))
-    .catch((err) => res.json(err));
 });
 
 // Starting the server.
