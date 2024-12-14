@@ -1,40 +1,15 @@
 import { useState, useEffect } from "react";
 import mongoose from "mongoose";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+  Tabs,TabsContent,TabsList,TabsTrigger,} from "@/components/ui/tabs";
 import BrandPage from "@/components/brand-page";
-import { ListChecks, ReceiptRussianRuble } from "lucide-react";
+import { ListChecks, LucideTrash2, ReceiptRussianRuble } from "lucide-react";
 import AddSaleForm from "@/components/form-add-sale";
 import { UseFetchSales } from "@/hooks/use-fetch-sales";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
+import { Card, CardHeader,CardTitle, CardContent,} from "@/components/ui/card";
+import {Table,TableHeader,TableRow,TableHead,TableBody,TableCell,} from "@/components/ui/table";
 
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogAction,
-  AlertDialogCancel,
+import {AlertDialog,AlertDialogTrigger,AlertDialogContent,AlertDialogHeader,AlertDialogTitle,AlertDialogDescription,AlertDialogFooter,AlertDialogAction,AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
@@ -129,7 +104,7 @@ function Home() {
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button variant="outline" size="sm">
-                              <Trash size={16} />
+                              <LucideTrash2 size={16} />
                             </Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
