@@ -50,26 +50,22 @@ interface Sale {
 
 function Home() {
   const [sales, setSales] = useState<Sale[]>([]); // State for sales data
-  const [selectedBrandId] = useState<string | null>(null); // State for selected brand ID
 
   // Fetch sales data
   useEffect(() => {
-    async function fetchSales() {
-      try {
-        if (selectedBrandId) {
-          const salesData = await UseFetchSales(new mongoose.Types.ObjectId(selectedBrandId));
-          const sales = salesData.map((sale) => ({
-              ...sale,
-              date: sale.date.toISOString(),
-          }));
-          setSales(sales);
-        }
-      } catch (error) {
-        console.error("Failed to fetch sales data:", error);
-      }
-    }
-    fetchSales();
-  }, [selectedBrandId]);
+    const promise = UseFetchSales();
+    promise.then((salesData) => {
+      const sales = salesData.map((sale) => ({
+          ...sale,
+          date: sale.date.toISOString(),
+      }));
+      console.log(`Sales: ${sales.length}`);
+      console.log(sales);
+      setSales(sales);
+    }).catch((error) => {
+      console.error("Failed to fetch sales data:", error);
+    });
+  }, []);
 
   return (
     <>
