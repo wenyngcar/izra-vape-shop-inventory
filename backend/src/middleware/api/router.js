@@ -1,6 +1,7 @@
 import express, { query } from "express";
 import { checkSchema, validationResult } from 'express-validator'
 import * as validateSchema from '../utils/validationSchema.js'
+import * as account from "./account.js";
 import * as database from "./database.js";
 import * as message from "../utils/message.js";
 
@@ -140,6 +141,37 @@ router.patch("/subtract-quantity", async (req, res) => {
         res.json(message.failure(error.message));
     }
 })
+
+
+router.post("/sign-up", checkSchema(validateSchema.accountValidationSchema),
+    async (req, res) => {
+        const result = validationResult(req);
+        
+        if (result.isEmpty()) {
+            console.log("Creating account.");
+            await account.createAccount(req.body);
+            return res.json(message.success("Succeeded in creating account."));
+        }
+
+        console.log("Failed to create account.");
+        res.status(400).json(message.failure(result.array()));
+    }
+)
+
+router.post("/login", checkSchema(validateSchema.accountValidationSchema),
+    async (req, res) => {
+        const result = validationResult(req);
+
+        if (result.isEmpty()) {
+            console.log("Verfying account credentials.");
+            const isValid = await account.verifyAccount(req.body);
+            return res.json(message.success(isValid));
+        }
+        
+        console.log("Failed to verify account.");
+        res.status(400).json(message.failure(result.array()));
+    }
+);
 
 
 export default router;

@@ -66,3 +66,16 @@ export const createVariantValidationSchema = {
         escape: true,
     }
 }
+
+export const accountValidationSchema = {
+    username: {
+        errorMessage: "Invalid account username",
+        notEmpty: true,
+        escape: true,
+    },
+    password: {
+        errorMessage: "Invalid account password",
+        notEmpty: true,
+        escape: true,
+    }
+};
