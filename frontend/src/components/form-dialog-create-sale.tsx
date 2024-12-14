@@ -14,6 +14,7 @@ import { useState } from "react";
 export default function AddSaleDialog({
   brandId,
   productId,
+  quantity,
 }: FormAddSaleDialogProps) {
   // Submit button is inside another component, setOpen will be pass
   // as props for the dialog to get close.
@@ -37,6 +38,7 @@ export default function AddSaleDialog({
         <AddSaleForm
           brandId={brandId}
           productId={productId}
+          quantity={quantity}
           setOpen={setOpen}
         />
       </DialogContent>

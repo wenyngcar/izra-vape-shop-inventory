@@ -95,6 +95,7 @@ export function ItemDataTable<TData, TValue>({
                   <AddSaleDialog
                     brandId={brandId}
                     productId={(row.original as Items).id}
+                    quantity={(row.original as Items).quantity}
                   />
                 </div>
               </div>
