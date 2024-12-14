@@ -11,14 +11,12 @@ type Sale = {
   quantity: number;
   price: number;
   total: number;
-  date: Date;
+  Date: Date;
 };
 
-export async function UseFetchSales(
-  brandId: mongoose.Types.ObjectId
-): Promise<Sales[]> {
+export async function UseFetchSales(): Promise<Sales[]> {
   try {
-    const data = await readSales({ brandId });
+    const data = await readSales({});
     const sales = data.map((sale: Sale) => ({
       id: sale._id.toString(),
       brandId: sale.brandId,
@@ -28,7 +26,7 @@ export async function UseFetchSales(
       quantity: sale.quantity,
       price: sale.price,
       total: sale.quantity * sale.price, // Calculate total on the fly
-      date: new Date(sale.date),
+      date: new Date(sale.Date),
     }));
     return sales;
   } catch (error) {
