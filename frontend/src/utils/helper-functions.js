@@ -160,3 +160,19 @@ export async function deleteSingleProduct(api, queryParams = {}, { port = 3000, 
     const response = await fetch(url, request);
     return response;
 }
+export async function deleteSales(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
+    if (!api)
+        throw new Error("Provide an API to use.");
+
+    const baseUrl = `http://localhost:${port}/${path}`;
+    // const url = `${baseUrl}/${api}`;
+    const url = new URL(`${baseUrl}/${api}`); // Use URL object
+    // Add query parameters to the URL
+    Object.entries(queryParams).forEach(([key, value]) => {
+        url.searchParams.append(key, value);
+    });
+
+    const request = createDELETERequest();
+    const response = await fetch(url, request);
+    return response;
+}

@@ -127,6 +127,28 @@ router.delete("/delete-product", async (req, res) => {
     }
 })
 
+// For deleting salesrouter.delete("/delete-sales", async (req, res) => {
+    try {
+        const { id } = req.query; // Destructure ID from query params
+
+        // Validate ID
+        if (!id) {
+            return res.status(400).json(message.failure("Sales ID (id) is required."));
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json(message.failure("Invalid Sales ID format."));
+        }
+
+        // Call the database function to delete the sale
+        await database.deleteSalesById(id);
+        res.json(message.success(`Sales with ID ${id} successfully deleted.`));
+    } catch (error) {
+        console.error("Error deleting sales:", error.message);
+        res.status(500).json(message.failure(error.message));
+    }
+
+
 //  For editing item/product
 router.put("/edit-product", async (req, res) => {
     try {

@@ -143,6 +143,26 @@ export async function deleteProductById(id) {
 }
 
 /**
+ * Delete sales by ID
+ * @param {mongoose.Types.ObjectId | string} id - The ID of the sale to delete.
+ */
+export async function deleteSalesById(id) {
+    try {
+        const result = await Sale.findByIdAndDelete(id); // Use the correct model
+
+        if (!result) {
+            console.error(`No sale found with ID: ${id}`);
+            throw new Error("Sale not found.");
+        }
+
+        console.log(`Sales with ID ${id} successfully deleted.`);
+    } catch (error) {
+        console.error("Error deleting sales:", error.message);
+        throw error; // Re-throw error for router to handle
+    }
+}
+
+/**
  * Edit products based on productId
  * @param {Object} [filter] Optional filter criteria for reading brands.
  * @param {mongoose.Types.ObjectId | string} filter.id by product.
