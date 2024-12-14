@@ -1,4 +1,4 @@
-import express from "express";
+import express, { query } from "express";
 import { checkSchema, validationResult } from 'express-validator'
 import * as validateSchema from '../utils/validationSchema.js'
 import * as database from "./database.js";
@@ -58,8 +58,11 @@ router.post("/create-product", checkSchema(validateSchema.createProductValidatio
         if (result.isEmpty()) {
             console.log("Creating product.");
 
+            console.log(req.body)
             // Date is originally in ISO string format.
             req.body.expiration = new Date(req.body.expiration);
+
+            console.log(req.body)
 
             await database.createProduct(req.body);
             return res.json(message.success("Succeeded in creating product."));
@@ -87,6 +90,7 @@ router.post("/create-variant", checkSchema(validateSchema.createVariantValidatio
     }
 );
 
+// For deleting item/product
 router.delete("/delete-product", async (req, res) => {
     try {
         const _id = req.query
@@ -98,6 +102,20 @@ router.delete("/delete-product", async (req, res) => {
         res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
     } catch (error) {
         console.error("Error deleting product:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
+//  For editing item/product
+router.put("/edit-product", async (req, res) => {
+    try {
+        // const _id = req.params.id
+        req.body.expiration = new Date(req.body.expiration);
+
+        await database.editProductById(req.body)
+        return res.json(message.success("Succeeded in editing item."));
+    } catch (error) {
+        console.error("Error editing product:", error);
         res.json(message.failure(error.message));
     }
 })
