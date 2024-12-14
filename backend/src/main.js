@@ -21,13 +21,14 @@ const server = {
     port: process.env.PORT,
 };
 const database = {
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    cluster: process.env.DATABASE_CLUSTER,
     name: process.env.DATABASE_NAME,
 };
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
-const mongodbString = `mongodb+srv://${database.username}:${database.password}@128-inventory-system.n4rnz.mongodb.net/${database.name}?retryWrites=true&w=majority&appName=128-inventory-system`;
+const mongodbString = `mongodb+srv://${database.username}:${database.password}@${database.cluster}.n4rnz.mongodb.net/${database.name}?retryWrites=true&w=majority&appName=${database.cluster}`;
 
 // Automatically converts request body to JSON.
 server.application.use(express.json());

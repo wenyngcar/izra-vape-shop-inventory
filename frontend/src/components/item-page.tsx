@@ -21,7 +21,7 @@ export default function ItemPage({ brandId }: BrandId) {
   }, [itemData]);
 
   return (
-    <div className="container mx-auto pb-10">
+    <div className="container mx-auto pb-8">
       <ItemDataTable columns={nestedColumns} data={itemData} />
     </div>
   );

@@ -30,11 +30,25 @@ function createPOSTRequest(body) {
     return request;
 }
 
+function createPUTRequest(body) {
+    const request = {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    };
+
+    return request;
+}
+
 function createDELETERequest() {
     const request = {
         method: "DELETE",
         headers: {
             "Accept": "application/json",
+            "Content-Type": "application/json",
         },
     };
 
@@ -85,7 +99,23 @@ export async function get(api, queryParams = {}, { port = 3000, path = "api" } =
     return response;
 }
 
-export async function deleteReq(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
+export async function put(api, body, {
+    port = 3000,
+    path = "api"
+} = {}) {
+    if (!api)
+        throw new Error("Provide an API to use.");
+    else if (!body)
+        throw new Error("Provide a body for the POST request.");
+
+    const baseUrl = `http://localhost:${port}/${path}`;
+    const url = `${baseUrl}/${api}`;
+    const request = createPUTRequest(body);
+    const response = await fetch(url, request);
+    return response;
+}
+
+export async function deleteSingleProduct(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
     if (!api)
         throw new Error("Provide an API to use.");
 
@@ -97,7 +127,7 @@ export async function deleteReq(api, queryParams = {}, { port = 3000, path = "ap
         url.searchParams.append(key, value);
     });
 
-    const request = createGETRequest();
+    const request = createDELETERequest();
     const response = await fetch(url, request);
     return response;
 }
