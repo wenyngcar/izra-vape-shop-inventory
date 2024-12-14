@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-const adminSchema = new mongoose.Schema({
-  name: String,
-  password: String,
-});
+// const adminSchema = new mongoose.Schema({
+//   name: String,
+//   password: String,
+// });
 
-export default adminSchema;
+// export default adminSchema;
