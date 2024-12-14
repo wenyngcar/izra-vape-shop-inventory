@@ -40,7 +40,7 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 
 interface Sale {
-  id: string;
+  id: mongoose.Types.ObjectId;
   name: string;
   category: string;
   quantity: number;
@@ -58,12 +58,11 @@ function Home() {
       try {
         if (selectedBrandId) {
           const salesData = await UseFetchSales(new mongoose.Types.ObjectId(selectedBrandId));
-          setSales(
-            salesData.map((sale) => ({
+          const sales = salesData.map((sale) => ({
               ...sale,
               date: sale.date.toISOString(),
-            }))
-          );
+          }));
+          setSales(sales);
         }
       } catch (error) {
         console.error("Failed to fetch sales data:", error);
