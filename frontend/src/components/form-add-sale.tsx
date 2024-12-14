@@ -53,6 +53,11 @@ export default function AddSaleForm({
     // ✅ This will be type-safe and validated.
 
     try {
+      api.createSale({
+        brandId: brandId,
+        productId: productId,
+        sale: values.sale,
+      });
       setOpen(false);
     } catch (error) {
       console.error("Error adding sale:", error);
@@ -67,7 +72,7 @@ export default function AddSaleForm({
           name="sale"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Brand Name</FormLabel>
+              <FormLabel>Sale Amount</FormLabel>
               <FormControl>
                 <Input
                   type="number"
