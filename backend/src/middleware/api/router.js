@@ -90,6 +90,16 @@ router.post("/create-variant", checkSchema(validateSchema.createVariantValidatio
     }
 );
 
+router.post("/create-sale", async (req, res) => {
+    try {
+        await database.createSale(req.body)
+        res.json(message.success("Succeeded in creating sale."));
+    } catch (error) {
+        console.error("Error creating sale:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
 // For deleting item/product
 router.delete("/delete-product", async (req, res) => {
     try {
