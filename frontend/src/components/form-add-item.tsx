@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import * as api from "@/utils/api.js";
 import mongoose from "mongoose";
 
+// brandName and brandCategory is needed as props for backend validation.
 export interface FormAddItemDialogProps {
   brandId: mongoose.Types.ObjectId;
   brandName: string;
@@ -38,11 +39,11 @@ const formSchema = z.object({
   quantity: z
     .number({ required_error: "Please enter a quantity" })
     .min(1, { message: "Quantity must be at least 1." }),
-    // .optional(), // this allow undefined
+  // .optional(), // this allow undefined
   price: z
     .number({ required_error: "Please enter a price" })
     .min(1, { message: "Price must be at least 1." }),
-    // .optional(), // his allow undefined
+  // .optional(), // his allow undefined
   expirationDate: z
     .date({ required_error: "Please enter an expiration date" })
     .refine((date) => date > new Date(), {
@@ -50,14 +51,15 @@ const formSchema = z.object({
     }),
 });
 
-
+// brandName and brandCategory is needed for backend validation
+// set Open is for dialog to close.
 export default function FormAddItem({
   brandId,
   brandName,
   brandCategory,
   setOpen,
 }: FormAddItemDialogWithSetOpen) {
-  // 1. Define your form.
+  // Define form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,13 +69,13 @@ export default function FormAddItem({
       expirationDate: undefined,
     },
   });
-  
 
-  // 2. Define a submit handler.
+  // Define submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
+    // brandName and brandCategory is needed for backend validation.
     try {
       api.createProduct({
         brandId: brandId,
@@ -86,6 +88,7 @@ export default function FormAddItem({
         expiration: values.expirationDate,
       });
 
+      // setOpen is for the dialog to close.
       setOpen(false);
     } catch (error) {
       console.log("There was an error in creating brand", error);

@@ -18,6 +18,8 @@ export default function InventoryFormDialog({
   brandName,
   brandCategory,
 }: FormAddItemDialogProps) {
+  // Submit button is inside another component, setOpen will be pass
+  // as props for the dialog to get close.
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,6 +37,9 @@ export default function InventoryFormDialog({
             Enter the details for the new item.
           </DialogDescription>
         </DialogHeader>
+
+        {/* brandName and brandCategory is needed as props for backend validation. */}
+        {/* setOpen is for the dialog to close. */}
         <FormAddItem
           brandId={brandId}
           brandName={brandName}
