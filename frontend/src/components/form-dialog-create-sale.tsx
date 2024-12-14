@@ -29,8 +29,8 @@ export default function AddSaleDialog({
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Create a Sale</DialogTitle>
-          <DialogDescription>Create a sale</DialogDescription>
+          <DialogTitle>Confirm Sale</DialogTitle>
+          <DialogDescription>Are you sure you want to mark this item as sold?</DialogDescription>
         </DialogHeader>
 
         {/* brandName and brandCategory is needed as props for backend validation. */}
