@@ -128,6 +128,22 @@ router.delete("/delete-product", async (req, res) => {
     }
 })
 
+// For deleting sales
+router.delete("/delete-sales", async (req, res) => {
+    try {
+        const _id = req.query
+
+        // Check if there are id pass in the query parameters.
+        if (!_id) return res.json(message.failure("Product ID (_id) is requried."))
+
+        await database.deleteSalesById(_id)
+        res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.json(message.failure(error.message));
+    }
+})
+
 //  For editing item/product
 router.put("/edit-product", async (req, res) => {
     try {

@@ -143,6 +143,21 @@ export async function deleteProductById(id) {
 }
 
 /**
+ * Delete sales based on salesId
+ * @param {mongoose.Types.ObjectId | string} id by product.
+ */
+// export async function deleteSalesById(id) {
+
+//     await Product.findByIdAndDelete(id)
+
+//     console.log(`Product with ID ${JSON.stringify(id)} successfully deleted.`)
+// }
+
+export async function deleteOneSales(filter) {
+    await deleteSingleSales("delete-sales", filter);
+}
+
+/**
  * Edit products based on productId
  * @param {Object} [filter] Optional filter criteria for reading brands.
  * @param {mongoose.Types.ObjectId | string} filter.id by product.
