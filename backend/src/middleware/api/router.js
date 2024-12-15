@@ -127,27 +127,21 @@ router.delete("/delete-product", async (req, res) => {
     }
 })
 
-// For deleting salesrouter.delete("/delete-sales", async (req, res) => {
+// For deleting sales
+router.delete("/delete-sales", async (req, res) => {
     try {
-        const { id } = req.query; // Destructure ID from query params
+        const _id = req.query
 
-        // Validate ID
-        if (!id) {
-            return res.status(400).json(message.failure("Sales ID (id) is required."));
-        }
+        // Check if there are id pass in the query parameters.
+        if (!_id) return res.json(message.failure("Product ID (_id) is requried."))
 
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json(message.failure("Invalid Sales ID format."));
-        }
-
-        // Call the database function to delete the sale
-        await database.deleteSalesById(id);
-        res.json(message.success(`Sales with ID ${id} successfully deleted.`));
+        await database.deleteSalesById(_id)
+        res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
     } catch (error) {
-        console.error("Error deleting sales:", error.message);
-        res.status(500).json(message.failure(error.message));
+        console.error("Error deleting product:", error);
+        res.json(message.failure(error.message));
     }
-
+})
 
 //  For editing item/product
 router.put("/edit-product", async (req, res) => {

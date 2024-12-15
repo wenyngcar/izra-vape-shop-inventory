@@ -1,19 +1,41 @@
 import { useState, useEffect } from "react";
 import mongoose from "mongoose";
 import {
-  Tabs, TabsContent, TabsList, TabsTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from "@/components/ui/tabs";
 import BrandPage from "@/components/brand-page";
 import { ListChecks, LucideTrash2, ReceiptRussianRuble } from "lucide-react";
-import AddSaleForm from "@/components/form-add-sale";
 import { UseFetchSales } from "@/hooks/use-fetch-sales";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import {
-  AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import * as api from "./utils/api";
 
 interface Sale {
   id: mongoose.Types.ObjectId;
@@ -25,42 +47,38 @@ interface Sale {
 }
 
 function Home() {
-  const [sales, setSales] = useState<Sale[]>([]); // State for sales data
+  const [sales, setSales] = useState<Sale[]>([]);
 
-  // Fetch sales data
   useEffect(() => {
-    const promise = UseFetchSales();
-    promise.then((salesData) => {
-      const sales = salesData.map((sale) => ({
-        ...sale,
-        date: sale.date.toISOString(),
-      }));
-      console.log(`Sales: ${sales.length}`);
-      console.log(sales);
-      setSales(sales);
-    }).catch((error) => {
-      console.error("Failed to fetch sales data:", error);
-    });
+    const fetchSales = async () => {
+      try {
+        const salesData = await UseFetchSales();
+        const formattedSales = salesData.map((sale) => ({
+          ...sale,
+          date: new Date(sale.date).toISOString(),
+        }));
+        setSales(formattedSales);
+        console.log(`Sales fetched: ${formattedSales.length}`);
+      } catch (error) {
+        console.error("Failed to fetch sales data:", error);
+      }
+    };
+
+    fetchSales();
   }, []);
 
-  const handleDeleteSale = async (index: number) => {
-    const saleToDelete = sales[index];
+  async function handleDeleteSale(saleId: string): Promise<void> {
     try {
-      const response = await fetch(`/api/delete-sales?id=${saleToDelete.id.toString()}`, {
-        method: 'DELETE',
-      });
-  
-      if (response.ok) {
-        setSales((prevSales) => prevSales.filter((_, i) => i !== index));
-        console.log(`Sale with ID ${saleToDelete.id} deleted successfully.`);
-      } else {
-        const errorMessage = await response.text();
-        console.error("Failed to delete sale record:", errorMessage);
-      }
+      await api.deleteOneSales({ _id: saleId });
+      setSales((prevSales) =>
+        prevSales.filter((sale) => sale.id.toString() !== saleId)
+      );
+      console.log(`Successfully deleted sale with ID: ${saleId}`);
     } catch (error) {
-      console.error("Error deleting sale record:", error);
+      console.error("Error deleting sale:", error);
     }
-  };
+  }
+
   return (
     <>
       <header className="bg-primary text-primary-foreground py-6">
@@ -86,12 +104,10 @@ function Home() {
           </TabsTrigger>
         </TabsList>
 
-        {/* Inventory Tab */}
         <TabsContent value="account">
           <BrandPage />
         </TabsContent>
 
-        {/* Sales Tab */}
         <TabsContent value="sales">
           <Card>
             <CardHeader>
@@ -111,14 +127,18 @@ function Home() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sales.map((sale, index) => (
+                  {sales.map((sale) => (
                     <TableRow key={sale.id.toString()}>
                       <TableCell>{sale.name}</TableCell>
                       <TableCell>{sale.category}</TableCell>
                       <TableCell>{sale.quantity}</TableCell>
                       <TableCell>${sale.price.toFixed(2)}</TableCell>
-                      <TableCell>${(sale.price * sale.quantity).toFixed(2)}</TableCell>
-                      <TableCell>{new Date(sale.date).toLocaleString()}</TableCell>
+                      <TableCell>
+                        ${(sale.price * sale.quantity).toFixed(2)}
+                      </TableCell>
+                      <TableCell>
+                        {new Date(sale.date).toLocaleString()}
+                      </TableCell>
                       <TableCell>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
@@ -128,15 +148,24 @@ function Home() {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Sale Record</AlertDialogTitle>
+                              <AlertDialogTitle>
+                                Delete Sale Record
+                              </AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete this sale record? This action cannot be undone.
+                                Are you sure you want to delete this sale
+                                record? This action cannot be undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => handleDeleteSale(index)}>
-                                Delete
+                              <AlertDialogAction asChild>
+                                <Button
+                                  onClick={() =>
+                                    handleDeleteSale(sale.id.toString())
+                                  }
+                                >
+                                  Delete
+                                </Button>
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
@@ -153,4 +182,5 @@ function Home() {
     </>
   );
 }
+
 export default Home;

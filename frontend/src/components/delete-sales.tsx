@@ -11,22 +11,22 @@ import {
 
 import { Button } from "./ui/button";
 import mongoose from "mongoose";
-import { deleteSaless } from "@/utils/api";
+import { deleteOneSales } from "@/utils/api";
 import { Trash2 } from 'lucide-react';
 
-type deleteSaless = {
+type deleteSales = {
     itemId: mongoose.Types.ObjectId;
 };
 
-export default function DeleteSales({ itemId }: deleteSaless) {
-    async function handleDeleteSales() {
+export default function DeleteSales({ itemId }: deleteSales) {
+    async function deleteSales() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-        await deleteSaless({ _id: itemId });
+        deleteOneSales({ _id: itemId });
     } catch (error) {
         console.log("There was an error on deleting product", error);
-    }
+    }6
     }
 
     return (
@@ -50,7 +50,7 @@ export default function DeleteSales({ itemId }: deleteSaless) {
             </Button>
             </DialogClose>
             <DialogClose asChild>
-            <Button onClick={() => handleDeleteSales()}>Confirm</Button>
+            <Button onClick={() => deleteSales()}>Confirm</Button>
             </DialogClose>
         </DialogFooter>
         </DialogContent>

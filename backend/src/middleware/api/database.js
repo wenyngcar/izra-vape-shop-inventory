@@ -143,23 +143,18 @@ export async function deleteProductById(id) {
 }
 
 /**
- * Delete sales by ID
- * @param {mongoose.Types.ObjectId | string} id - The ID of the sale to delete.
+ * Delete sales based on salesId
+ * @param {mongoose.Types.ObjectId | string} id by product.
  */
-export async function deleteSalesById(id) {
-    try {
-        const result = await Sale.findByIdAndDelete(id); // Use the correct model
+// export async function deleteSalesById(id) {
 
-        if (!result) {
-            console.error(`No sale found with ID: ${id}`);
-            throw new Error("Sale not found.");
-        }
+//     await Product.findByIdAndDelete(id)
 
-        console.log(`Sales with ID ${id} successfully deleted.`);
-    } catch (error) {
-        console.error("Error deleting sales:", error.message);
-        throw error; // Re-throw error for router to handle
-    }
+//     console.log(`Product with ID ${JSON.stringify(id)} successfully deleted.`)
+// }
+
+export async function deleteOneSales(filter) {
+    await deleteSingleSales("delete-sales", filter);
 }
 
 /**
