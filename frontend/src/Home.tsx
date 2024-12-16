@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import * as api from "./utils/api";
+import logo from './IVP.jpg'; 
 
 interface Sale {
   id: mongoose.Types.ObjectId;
@@ -81,15 +82,24 @@ function Home() {
 
   return (
     <>
-      <header className="bg-primary text-primary-foreground py-6">
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold">
-              Izra Vapeshop Inventory System
-            </h1>
-          </div>
-        </div>
-      </header>
+<header className="bg-dark-background py-6">
+  <div className="container mx-auto px-4 flex items-center justify-between">
+  <div className="flex items-center space-x-4">
+  <img
+  src={logo}
+  alt="Izra Vapeshop Logo"
+  className="h-16 w-16 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-28 lg:w-28 rounded-full object-cover transition-all duration-300 ease-in-out glow-effect "
+/>
+
+
+
+
+    <h1 className="text-4xl font-bold neon-white-text">
+      Izra Vapeshop Inventory System
+    </h1>
+    </div>
+  </div>
+</header>
 
       <Tabs
         defaultValue="account"
@@ -179,6 +189,36 @@ function Home() {
           </Card>
         </TabsContent>
       </Tabs>
+      <footer className="bg-dark-background text-gray-300 py-6 min-h-5">
+  <div className="container mx-auto px-4 text-center">
+    <h2 className="text-2xl font-bold neon-white-text mb-4">
+      Izra Vapeshop Inventory System
+    </h2>
+    <p className="text-sm text-gray-400">
+      &copy; {new Date().getFullYear()} Izra Vapeshop. All rights reserved.
+    </p>
+    <div className="mt-4 flex justify-center space-x-4">
+      <a
+        href="#"
+        className="footer-link"
+      >
+        Privacy Policy
+      </a>
+      <a
+        href="#"
+        className="footer-link"
+      >
+        Terms of Service
+      </a>
+      <a
+        href="#"
+        className="footer-link"
+      >
+        Contact Us
+      </a>
+    </div>
+  </div>
+</footer>
     </>
   );
 }
