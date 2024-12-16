@@ -37,6 +37,7 @@ import {
 import { Button } from "@/components/ui/button";
 import * as api from "./utils/api";
 import logo from './IVP.jpg'; 
+import { PhilippinePeso } from 'lucide-react';
 
 interface Sale {
   id: mongoose.Types.ObjectId;
@@ -110,7 +111,7 @@ function Home() {
             <ListChecks className="w-4 h-4 mr-2" /> Inventory
           </TabsTrigger>
           <TabsTrigger value="sales">
-            <ReceiptRussianRuble className="w-4 h-4 mr-2" /> Sales
+            <PhilippinePeso className="w-4 h-4 mr-2" /> Sales
           </TabsTrigger>
         </TabsList>
 

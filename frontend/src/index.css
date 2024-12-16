@@ -90,26 +90,26 @@
 }
 
 .footer-link {
-  color: #00d4ff; /* Neon blue text for links */
+  color: #00d4ff; 
   transition: color 0.3s ease;
 }
 
 .footer-link:hover {
-  color: #ff00d4; /* Neon pink on hover */
+  color: #ff00d4;
 }
 
 /* Default glow effect */
 .glow-effect {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), /* White glow */
-              0 0 15px rgba(255, 105, 180, 0.5), /* Subtle pink glow */
-              0 0 20px rgba(0, 191, 255, 0.5); /* Subtle blue glow */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 
+              0 0 15px rgba(255, 105, 180, 0.5), 
+              0 0 20px rgba(0, 191, 255, 0.5); 
   background-color: transparent; /* Ensure no background color is inherited */
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
 }
 
 /* Hover effect with stronger glow */
 .glow-effect:hover {
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), /* Stronger white glow */
-              0 0 35px rgba(255, 105, 180, 0.7), /* Stronger pink glow */
-              0 0 40px rgba(0, 191, 255, 0.7); /* Stronger blue glow */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 
+              0 0 35px rgba(255, 105, 180, 0.7), 
+              0 0 40px rgba(0, 191, 255, 0.7); 
 }
