@@ -249,3 +249,23 @@
 .neon-icon:hover {
   text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 40px rgba(0, 191, 255, 1);
 }
+
+
+.neon-input {
+  padding: 0.5rem;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  background-color: transparent;
+  color: rgb(13, 10, 10);
+  transition: box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
+
+}
+
+.neon-input:focus,
+.neon-input:hover {
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 
+              0 0 20px rgba(255, 105, 180, 0.6), 
+              0 0 30px rgba(0, 191, 255, 0.6); 
+  border-color: #ffffff; 
+}
