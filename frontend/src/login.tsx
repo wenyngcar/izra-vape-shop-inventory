@@ -26,8 +26,11 @@ export function Login() {
     e.preventDefault();
 
     // Check credentials
-    api.login({ username, password }).then((json: any) => {
+    api.login({ username, password }).then((response: any) => {
+      return response.json();
+    }).then((json) => {
       const isValid = json.message;
+      console.log(isValid);
       if (isValid) {
         setError(""); // Clear previous errors
         navigate("/Home"); // Redirect to Home

@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import apiRouter from "./middleware/api/router.js";
 import Variant from "./database/models/Variant.js";
 import dotenv from "dotenv";
+import Account from "./database/models/Account.js";
 
 dotenv.config()
 // This gets the file and folder name of this JavaScript file.
@@ -67,5 +68,17 @@ server.application.listen(server.port, async () => {
     if (variants.length === 0) {
         const variant = new Variant(closedPodDetails);
         await variant.save();
+    }
+
+    const accountDetails = {
+        username: "admin",
+        password: "admin123",
+    };
+
+    const accounts = await Account.find(accountDetails);
+
+    if (accounts.length === 0) {
+        const account = new Account(accountDetails);
+        await account.save();
     }
 });

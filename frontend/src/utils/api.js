@@ -69,3 +69,7 @@ export async function createSale(filter) {
 export async function subtractQuantity(filter) {
     await patch("subtract-quantity", filter)
 }
+
+export async function login(credentials) {
+    return post("login", credentials);
+}
