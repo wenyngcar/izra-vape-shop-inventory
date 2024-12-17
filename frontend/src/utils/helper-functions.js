@@ -157,7 +157,7 @@ export async function remove(api, body, {
     const baseUrl = `http://localhost:${port}/${path}`;
     const url = `${baseUrl}/${api}`;
     const request = createDELETERequest(body);
-    const response = await fetch(url, fetch);
+    const response = await fetch(url, request);
     return response;
 }
 

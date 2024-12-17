@@ -23,7 +23,7 @@ export default function DeleteSales({ itemId }: deleteSales) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-        deleteOneSales({ _id: itemId });
+        await deleteOneSales({ id: itemId });
     } catch (error) {
         console.log("There was an error on deleting product", error);
     }6
