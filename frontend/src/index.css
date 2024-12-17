@@ -194,3 +194,58 @@
 .neon-icon:hover {
   text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 40px rgba(0, 191, 255, 1);
 }
+
+
+
+
+/* Neon text effect */
+.neon-text {
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(0, 191, 255, 0.8);
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.neon-text:hover {
+  text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 40px rgba(0, 191, 255, 1);
+}
+
+/* Neon input field */
+.neon-input {
+  background-color: transparent;
+  border: 2px solid #333;
+  color: white;
+  padding: 0.5rem;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.neon-input:focus {
+  border-color: rgba(255, 105, 180, 0.7);
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.7), 0 0 20px rgba(0, 191, 255, 0.7);
+}
+
+/* Neon button effect */
+.neon-button {
+  background-color: transparent;
+  border: 2px solid rgba(255, 105, 180, 0.7);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.neon-button:hover {
+  background-color: rgba(255, 105, 180, 0.1);
+  box-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(0, 191, 255, 1);
+}
+
+/* Neon icon effect */
+.neon-icon {
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(0, 191, 255, 0.8);
+  transition: all 0.3s ease-in-out;
+}
+
+.neon-icon:hover {
+  text-shadow: 0 0 10px rgba(255, 105, 180, 1), 0 0 20px rgba(255, 105, 180, 1), 0 0 40px rgba(0, 191, 255, 1);
+}

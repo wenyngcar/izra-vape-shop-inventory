@@ -18,7 +18,8 @@ export function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
-      <Card className="w-[350px] bg-transparent border-2 border-gray-700 rounded-lg p-6">
+      <Card className="w-[350px] bg-transparent border-2 border-gray-700 rounded-lg p-6 relative">
+    
         <CardHeader>
           <CardTitle className="text-2xl text-white neon-text">Sign In</CardTitle>
           <CardDescription className="text-gray-400">Please enter your details</CardDescription>
