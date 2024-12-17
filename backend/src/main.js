@@ -51,7 +51,8 @@ server.application.listen(server.port, async () => {
     console.log(`Application is listening on port ${server.port}`);
 
     // Connecting to the MongoDB database.
-    await mongoose.connect(mongodbString, clientOptions);
+    // await mongoose.connect(mongodbString, clientOptions);
+    await mongoose.connect('mongodb://127.0.0.1:27017/test')
     console.log(`Application has successfully connected to MongoDB.`);
 
     // TODO: Fix this.

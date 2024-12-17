@@ -130,16 +130,19 @@ router.delete("/delete-product", async (req, res) => {
 
 // For deleting sales
 router.delete("/delete-sales", async (req, res) => {
+    console.log("CALLED!!!");
     try {
-        const _id = req.query
-
+        const _id = req.body;
+        console.log(`ID: ${_id}`);
+        
         // Check if there are id pass in the query parameters.
         if (!_id) return res.json(message.failure("Product ID (_id) is requried."))
 
         await database.deleteSalesById(_id)
+        console.log("Sucessfully deleted sale.");
         res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
     } catch (error) {
-        console.error("Error deleting product:", error);
+        console.error("Error deleting sales:", error);
         res.json(message.failure(error.message));
     }
 })
@@ -149,7 +152,7 @@ router.put("/edit-product", async (req, res) => {
     try {
         req.body.expiration = new Date(req.body.expiration);
 
-        await database.editProductById(req.body)
+        await database.editProductById(req.body.id);
         return res.json(message.success("Succeeded in editing item."));
     } catch (error) {
         console.error("Error editing product:", error);
