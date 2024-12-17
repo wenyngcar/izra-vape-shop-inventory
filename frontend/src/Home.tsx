@@ -124,9 +124,9 @@ function Home() {
 
         <TabsContent value="sales">
           <Card>
-            <CardHeader>
+            {/* <CardHeader>
               <CardTitle>Sales Records</CardTitle>
-            </CardHeader>
+            </CardHeader> */}
             <CardContent>
               <Table>
                 <TableHeader>
