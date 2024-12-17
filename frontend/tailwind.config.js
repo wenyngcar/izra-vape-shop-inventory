@@ -10,6 +10,11 @@ export default {
 	],
 	theme: {
     	extend: {
+			boxShadow: {
+				'neon': '0 0 15px 5px rgba(0, 255, 255, 0.8)',
+				// You can add more custom neon colors here, e.g., for pink neon:
+				'neon-pink': '0 0 15px 5px rgba(255, 20, 147, 0.8)',
+			},
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
