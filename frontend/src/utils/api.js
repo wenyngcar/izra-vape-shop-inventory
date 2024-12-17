@@ -69,3 +69,30 @@ export async function createSale(filter) {
 export async function subtractQuantity(filter) {
     await patch("subtract-quantity", filter)
 }
+
+
+/**
+ * Login the account.
+ * 
+ * @param {Object} credentials The credentials of the account.
+ * @param {String} credentials.username The username of the account.
+ * @param {String} credentials.password The password of the account.
+ * @returns 
+ */
+export async function login(credentials) {
+    return post("login", credentials);
+}
+
+
+/**
+ * Sign up the account.
+ * 
+ * @param {Object} credentials The credentials of the account.
+ * @param {String} credentials.username The username of the account.
+ * @param {String} credentials.password The password of the account.
+ * @returns 
+ */
+export async function signup(credentials) {
+    return post("sign-up", credentials);
+}
+
