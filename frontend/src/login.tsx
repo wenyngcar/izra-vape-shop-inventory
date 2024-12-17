@@ -32,7 +32,7 @@ export function Login() {
                 <Input
                   id="name"
                   placeholder="Username"
-                  className="bg-transparent border-2 border-gray-500 text-white neon-input"
+                  className="bg-transparent border-2 border-gray-500 text-white my-neon-input"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
@@ -42,7 +42,7 @@ export function Login() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
-                    className="pr-10 bg-transparent border-2 border-gray-500 text-white neon-input"
+                    className="pr-10 bg-transparent border-2 border-gray-500 text-white my-neon-input"
                   />
                   <button
                     type="button"
