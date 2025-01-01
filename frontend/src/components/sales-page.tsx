@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { useEffect, useState } from "react";
 import { UseFetchSales } from "@/hooks/use-fetch-sales";
+import SalesTable from "./sales-table";
 
-type Sale = {
+export type Sale = {
   id: mongoose.Types.ObjectId;
   name: string;
   category: string;
@@ -31,4 +32,9 @@ export default function SalesPage() {
 
     fetchSales();
   }, []);
+  return (
+    <div className="container mx-auto py-10">
+      <SalesTable sales={sales} />
+    </div>
+  );
 }
