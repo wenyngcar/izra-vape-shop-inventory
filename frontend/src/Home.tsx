@@ -1,85 +1,46 @@
 import { useState, useEffect } from "react";
-import mongoose from "mongoose";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BrandPage from "@/components/brand-page";
-import { ListChecks, LucideTrash2, PhilippinePeso } from "lucide-react";
-import { UseFetchSales } from "@/hooks/use-fetch-sales";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogAction,
-  AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import * as api from "./utils/api";
-import logo from './IVP.jpg'; 
+import { ListChecks, PhilippinePeso } from "lucide-react";
+import SalesPage from "./components/sales-page";
+// import { UseFetchSales } from "@/hooks/use-fetch-sales";
 
-interface Sale {
-  id: mongoose.Types.ObjectId;
-  name: string;
-  category: string;
-  quantity: number;
-  price: number;
-  date: string;
-}
+// import * as api from "./utils/api";
+import logo from "./IVP.jpg";
 
 function Home() {
-  const [sales, setSales] = useState<Sale[]>([]);
-  const [open, setOpen] = useState<string>("account"); // Default tab is "account"
+  // const [sales, setSales] = useState<Sale[]>([]);
+  const [open, setOpen] = useState<string>("inventory"); // Default tab is "inventory"
 
-  useEffect(() => {
-    const fetchSales = async () => {
-      try {
-        const salesData = await UseFetchSales();
-        const formattedSales = salesData.map((sale) => ({
-          ...sale,
-          date: new Date(sale.date).toISOString(),
-        }));
-        setSales(formattedSales);
-        console.log(`Sales fetched: ${formattedSales.length}`);
-      } catch (error) {
-        console.error("Failed to fetch sales data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchSales = async () => {
+  //     try {
+  //       const salesData = await UseFetchSales();
+  //       const formattedSales = salesData.map((sale) => ({
+  //         ...sale,
+  //         date: new Date(sale.date).toISOString(),
+  //       }));
+  //       setSales(formattedSales);
+  //       console.log(`Sales fetched: ${formattedSales.length}`);
+  //     } catch (error) {
+  //       console.error("Failed to fetch sales data:", error);
+  //     }
+  //   };
 
-    fetchSales();
-  }, []);
+  //   fetchSales();
+  // }, []);
 
-  async function handleDeleteSale(saleId: string): Promise<void> {
-    try {
-      await api.deleteOneSales({ _id: saleId });
-      setSales((prevSales) =>
-        prevSales.filter((sale) => sale.id.toString() !== saleId)
-      );
-      console.log(`Successfully deleted sale with ID: ${saleId}`);
-    } catch (error) {
-      console.error("Error deleting sale:", error);
-    }
-  }
+  // async function handleDeleteSale(saleId: string): Promise<void> {
+  //   try {
+  //     await api.deleteOneSales({ _id: saleId });
+  //     setSales((prevSales) =>
+  //       prevSales.filter((sale) => sale.id.toString() !== saleId)
+  //     );
+  //     console.log(`Successfully deleted sale with ID: ${saleId}`);
+  //   } catch (error) {
+  //     console.error("Error deleting sale:", error);
+  //   }
+  // }
 
   return (
     <>
@@ -105,8 +66,10 @@ function Home() {
       >
         <TabsList className="bg-gray-100 w-full grid-cols-2 justify-around">
           <TabsTrigger
-            value="account"
-            className={`tab-trigger ${open === "account" ? "active-tab" : ""}`}
+            value="inventory"
+            className={`tab-trigger ${
+              open === "inventory" ? "active-tab" : ""
+            }`}
           >
             <ListChecks className="w-4 h-4 mr-2" /> Inventory
           </TabsTrigger>
@@ -118,79 +81,14 @@ function Home() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="account">
+        {/* Inventory Tab */}
+        <TabsContent value="inventory">
           <BrandPage />
         </TabsContent>
 
+        {/* Sales Tab */}
         <TabsContent value="sales">
-          <Card>
-            {/* <CardHeader>
-              <CardTitle>Sales Records</CardTitle>
-            </CardHeader> */}
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Item</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead>Sold At</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sales.map((sale) => (
-                    <TableRow key={sale.id.toString()}>
-                      <TableCell>{sale.name}</TableCell>
-                      <TableCell>{sale.category}</TableCell>
-                      <TableCell>{sale.quantity}</TableCell>
-                      <TableCell>${sale.price.toFixed(2)}</TableCell>
-                      <TableCell>
-                        ${(sale.price * sale.quantity).toFixed(2)}
-                      </TableCell>
-                      <TableCell>
-                        {new Date(sale.date).toLocaleString()}
-                      </TableCell>
-                      <TableCell>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="outline" size="sm">
-                              <LucideTrash2 size={16} />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>
-                                Delete Sale Record
-                              </AlertDialogTitle>
-                              <AlertDialogDescription>
-                                Are you sure you want to delete this sale record?
-                                This action cannot be undone.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction asChild>
-                                <Button
-                                  onClick={() =>
-                                    handleDeleteSale(sale.id.toString())
-                                  }
-                                >
-                                  Delete
-                                </Button>
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <SalesPage />
         </TabsContent>
       </Tabs>
 
@@ -200,7 +98,8 @@ function Home() {
             Izra Vapeshop Inventory System
           </h2>
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} Izra Vapeshop. All rights reserved.
+            &copy; {new Date().getFullYear()} Izra Vapeshop. All rights
+            reserved.
           </p>
           <div className="mt-4 flex justify-center space-x-4">
             <a href="#" className="footer-link">
