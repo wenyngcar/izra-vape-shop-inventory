@@ -1,46 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BrandPage from "@/components/brand-page";
 import { ListChecks, PhilippinePeso } from "lucide-react";
 import SalesPage from "./components/sales-page";
-// import { UseFetchSales } from "@/hooks/use-fetch-sales";
-
-// import * as api from "./utils/api";
 import logo from "./IVP.jpg";
 
 function Home() {
-  // const [sales, setSales] = useState<Sale[]>([]);
   const [open, setOpen] = useState<string>("inventory"); // Default tab is "inventory"
-
-  // useEffect(() => {
-  //   const fetchSales = async () => {
-  //     try {
-  //       const salesData = await UseFetchSales();
-  //       const formattedSales = salesData.map((sale) => ({
-  //         ...sale,
-  //         date: new Date(sale.date).toISOString(),
-  //       }));
-  //       setSales(formattedSales);
-  //       console.log(`Sales fetched: ${formattedSales.length}`);
-  //     } catch (error) {
-  //       console.error("Failed to fetch sales data:", error);
-  //     }
-  //   };
-
-  //   fetchSales();
-  // }, []);
-
-  // async function handleDeleteSale(saleId: string): Promise<void> {
-  //   try {
-  //     await api.deleteOneSales({ _id: saleId });
-  //     setSales((prevSales) =>
-  //       prevSales.filter((sale) => sale.id.toString() !== saleId)
-  //     );
-  //     console.log(`Successfully deleted sale with ID: ${saleId}`);
-  //   } catch (error) {
-  //     console.error("Error deleting sale:", error);
-  //   }
-  // }
 
   return (
     <>
