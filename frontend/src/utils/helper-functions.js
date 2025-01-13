@@ -145,23 +145,7 @@ export async function put(api, body, {
     return response;
 }
 
-export async function remove(api, body, {
-    port = 3000,
-    path = "api"
-} = {}) {
-    if (!api)
-        throw new Error("Provide an API to use.");
-    else if (!body)
-        throw new Error("Provide a body for the DELETE request.");
-
-    const baseUrl = `http://localhost:${port}/${path}`;
-    const url = `${baseUrl}/${api}`;
-    const request = createDELETERequest(body);
-    const response = await fetch(url, fetch);
-    return response;
-}
-
-export async function deleteSingleProduct(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
+export async function deleteAPI(api, queryParams = {}, { port = 3000, path = "api" } = {}) {
     if (!api)
         throw new Error("Provide an API to use.");
 
@@ -172,7 +156,6 @@ export async function deleteSingleProduct(api, queryParams = {}, { port = 3000, 
     Object.entries(queryParams).forEach(([key, value]) => {
         url.searchParams.append(key, value);
     });
-
     const request = createDELETERequest();
     const response = await fetch(url, request);
     return response;
