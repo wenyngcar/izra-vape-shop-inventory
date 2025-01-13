@@ -24,7 +24,7 @@ export default function SalesPage() {
           date: new Date(sale.date).toISOString(),
         }));
         setSalesData(formattedSales);
-        console.log(`Sales fetched: ${formattedSales.length}`);
+        // console.log(`Sales fetched: ${formattedSales.length}`);
       } catch (error) {
         console.error("Failed to fetch salesData data:", error);
       }
