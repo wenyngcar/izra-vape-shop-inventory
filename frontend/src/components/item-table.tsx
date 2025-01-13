@@ -81,7 +81,7 @@ export function ItemDataTable<TData, TValue>({
               >
                 <div>{(row.original as Items).name}</div>
                 <div>{(row.original as Items).quantity}</div>
-                <div>&#8369; {(row.original as Items).price}</div>
+                <div>&#8369;{(row.original as Items).price}</div>
                 <div>{formatDate((row.original as Items).date)}</div>
                 <div className="space-x-2">
                   <ItemEditFormDialog

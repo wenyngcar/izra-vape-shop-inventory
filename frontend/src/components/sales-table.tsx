@@ -48,9 +48,9 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
                   <TableCell>{sale.name}</TableCell>
                   <TableCell>{sale.category}</TableCell>
                   <TableCell>{sale.quantity}</TableCell>
-                  <TableCell>${sale.price.toFixed(2)}</TableCell>
+                  <TableCell>&#8369;{sale.price.toFixed(2)}</TableCell>
                   <TableCell>
-                    ${(sale.price * sale.quantity).toFixed(2)}
+                    &#8369;{(sale.price * sale.quantity).toFixed(2)}
                   </TableCell>
                   <TableCell>{new Date(sale.date).toLocaleString()}</TableCell>
                   <TableCell>
