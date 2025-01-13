@@ -21,8 +21,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
 import { Sale } from "./sales-page";
+import { deleteOneSales } from "@/utils/api";
 
 export default function SalesTable({ salesData }: { salesData: Sale[] }) {
+  // const [sales, setSales] = useState<Sale[]>([]);
+
+  async function handleDeleteSale(saleId: string): Promise<void> {
+    try {
+      await deleteOneSales({ _id: saleId });
+      // setSales((prevSales) =>
+      //   prevSales.filter((sale) => sale.id.toString() !== saleId)
+      // );
+      console.log(`Successfully deleted sale with ID: ${saleId}`);
+    } catch (error) {
+      console.error("Error deleting sale:", error);
+    }
+  }
+
   return (
     <div>
       <Card>
@@ -74,7 +89,9 @@ export default function SalesTable({ salesData }: { salesData: Sale[] }) {
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction asChild>
                             <Button
-                            //   onClick={() => handleDeleteSale(sale.id.toString())}
+                              onClick={() =>
+                                handleDeleteSale(sale.id.toString())
+                              }
                             >
                               Delete
                             </Button>
