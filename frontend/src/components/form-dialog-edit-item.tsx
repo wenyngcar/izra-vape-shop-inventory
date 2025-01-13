@@ -11,7 +11,7 @@ import FormEditItem from "./form-edit-item";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { FormEditItemDialogProps } from "./form-edit-item";
-import { PencilLine } from 'lucide-react';
+import { PencilLine } from "lucide-react";
 
 export default function ItemEditFormDialog({
   itemId,
@@ -26,9 +26,8 @@ export default function ItemEditFormDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="hover:bg-gray-200">
-        <PencilLine className="w-6 h-8 mr-2" />
+          <PencilLine className="w-6 h-8 mr-2" />
         </Button>
-
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
         <DialogHeader>

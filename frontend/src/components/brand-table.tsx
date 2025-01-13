@@ -59,16 +59,16 @@ export function BrandTable<TData, TValue>({
   return (
     <>
       <div className="flex items-center justify-around space-x-4 py-4">
-      <Input
-  placeholder="Search brand here..."
-  value={(table.getColumn("brand")?.getFilterValue() as string) ?? ""}
-  onChange={(event) =>
-    table.getColumn("brand")?.setFilterValue(event.target.value)
-  }
-  className="min-w-sm w-full neon-input"
-/>
+        <Input
+          placeholder="Search brand here..."
+          value={(table.getColumn("brand")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("brand")?.setFilterValue(event.target.value)
+          }
+          className="min-w-sm w-full neon-input"
+        />
 
-<InventoryFormDialog />
+        <InventoryFormDialog />
       </div>
       <div className="rounded-md border">
         <Table>

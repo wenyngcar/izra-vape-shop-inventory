@@ -19,16 +19,21 @@ export function Login() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <Card className="w-[350px] bg-transparent border-2 border-gray-700 rounded-lg p-6 relative">
-    
         <CardHeader>
-          <CardTitle className="text-2xl text-white neon-text">Sign In</CardTitle>
-          <CardDescription className="text-gray-400">Please enter your details</CardDescription>
+          <CardTitle className="text-2xl text-white neon-text">
+            Sign In
+          </CardTitle>
+          <CardDescription className="text-gray-400">
+            Please enter your details
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name" className="text-white neon-text">Username</Label>
+                <Label htmlFor="name" className="text-white neon-text">
+                  Username
+                </Label>
                 <Input
                   id="name"
                   placeholder="Username"
@@ -36,7 +41,9 @@ export function Login() {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password" className="text-white neon-text">Password</Label>
+                <Label htmlFor="password" className="text-white neon-text">
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -48,7 +55,9 @@ export function Login() {
                     type="button"
                     className="absolute inset-y-0 right-2 flex items-center"
                     onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5 text-white neon-icon" />

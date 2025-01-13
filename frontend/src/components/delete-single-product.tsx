@@ -12,7 +12,7 @@ import {
 import { Button } from "./ui/button";
 import mongoose from "mongoose";
 import { deleteOneItem } from "@/utils/api";
-import { Trash2 } from 'lucide-react';
+import { Trash2 } from "lucide-react";
 
 type deleteProduct = {
   itemId: mongoose.Types.ObjectId;

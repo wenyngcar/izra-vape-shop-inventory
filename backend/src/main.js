@@ -1,4 +1,3 @@
-
 import path from "path";
 import url from "url";
 
@@ -42,7 +41,7 @@ server.application.use(cors({
 server.application.use(express.static(path.join(__dirname, "public")));
 server.application.use("/api", apiRouter);
 
-server.application.get("/", (req, res) => {
+server.application.get("/", (_, res) => {
     res.redirect("/main");
 });
 

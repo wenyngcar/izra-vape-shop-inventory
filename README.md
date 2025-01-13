@@ -13,3 +13,11 @@ Use `git clone https://github.com/wenyngcar/izra-vape-shop-inventory.git`
 > [!IMPORTANT]
 > Always pull --rebase first before pushing your branch to repo to avoid merge conflicts with dev & main branch.\
 > Use `git pull origin dev --rebase`
+
+### File Structure [front-end]
+``` 
+└── main.tsx
+  └── App.tsx
+    ├── Home.tsx
+    └── login.tsx
+```
