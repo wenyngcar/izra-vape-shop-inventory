@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
 import { Sale } from "./sales-page";
 
-export default function SalesTable({ sales }: { sales: Sale[] }) {
+export default function SalesTable({ salesData }: { salesData: Sale[] }) {
   return (
     <div>
       <Card>
@@ -43,7 +43,7 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sales.map((sale) => (
+              {salesData.map((sale) => (
                 <TableRow key={sale.id.toString()}>
                   <TableCell>{sale.name}</TableCell>
                   <TableCell>{sale.category}</TableCell>

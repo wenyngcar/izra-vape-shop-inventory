@@ -13,7 +13,7 @@ export type Sale = {
 };
 
 export default function SalesPage() {
-  const [sales, setSales] = useState<Sale[]>([]);
+  const [salesData, setSalesData] = useState<Sale[]>([]);
 
   useEffect(() => {
     const fetchSales = async () => {
@@ -23,10 +23,10 @@ export default function SalesPage() {
           ...sale,
           date: new Date(sale.date).toISOString(),
         }));
-        setSales(formattedSales);
+        setSalesData(formattedSales);
         console.log(`Sales fetched: ${formattedSales.length}`);
       } catch (error) {
-        console.error("Failed to fetch sales data:", error);
+        console.error("Failed to fetch salesData data:", error);
       }
     };
 
@@ -34,7 +34,7 @@ export default function SalesPage() {
   }, []);
   return (
     <div className="container mx-auto py-10">
-      <SalesTable sales={sales} />
+      <SalesTable salesData={salesData} />
     </div>
   );
 }
