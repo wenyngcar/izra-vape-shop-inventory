@@ -1,5 +1,5 @@
 import { Brands } from "@/components/columns";
-import { getBrands } from "@/utils/functions";
+import { getData } from "@/utils/functions";
 import mongoose from "mongoose";
 
 // Types here must match the field name in collections.
@@ -12,7 +12,7 @@ type Brand = {
 export async function useFetchBrands(): Promise<Brands[]> {
   try {
     // Fetch data from your API here.
-    const data = (await getBrands()).data;
+    const data = (await getData("brands")).data;
 
     const brands = data.map((brand: Brand) => ({
       id: brand._id,
