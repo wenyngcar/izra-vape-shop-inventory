@@ -1,7 +1,8 @@
 import { Sales } from "@/components/columns";
-import { readSales } from "@/utils/api";
+import { getData } from "@/utils/functions";
 import mongoose from "mongoose";
 
+// Types here must match the field name in collections.
 type Sale = {
   _id: mongoose.Types.ObjectId;
   brandId: mongoose.Types.ObjectId;
@@ -14,9 +15,10 @@ type Sale = {
   Date: Date;
 };
 
-export async function UseFetchSales(): Promise<Sales[]> {
+export async function useFetchSales(): Promise<Sales[]> {
   try {
-    const data = await readSales({});
+    // Fetch data here
+    const data = (await getData("sales")).data;
     const sales = data.map((sale: Sale) => ({
       id: sale._id.toString(),
       brandId: sale.brandId,
@@ -28,6 +30,7 @@ export async function UseFetchSales(): Promise<Sales[]> {
       total: sale.quantity * sale.price, // Calculate total on the fly
       date: new Date(sale.Date),
     }));
+
     return sales;
   } catch (error) {
     console.error("Error fetching sales:", error);
