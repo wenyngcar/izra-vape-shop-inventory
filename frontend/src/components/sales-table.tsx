@@ -21,18 +21,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
 import { Sale } from "./sales-page";
-import { deleteOneSales } from "@/utils/api";
+import { deleteData } from "@/utils/functions";
 
 export default function SalesTable({ salesData }: { salesData: Sale[] }) {
-  // const [sales, setSales] = useState<Sale[]>([]);
-
   async function handleDeleteSale(saleId: string): Promise<void> {
     try {
-      await deleteOneSales({ _id: saleId });
-      // setSales((prevSales) =>
-      //   prevSales.filter((sale) => sale.id.toString() !== saleId)
-      // );
-      console.log(`Successfully deleted sale with ID: ${saleId}`);
+      // (1)Argument is url, (2)Argument is sale id.
+      await deleteData("delete-sales", saleId);
+      // console.log(`Successfully deleted sale with ID: ${saleId}`);
     } catch (error) {
       console.error("Error deleting sale:", error);
     }
