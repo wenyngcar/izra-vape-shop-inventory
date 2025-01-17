@@ -1,8 +1,9 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { postData } from "@/utils/functions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 import {
   Form,
@@ -20,11 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-import * as api from "@/utils/api";
 
 const formSchema = z.object({
   brand: z
@@ -56,9 +52,10 @@ export default function ProfileForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
     try {
-      api.createBrand({
+      // Function to create brand.
+      // (1)Arugment is url, (2)Argument is the object data to be created.
+      postData("create-brand", {
         name: values.brand,
         category: values.category,
       });
