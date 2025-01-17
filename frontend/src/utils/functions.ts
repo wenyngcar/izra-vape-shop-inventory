@@ -18,3 +18,18 @@ export function getData(
 export function deleteData(url: string, id: string) {
   return axios.delete(`${baseUrl}${url}?_id=${id}`);
 }
+
+// Function for creating data.
+export function postData(url: string, body: object) {
+  return axios.post(
+    `${baseUrl}${url}`,
+    {
+      ...body,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
