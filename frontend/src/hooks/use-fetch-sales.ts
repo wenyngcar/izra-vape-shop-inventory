@@ -12,7 +12,7 @@ type Sale = {
   quantity: number;
   price: number;
   total: number;
-  Date: Date;
+  date: Date;
 };
 
 export async function useFetchSales(): Promise<Sales[]> {
@@ -28,7 +28,7 @@ export async function useFetchSales(): Promise<Sales[]> {
       quantity: sale.quantity,
       price: sale.price,
       total: sale.quantity * sale.price, // Calculate total on the fly
-      date: new Date(sale.Date),
+      date: sale.date,
     }));
 
     return sales;

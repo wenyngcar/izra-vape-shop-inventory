@@ -1,34 +1,25 @@
-import mongoose from "mongoose";
 import { useEffect, useState } from "react";
 import { useFetchSales } from "@/hooks/use-fetch-sales";
 import SalesTable from "./sales-table";
-
-export type Sale = {
-  id: mongoose.Types.ObjectId;
-  name: string;
-  category: string;
-  quantity: number;
-  price: number;
-  date: string;
-};
+import { Sales } from "./columns";
 
 export default function SalesPage() {
   // Store and set the data here.
-  const [salesData, setSalesData] = useState<Sale[]>([]);
+  const [salesData, setSalesData] = useState<Sales[]>([]);
 
   useEffect(() => {
     const fetchSales = async () => {
       try {
         // Fetch data ...
-        const salesData = await useFetchSales();
+        const salesResult = await useFetchSales();
 
-        // Format the date
-        const formattedSales = salesData.map((sale) => ({
-          ...sale,
-          date: new Date(sale.date).toISOString(),
-        }));
+        // // Format the date
+        // const formattedSales = salesData.map((sale) => ({
+        //   ...sale,
+        //   date: new Date(sale.date).toISOString(),
+        // }));
 
-        setSalesData(formattedSales);
+        setSalesData(salesResult);
       } catch (error) {
         console.error("Failed to fetch salesData data:", error);
       }

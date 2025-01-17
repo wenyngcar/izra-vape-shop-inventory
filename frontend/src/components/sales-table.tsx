@@ -20,10 +20,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
-import { Sale } from "./sales-page";
+import { Sales } from "./columns";
 import { deleteData } from "@/utils/functions";
 
-export default function SalesTable({ salesData }: { salesData: Sale[] }) {
+export default function SalesTable({ salesData }: { salesData: Sales[] }) {
   async function handleDeleteSale(saleId: string): Promise<void> {
     try {
       // (1)Argument is url, (2)Argument is sale id.
