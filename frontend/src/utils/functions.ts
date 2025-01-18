@@ -7,7 +7,9 @@ const baseUrl = "http://localhost:3000/api/";
 // url is required argument, _id is optional argument.
 export function getData(
   url: string,
-  filter: { _id?: mongoose.Types.ObjectId } = {}
+  filter: {
+    brandId?: mongoose.Types.ObjectId; // For fetching item that belongs only to specific brand.
+  } = {}
 ) {
   return axios.get(`${baseUrl}${url}`, {
     params: filter,

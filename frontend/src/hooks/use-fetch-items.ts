@@ -17,7 +17,7 @@ export async function UseFetchItems(
 ): Promise<Items[]> {
   try {
     // Fetch data from your API here.
-    const data = (await getData("products", { _id: id })).data;
+    const data = (await getData("products", { brandId: id })).data;
 
     const items = data.map((item: Item) => ({
       id: item._id,
