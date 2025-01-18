@@ -6,7 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Items } from "./columns";
+import { Items } from "../columns";
 import ItemEditFormDialog from "./form-dialog-edit-item";
 import DeleteItem from "./delete-single-product";
 import AddSaleDialog from "./form-dialog-create-sale";

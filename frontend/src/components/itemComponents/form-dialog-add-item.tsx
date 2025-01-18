@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 
 import FormAddItem from "./form-add-item";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 
 export default function InventoryFormDialog({

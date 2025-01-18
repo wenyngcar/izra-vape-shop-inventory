@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
-import { Sales } from "./columns";
+import { Sales } from "../columns";
 import { deleteData } from "@/utils/functions";
 import mongoose from "mongoose";
 

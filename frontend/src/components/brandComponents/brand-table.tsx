@@ -23,10 +23,10 @@ import {
 } from "@/components/ui/accordion";
 
 import { Input } from "@/components/ui/input";
-import FormDialogAddItem from "./form-dialog-add-item";
-import { Brands } from "./columns";
+import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
+import { Brands } from "../columns";
 import { ChevronDown } from "lucide-react";
-import ItemPage from "./item-page";
+import ItemPage from "../itemComponents/item-page";
 
 interface BrandDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

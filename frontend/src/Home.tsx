@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BrandPage from "@/components/brand-page";
+import BrandPage from "@/components/brandComponents/brand-page";
 import { ListChecks, PhilippinePeso } from "lucide-react";
-import SalesPage from "./components/sales-page";
+import SalesPage from "./components/salesComponents/sales-page";
 import logo from "./IVP.jpg";
 
 function Home() {

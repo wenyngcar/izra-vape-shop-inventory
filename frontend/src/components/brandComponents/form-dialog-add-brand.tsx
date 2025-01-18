@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 
 import BrandInventoryForm from "./form-add-brand";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 
 export default function InventoryFormDialog() {
