@@ -35,3 +35,18 @@ export function postData(url: string, body: object) {
     }
   );
 }
+
+// Function for editing data.
+export function patchData(url: string, body: object) {
+  return axios.patch(
+    `${baseUrl}${url}`,
+    {
+      ...body,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
