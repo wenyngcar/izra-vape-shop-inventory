@@ -1,8 +1,10 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import mongoose from "mongoose";
+import { postData, patchData } from "@/utils/functions";
 
 import {
   Form,
@@ -12,12 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-import * as api from "@/utils/api";
-import mongoose from "mongoose";
 
 export interface FormAddSaleDialogProps {
   brandId: mongoose.Types.ObjectId;
@@ -54,12 +50,14 @@ export default function AddSaleForm({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      api.createSale({
+      // (1)Arugment is url, (2)Argument is the object data to be created.
+      postData("create-sale", {
         brandId: brandId,
         productId: productId,
         sale: values.sale,
       });
-      api.subtractQuantity({
+      // (1)Arugment is url, (2)Argument is the object data to be edited.
+      patchData("subtract-quantity", {
         id: productId,
         quantity: quantity - values.sale,
       });
