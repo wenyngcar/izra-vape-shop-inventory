@@ -18,7 +18,7 @@ export default function ItemPage({ brandId }: BrandId) {
       setItemData(itemResult);
     }
     fetchData();
-  }, [itemData]);
+  }, []);
 
   return (
     <div className="container mx-auto pb-8">

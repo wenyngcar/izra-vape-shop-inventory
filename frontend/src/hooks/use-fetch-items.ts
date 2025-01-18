@@ -1,5 +1,5 @@
 import { Items } from "@/components/columns";
-import { readProducts } from "@/utils/api";
+import { getData } from "@/utils/functions";
 import mongoose from "mongoose";
 
 // Types here must match the field name in collections.
@@ -17,7 +17,7 @@ export async function UseFetchItems(
 ): Promise<Items[]> {
   try {
     // Fetch data from your API here.
-    const data = await readProducts({ brandId: id });
+    const data = (await getData("products", { brandId: id })).data;
 
     const items = data.map((item: Item) => ({
       id: item._id,

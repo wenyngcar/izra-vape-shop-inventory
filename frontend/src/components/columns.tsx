@@ -20,6 +20,18 @@ export type Items = {
   date: Date;
 };
 
+export type Sales = {
+  id: mongoose.Types.ObjectId;
+  brandId: mongoose.Types.ObjectId;
+  productId: mongoose.Types.ObjectId;
+  name: string;
+  category: string;
+  quantity: number;
+  price: number;
+  total: number;
+  date: Date;
+};
+
 // For the table headers
 export const columns: ColumnDef<Brands>[] = [
   {
@@ -70,60 +82,39 @@ export const nestedColumns: ColumnDef<Items>[] = [
   },
 ];
 
-// const quantityColumn = nestedColumns.find(
-//   (column) => "accessorKey" in column && column.accessorKey === "quantity"
-// );
-// if (quantityColumn) {
-//   quantityColumn.cell = ({ row }) => {
-//     const { quantity } = row.original;
-//     return <QuantityCell value={quantity} row={row} />;
-//   };
-// }
-export type Sales = {
-  id: mongoose.Types.ObjectId;
-  brandId: mongoose.Types.ObjectId;
-  productId: mongoose.Types.ObjectId;
-  name: string;
-  category: string;
-  quantity: number;
-  price: number;
-  total: number;
-  date: Date;
-};
-
-export const columns_sale: ColumnDef<Sales>[] = [
-  {
-    accessorKey: "name",
-    header: "Name",
-  },
-  {
-    accessorKey: "category",
-    header: "Category",
-  },
-  {
-    accessorKey: "quantity",
-    header: "Quantity",
-  },
-  {
-    accessorKey: "price",
-    header: "Price",
-  },
-  {
-    accessorKey: "total",
-    header: "Total",
-  },
-  {
-    accessorKey: "date",
-    header: "Date",
-  },
-  {
-    id: "actions",
-    header: "Actions",
-    // cell: ({ row }) => (
-    //   <Button onClick={() => handleDelete(row.original)}>Delete</Button>
-    // ),
-  },
-];
+// export const columns_sale: ColumnDef<Sales>[] = [
+//   {
+//     accessorKey: "name",
+//     header: "Name",
+//   },
+//   {
+//     accessorKey: "category",
+//     header: "Category",
+//   },
+//   {
+//     accessorKey: "quantity",
+//     header: "Quantity",
+//   },
+//   {
+//     accessorKey: "price",
+//     header: "Price",
+//   },
+//   {
+//     accessorKey: "total",
+//     header: "Total",
+//   },
+//   {
+//     accessorKey: "date",
+//     header: "Date",
+//   },
+//   // {
+//   //   id: "actions",
+//   //   header: "Actions",
+//   //   // cell: ({ row }) => (
+//   //   //   <Button onClick={() => handleDelete(row.original)}>Delete</Button>
+//   //   // ),
+//   // },
+// ];
 
 // const handleDelete = (item: SaleItem) => {
 //   // Implement delete functionality here

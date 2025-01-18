@@ -1,8 +1,10 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import mongoose from "mongoose";
+import { postData } from "@/utils/functions";
 
 import {
   Form,
@@ -12,11 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import * as api from "@/utils/api.js";
-import mongoose from "mongoose";
 
 // brandName and brandCategory is needed as props for backend validation.
 export interface FormAddItemDialogProps {
@@ -77,7 +74,8 @@ export default function FormAddItem({
 
     // brandName and brandCategory is needed for backend validation.
     try {
-      api.createProduct({
+      // (1)Arugment is url, (2)Argument is the object data to be created.
+      postData("create-product", {
         brandId: brandId,
         brandName: brandName,
         brandCategory: brandCategory,

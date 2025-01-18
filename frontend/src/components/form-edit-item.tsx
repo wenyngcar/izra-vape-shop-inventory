@@ -1,9 +1,10 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import * as api from "../utils/api";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import mongoose from "mongoose";
+import { patchData } from "@/utils/functions";
 
 import {
   Form,
@@ -13,10 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import mongoose from "mongoose";
 
 export interface FormEditItemDialogProps {
   itemId: mongoose.Types.ObjectId;
@@ -75,15 +72,16 @@ export default function FormEditItem({
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
     try {
-      api.editOneItem({
+      // (1)Arugment is url, (2)Argument is the object data to be edited.
+      patchData("edit-product", {
         id: itemId,
         name: values.item,
         price: values.price,
         quantity: values.quantity,
         expiration: values.expirationDate,
       });
+
       setOpen(false);
     } catch (error) {
       console.log("There was an error in creating brand", error);

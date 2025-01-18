@@ -9,7 +9,7 @@ const saleSchema = new mongoose.Schema({
     quantity: Number,
     price: Number,
     total: Number,
-    Date: Date,
+    date: Date,
 });
 
 export default saleSchema;

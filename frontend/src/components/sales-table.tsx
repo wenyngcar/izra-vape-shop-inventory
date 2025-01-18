@@ -20,19 +20,18 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
-import { Sale } from "./sales-page";
-import { deleteOneSales } from "@/utils/api";
+import { Sales } from "./columns";
+import { deleteData } from "@/utils/functions";
+import mongoose from "mongoose";
 
-export default function SalesTable({ salesData }: { salesData: Sale[] }) {
-  // const [sales, setSales] = useState<Sale[]>([]);
-
-  async function handleDeleteSale(saleId: string): Promise<void> {
+export default function SalesTable({ salesData }: { salesData: Sales[] }) {
+  async function handleDeleteSale(
+    saleId: mongoose.Types.ObjectId
+  ): Promise<void> {
     try {
-      await deleteOneSales({ _id: saleId });
-      // setSales((prevSales) =>
-      //   prevSales.filter((sale) => sale.id.toString() !== saleId)
-      // );
-      console.log(`Successfully deleted sale with ID: ${saleId}`);
+      // (1)Argument is url, (2)Argument is sale id.
+      await deleteData("delete-sales", saleId);
+      // console.log(`Successfully deleted sale with ID: ${saleId}`);
     } catch (error) {
       console.error("Error deleting sale:", error);
     }
@@ -88,11 +87,7 @@ export default function SalesTable({ salesData }: { salesData: Sale[] }) {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction asChild>
-                            <Button
-                              onClick={() =>
-                                handleDeleteSale(sale.id.toString())
-                              }
-                            >
+                            <Button onClick={() => handleDeleteSale(sale.id)}>
                               Delete
                             </Button>
                           </AlertDialogAction>

@@ -1,4 +1,4 @@
-import express, { query } from "express";
+import express from "express";
 import { checkSchema, validationResult } from 'express-validator'
 import * as validateSchema from '../utils/validationSchema.js'
 import * as account from "./account.js";
@@ -134,7 +134,7 @@ router.delete("/delete-sales", async (req, res) => {
         const _id = req.query
 
         // Check if there are id pass in the query parameters.
-        if (!_id) return res.json(message.failure("Product ID (_id) is requried."))
+        if (!_id) return res.json(message.failure("Sale ID (_id) is requried."))
 
         await database.deleteSalesById(_id)
         res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
@@ -145,10 +145,8 @@ router.delete("/delete-sales", async (req, res) => {
 })
 
 //  For editing item/product
-router.put("/edit-product", async (req, res) => {
+router.patch("/edit-product", async (req, res) => {
     try {
-        req.body.expiration = new Date(req.body.expiration);
-
         await database.editProductById(req.body)
         return res.json(message.success("Succeeded in editing item."));
     } catch (error) {
@@ -172,7 +170,7 @@ router.patch("/subtract-quantity", async (req, res) => {
 router.post("/sign-up", checkSchema(validateSchema.accountValidationSchema),
     async (req, res) => {
         const result = validationResult(req);
-        
+
         if (result.isEmpty()) {
             console.log("Creating account.");
             await account.createAccount(req.body);
@@ -193,11 +191,10 @@ router.post("/login", checkSchema(validateSchema.accountValidationSchema),
             const isValid = await account.verifyAccount(req.body);
             return res.json(message.success(isValid));
         }
-        
+
         console.log("Failed to verify account.");
         res.status(400).json(message.failure(result.array()));
     }
 );
-
 
 export default router;
