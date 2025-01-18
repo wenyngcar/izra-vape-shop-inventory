@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./login";
+import Login from "./Login";
 import Home from "./Home";
 
 function App() {

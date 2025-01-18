@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Items, nestedColumns } from "./columns";
+import { Items, nestedColumns } from "../columns";
 import { UseFetchItems } from "@/hooks/use-fetch-items";
 import { ItemDataTable } from "./item-table";
 import mongoose from "mongoose";

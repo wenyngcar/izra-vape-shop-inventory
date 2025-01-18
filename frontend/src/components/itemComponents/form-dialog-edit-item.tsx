@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 
 import FormEditItem from "./form-edit-item";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 import { FormEditItemDialogProps } from "./form-edit-item";
 import { PencilLine } from "lucide-react";

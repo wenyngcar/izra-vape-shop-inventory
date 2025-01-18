@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetchSales } from "@/hooks/use-fetch-sales";
 import SalesTable from "./sales-table";
-import { Sales } from "./columns";
+import { Sales } from "../columns";
 
 export default function SalesPage() {
   // Store and set the data here.

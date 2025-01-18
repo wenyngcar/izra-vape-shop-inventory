@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Brands, columns } from "./columns";
+import { Brands, columns } from "../columns";
 import { BrandTable } from "./brand-table";
 import { useFetchBrands } from "@/hooks/use-fetch-brands";
 

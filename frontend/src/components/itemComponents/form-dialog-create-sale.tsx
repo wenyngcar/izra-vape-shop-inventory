@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 
 import AddSaleForm, { FormAddSaleDialogProps } from "./form-add-sale";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 import { PhilippinePeso } from "lucide-react";
 

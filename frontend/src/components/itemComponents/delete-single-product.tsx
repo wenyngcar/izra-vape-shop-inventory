@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import mongoose from "mongoose";
 import { Trash2 } from "lucide-react";
 import { deleteData } from "@/utils/functions";
