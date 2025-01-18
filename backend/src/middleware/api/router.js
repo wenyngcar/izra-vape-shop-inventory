@@ -1,4 +1,4 @@
-import express, { query } from "express";
+import express from "express";
 import { checkSchema, validationResult } from 'express-validator'
 import * as validateSchema from '../utils/validationSchema.js'
 import * as account from "./account.js";
@@ -145,10 +145,8 @@ router.delete("/delete-sales", async (req, res) => {
 })
 
 //  For editing item/product
-router.put("/edit-product", async (req, res) => {
+router.patch("/edit-product", async (req, res) => {
     try {
-        req.body.expiration = new Date(req.body.expiration);
-
         await database.editProductById(req.body)
         return res.json(message.success("Succeeded in editing item."));
     } catch (error) {
@@ -198,6 +196,5 @@ router.post("/login", checkSchema(validateSchema.accountValidationSchema),
         res.status(400).json(message.failure(result.array()));
     }
 );
-
 
 export default router;
