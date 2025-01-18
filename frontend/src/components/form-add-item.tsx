@@ -74,6 +74,7 @@ export default function FormAddItem({
 
     // brandName and brandCategory is needed for backend validation.
     try {
+      // (1)Arugment is url, (2)Argument is the object data to be created.
       postData("create-product", {
         brandId: brandId,
         brandName: brandName,
