@@ -22,9 +22,12 @@ import { Button } from "@/components/ui/button";
 import { LucideTrash2 } from "lucide-react";
 import { Sales } from "./columns";
 import { deleteData } from "@/utils/functions";
+import mongoose from "mongoose";
 
 export default function SalesTable({ salesData }: { salesData: Sales[] }) {
-  async function handleDeleteSale(saleId: string): Promise<void> {
+  async function handleDeleteSale(
+    saleId: mongoose.Types.ObjectId
+  ): Promise<void> {
     try {
       // (1)Argument is url, (2)Argument is sale id.
       await deleteData("delete-sales", saleId);
@@ -84,11 +87,7 @@ export default function SalesTable({ salesData }: { salesData: Sales[] }) {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction asChild>
-                            <Button
-                              onClick={() =>
-                                handleDeleteSale(sale.id.toString())
-                              }
-                            >
+                            <Button onClick={() => handleDeleteSale(sale.id)}>
                               Delete
                             </Button>
                           </AlertDialogAction>

@@ -17,7 +17,7 @@ export function getData(
 }
 
 // Function for deleting data.
-export function deleteData(url: string, id: string) {
+export function deleteData(url: string, id: mongoose.Types.ObjectId) {
   return axios.delete(`${baseUrl}${url}?_id=${id}`);
 }
 
