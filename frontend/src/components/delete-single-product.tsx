@@ -11,8 +11,8 @@ import {
 
 import { Button } from "./ui/button";
 import mongoose from "mongoose";
-import { deleteOneItem } from "@/utils/api";
 import { Trash2 } from "lucide-react";
+import { deleteData } from "@/utils/functions";
 
 type deleteProduct = {
   itemId: mongoose.Types.ObjectId;
@@ -23,7 +23,7 @@ export default function DeleteItem({ itemId }: deleteProduct) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      deleteOneItem({ _id: itemId });
+      deleteData("delete-product", itemId);
     } catch (error) {
       console.log("There was an error on deleting product", error);
     }
