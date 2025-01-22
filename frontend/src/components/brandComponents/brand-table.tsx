@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import InventoryFormDialog from "./form-dialog-add-brand";
 
@@ -84,9 +83,9 @@ export function BrandTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -108,7 +107,7 @@ export function BrandTable<TData, TValue>({
               >
                 <AccordionItem value={row.id} className="grid grid-cols-3 px-2">
                   <AccordionTrigger>
-                    {(row.original as Brands).brand}
+                    {(row.original as Brands).name}
                   </AccordionTrigger>
                   <AccordionTrigger>
                     {(row.original as Brands).category}
@@ -117,7 +116,7 @@ export function BrandTable<TData, TValue>({
                   <div className="place-self-center">
                     <FormDialogAddItem
                       brandId={(row.original as Brands).id}
-                      brandName={(row.original as Brands).brand}
+                      brandName={(row.original as Brands).name}
                       brandCategory={(row.original as Brands).category}
                     />
                   </div>
