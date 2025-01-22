@@ -1,14 +1,14 @@
-"use client";
-
 import { ColumnDef } from "@tanstack/react-table";
 import mongoose from "mongoose";
 import { Button } from "./ui/button";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+
+// Types here shuold match the field name in the database.
 export type Brands = {
   id: mongoose.Types.ObjectId;
-  brand: string;
+  name: string;
   category: "E-liquid" | "Device";
 };
 
