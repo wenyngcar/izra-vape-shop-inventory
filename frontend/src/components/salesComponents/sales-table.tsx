@@ -57,8 +57,8 @@ export default function SalesTable({ salesData }: { salesData: Sales[] }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {salesData.map((sale) => (
-                <TableRow key={sale.id.toString()}>
+              {salesData.map((sale, index) => (
+                <TableRow key={index}>
                   <TableCell>{sale.name}</TableCell>
                   <TableCell>{sale.category}</TableCell>
                   <TableCell>{sale.quantity}</TableCell>

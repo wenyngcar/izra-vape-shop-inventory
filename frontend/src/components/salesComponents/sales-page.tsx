@@ -1,35 +1,31 @@
-import { useEffect, useState } from "react";
-import { useFetchSales } from "@/hooks/use-fetch-sales";
 import SalesTable from "./sales-table";
-import { Sales } from "../columns";
+import { useQuery } from "@tanstack/react-query"
+import { getData } from "@/utils/functions";
 
 export default function SalesPage() {
-  // Store and set the data here.
-  const [salesData, setSalesData] = useState<Sales[]>([]);
+  // Fetching data using useQuery.
+  const { isPending, isError, data, error } = useQuery({ queryKey: ['sales'], queryFn: () => getData('sales') })
 
-  useEffect(() => {
-    const fetchSales = async () => {
-      try {
-        // Fetch data ...
-        const salesResult = await useFetchSales();
+  // If data is still pending. 
+  if (isPending) {
+    return (
+      <div className="container mx-auto py-10">
+        Loading...
+      </div>)
+  }
 
-        // // Format the date
-        // const formattedSales = salesData.map((sale) => ({
-        //   ...sale,
-        //   date: new Date(sale.date).toISOString(),
-        // }));
+  // If there is error in fetching data.
+  if (isError) {
+    console.error("Error fetching sales:", error);
+    return (
+      <div className="container mx-auto py-10">
+        Error loading sales data
+      </div>)
+  }
 
-        setSalesData(salesResult);
-      } catch (error) {
-        console.error("Failed to fetch salesData data:", error);
-      }
-    };
-
-    fetchSales();
-  }, []);
   return (
     <div className="container mx-auto py-10">
-      <SalesTable salesData={salesData} />
+      <SalesTable salesData={data.data} />
     </div>
   );
 }
