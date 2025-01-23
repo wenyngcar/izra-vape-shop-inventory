@@ -16,11 +16,12 @@ export interface Items extends MongooseId {
   name: string;
   price: number;
   quantity: number;
-  date: Date;
+  expiration: Date;
 };
 
 export interface Sales extends Items, Brands {
   brandId: mongoose.Types.ObjectId;
   productId: mongoose.Types.ObjectId;
+  date: Date
   total: number;
 };
