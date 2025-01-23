@@ -21,7 +21,7 @@ import {
 } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
-import { BrandId, Brands } from "@/utils/types";
+import { Brands, MongooseId } from "@/utils/types";
 import { ChevronDown } from "lucide-react";
 import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
 import ItemPage from "../itemComponents/item-page";
@@ -120,7 +120,7 @@ export function BrandTable<TData, TValue>({
                     />
                   </div>
                   <AccordionContent className="col-span-3">
-                    <ItemPage brandId={(row.original as BrandId).brandId} />
+                    <ItemPage _id={(row.original as MongooseId)._id} />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 const baseUrl = "http://localhost:3000/api/";
 
 // Function for fetching data.
-// url is required argument, _id is optional argument.
+// url is required argument, filter is optional argument.
+// filter is mostly used on fetching item base on brandId.
 export function getData(
   url,
   filter = {}
