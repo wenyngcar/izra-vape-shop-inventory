@@ -1,28 +1,28 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
 import {
   AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { deleteData } from "@/utils/api";
 import { LucideTrash2 } from "lucide-react";
-import { Sales } from "../columns";
-import { deleteData } from "@/utils/functions";
 import mongoose from "mongoose";
+import { Sales } from "@/utils/types";
 
 export default function SalesTable({ salesData }: { salesData: Sales[] }) {
   async function handleDeleteSale(
@@ -87,7 +87,7 @@ export default function SalesTable({ salesData }: { salesData: Sales[] }) {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction asChild>
-                            <Button onClick={() => handleDeleteSale(sale.id)}>
+                            <Button onClick={() => handleDeleteSale(sale._id)}>
                               Delete
                             </Button>
                           </AlertDialogAction>

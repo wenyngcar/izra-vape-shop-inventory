@@ -1,10 +1,9 @@
+import useFetchSales from "@/hooks/useFetchSales";
 import SalesTable from "./sales-table";
-import { useQuery } from "@tanstack/react-query"
-import { getData } from "@/utils/api";
 
 export default function SalesPage() {
   // Fetching data using useQuery.
-  const { isPending, isError, data, error } = useQuery({ queryKey: ['sales'], queryFn: () => getData('sales') })
+  const { isPending, isError, data, error } = useFetchSales()
 
   // If data is still pending. 
   if (isPending) {
@@ -25,7 +24,7 @@ export default function SalesPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <SalesTable salesData={data.data} />
+      <SalesTable salesData={data?.data} />
     </div>
   );
 }
