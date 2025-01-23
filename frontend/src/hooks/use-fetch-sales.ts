@@ -1,5 +1,5 @@
 import { Sales } from "@/components/columns";
-import { getData } from "@/utils/functions";
+import { getData } from "@/utils/api";
 import mongoose from "mongoose";
 
 // Types here must match the field name in collections.

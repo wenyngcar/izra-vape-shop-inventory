@@ -1,6 +1,6 @@
 import SalesTable from "./sales-table";
 import { useQuery } from "@tanstack/react-query"
-import { getData } from "@/utils/functions";
+import { getData } from "@/utils/api";
 
 export default function SalesPage() {
   // Fetching data using useQuery.

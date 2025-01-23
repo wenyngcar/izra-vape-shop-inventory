@@ -4,7 +4,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import mongoose from "mongoose";
-import { postData, patchData } from "@/utils/functions";
+import { postData, patchData } from "@/utils/api";
 
 import {
   Form,
