@@ -1,7 +1,13 @@
-"use client";
 import * as React from "react";
 import InventoryFormDialog from "./form-dialog-add-brand";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,18 +19,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import { Input } from "@/components/ui/input";
-import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
-import { Brands } from "../columns";
+import { BrandId, Brands } from "@/utils/types";
 import { ChevronDown } from "lucide-react";
+import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
 import ItemPage from "../itemComponents/item-page";
 
 interface BrandDataTableProps<TData, TValue> {
@@ -115,13 +114,13 @@ export function BrandTable<TData, TValue>({
                   </AccordionTrigger>
                   <div className="place-self-center">
                     <FormDialogAddItem
-                      brandId={(row.original as Brands).id}
+                      brandId={(row.original as Brands)._id}
                       brandName={(row.original as Brands).name}
                       brandCategory={(row.original as Brands).category}
                     />
                   </div>
                   <AccordionContent className="col-span-3">
-                    <ItemPage brandId={(row.original as Brands).id} />
+                    <ItemPage brandId={(row.original as BrandId).brandId} />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

@@ -1,11 +1,10 @@
+import useFetchBrand from "@/hooks/useFetchBrands";
 import { columns } from "../columns";
 import { BrandTable } from "./brand-table";
-import { getData } from "@/utils/functions";
-import { useQuery } from "@tanstack/react-query";
 
 export default function BrandPage() {
-  // Fetching data using useQuery.
-  const { isPending, isError, data, error } = useQuery({ queryKey: ['sales'], queryFn: () => getData('brands') })
+  // Custom hook for fetching brand data
+  const { isPending, isError, data, error } = useFetchBrand()
 
   // If data is still pending. 
   if (isPending) {
@@ -26,7 +25,7 @@ export default function BrandPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <BrandTable columns={columns} data={data.data} />
+      <BrandTable columns={columns} data={data?.data} />
     </div>
   );
 }
