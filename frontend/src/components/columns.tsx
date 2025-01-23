@@ -1,36 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
-import mongoose from "mongoose";
 import { Button } from "./ui/button";
-
+import { Brands, Items } from "@/utils/types";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-// Types here shuold match the field name in the database.
-export type Brands = {
-  id: mongoose.Types.ObjectId;
-  name: string;
-  category: "E-liquid" | "Device";
-};
-
-export type Items = {
-  id: mongoose.Types.ObjectId;
-  name: string;
-  price: number;
-  quantity: number;
-  date: Date;
-};
-
-export type Sales = {
-  id: mongoose.Types.ObjectId;
-  brandId: mongoose.Types.ObjectId;
-  productId: mongoose.Types.ObjectId;
-  name: string;
-  category: string;
-  quantity: number;
-  price: number;
-  total: number;
-  date: Date;
-};
 
 // For the table headers
 export const columns: ColumnDef<Brands>[] = [
