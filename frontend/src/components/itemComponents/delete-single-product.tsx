@@ -10,21 +10,36 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "../ui/button";
-import mongoose from "mongoose";
 import { Trash2 } from "lucide-react";
 import { deleteData } from "@/utils/api";
+import { MongooseId } from "@/utils/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-type deleteProduct = {
-  itemId: mongoose.Types.ObjectId;
-};
+export default function DeleteItem({ _id }: MongooseId) {
 
-export default function DeleteItem({ itemId }: deleteProduct) {
+  const queryClient = useQueryClient()
+
+  // react-query hook that is use to delete item.
+  const mutation = useMutation({
+    mutationFn: (itemId: MongooseId) => {
+      // (1)Argument is url, (2)Argument is the id of the data to be deleted.
+      return deleteData("delete-product", itemId)
+
+    }, onSuccess: () => {
+      // This refetches the item after deleting an item.
+      queryClient.invalidateQueries({ queryKey: ['item'] })
+
+    }, onError: (error) => {
+      console.log("There was an error on deleting product", error);
+    }
+  })
+
   async function deleteItem() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      // (1)Arugment is url, (2)Argument is item id
-      deleteData("delete-product", itemId);
+      // Method to delete item.
+      mutation.mutate(_id)
     } catch (error) {
       console.log("There was an error on deleting product", error);
     }

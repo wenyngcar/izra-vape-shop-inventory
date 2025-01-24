@@ -89,7 +89,7 @@ export function ItemDataTable<TData, TValue>({
                     itemPrice={(row.original as Items).price}
                     itemDate={(row.original as Items).expiration}
                   />
-                  <DeleteItem itemId={(row.original as Items)._id} />
+                  <DeleteItem _id={(row.original as Items)._id} />
                   <AddSaleDialog
                     brandId={brandId}
                     productId={(row.original as Items)._id}
