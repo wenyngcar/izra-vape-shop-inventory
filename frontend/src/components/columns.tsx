@@ -8,7 +8,7 @@ import { Brands, Items } from "@/utils/types";
 // For the table headers
 export const columns: ColumnDef<Brands>[] = [
   {
-    accessorKey: "brand",
+    accessorKey: "name",
     header: "Brand",
   },
   {

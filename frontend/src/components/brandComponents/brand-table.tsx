@@ -59,9 +59,9 @@ export function BrandTable<TData, TValue>({
       <div className="flex items-center justify-around space-x-4 py-4">
         <Input
           placeholder="Search brand here..."
-          value={(table.getColumn("brand")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("brand")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="min-w-sm w-full neon-input"
         />
