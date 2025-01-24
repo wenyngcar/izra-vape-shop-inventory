@@ -54,14 +54,14 @@ export default function BrandInventoryForm({
       return postData("create-brand", newBrand)
     },
     onSuccess: () => {
-      setOpen(false);
+      // This refetches the brands after adding a brand.
+      queryClient.invalidateQueries({ queryKey: ['brands'] })
     },
     onError: (error) => {
       console.error("Error creating brand:", error);
     },
     onSettled: () => {
-      // This refetches the brands after adding a brand.
-      queryClient.invalidateQueries({ queryKey: ['brands'] })
+      setOpen(false);
     }
   })
 
