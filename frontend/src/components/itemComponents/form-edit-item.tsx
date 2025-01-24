@@ -1,10 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import mongoose from "mongoose";
 import { patchData } from "@/utils/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import mongoose from "mongoose";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
@@ -21,6 +22,14 @@ export interface FormEditItemDialogProps {
   itemQuantity: number;
   itemPrice: number;
   itemDate: Date;
+}
+
+type Item = {
+  id: mongoose.Types.ObjectId,
+  name: string,
+  price: number,
+  quantity: number,
+  expiration: Date
 }
 
 export interface FormEditItemDialogWithSetOpen extends FormEditItemDialogProps {
@@ -57,6 +66,26 @@ export default function FormEditItem({
   itemDate,
   setOpen,
 }: FormEditItemDialogWithSetOpen) {
+
+  const queryClient = useQueryClient()
+
+  // react-query hook that is use to create new brand.
+  const mutation = useMutation({
+    // editedItem is object that was pass by mutation.mutate.
+    mutationFn: (editedItem: Item) => {
+      // (1)Arugment is url, (2)Argument is the object data to be edited.
+      return patchData("edit-product", editedItem)
+    }, onSuccess: () => {
+      // This refetches the item after editing an item.
+      queryClient.invalidateQueries({ queryKey: ['item'] })
+    },
+    onError: (error) => {
+      console.error("There was an error in editing item.", error);
+    }, onSettled: () => {
+      setOpen(false);
+    }
+  })
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,18 +102,17 @@ export default function FormEditItem({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      // (1)Arugment is url, (2)Argument is the object data to be edited.
-      patchData("edit-product", {
+      // Method to edit item.
+      mutation.mutate({
         id: itemId,
         name: values.item,
         price: values.price,
         quantity: values.quantity,
         expiration: values.expirationDate,
-      });
+      })
 
-      setOpen(false);
     } catch (error) {
-      console.log("There was an error in creating brand", error);
+      console.log("There was an error in editing item.", error);
     }
   }
 
