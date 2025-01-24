@@ -20,18 +20,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { deleteData } from "@/utils/api";
+import { MongooseId, Sales } from "@/utils/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LucideTrash2 } from "lucide-react";
 import mongoose from "mongoose";
-import { Sales } from "@/utils/types";
+
 
 export default function SalesTable({ salesData }: { salesData: Sales[] }) {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: (saleId: MongooseId) => {
+      // (1)Argument is url, (2)Argument is the id of the data to be deleted.
+      return deleteData("delete-sales", saleId)
+
+    }, onSuccess: () => {
+      // This refetches the item after deleting an sale.
+      queryClient.invalidateQueries({ queryKey: ['sales'] })
+
+    }, onError: (error) => {
+      console.error("There was an error in deleting sale.", error);
+    }
+  })
+
   async function handleDeleteSale(
     saleId: mongoose.Types.ObjectId
   ): Promise<void> {
     try {
-      // (1)Argument is url, (2)Argument is sale id.
-      await deleteData("delete-sales", saleId);
-      // console.log(`Successfully deleted sale with ID: ${saleId}`);
+      // Method to delete sale.
+      mutation.mutate(saleId)
     } catch (error) {
       console.error("Error deleting sale:", error);
     }
