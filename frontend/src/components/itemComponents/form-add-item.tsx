@@ -1,10 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { postData } from "@/utils/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
-import { postData } from "@/utils/functions";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
@@ -24,6 +25,17 @@ export interface FormAddItemDialogProps {
 
 export interface FormAddItemDialogWithSetOpen extends FormAddItemDialogProps {
   setOpen: (open: boolean) => void;
+}
+
+type Item = {
+  brandId: mongoose.Types.ObjectId,
+  brandName: string,
+  brandCategory: string
+  variantName: string,
+  name: string,
+  price: number,
+  quantity: number,
+  expiration: Date
 }
 
 const formSchema = z.object({
@@ -56,6 +68,29 @@ export default function FormAddItem({
   brandCategory,
   setOpen,
 }: FormAddItemDialogWithSetOpen) {
+
+  const queryClient = useQueryClient()
+
+  // react-query hook that is use to create new brand.
+  const mutation = useMutation({
+    // newItem is object that was pass by mutation.mutate.
+    mutationFn: (newItem: Item) => {
+      // (1)Arugment is url, (2)Argument is the object data to be created.
+      return postData("create-product", newItem)
+    },
+    onSuccess: () => {
+      // This refetches the items after adding an item .
+      queryClient.invalidateQueries({ queryKey: ['item'] })
+    },
+    onError: (error) => {
+      console.error("Error creating item:", error);
+    },
+    onSettled: () => {
+      // setOpen is for the dialog to close.
+      setOpen(false);
+    }
+  })
+
   // Define form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,10 +107,10 @@ export default function FormAddItem({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    // brandName and brandCategory is needed for backend validation.
     try {
-      // (1)Arugment is url, (2)Argument is the object data to be created.
-      postData("create-product", {
+      // Method to create item.
+      // brandName and brandCategory is needed for backend validation.
+      mutation.mutate({
         brandId: brandId,
         brandName: brandName,
         brandCategory: brandCategory,
@@ -84,12 +119,10 @@ export default function FormAddItem({
         price: values.price,
         quantity: values.quantity,
         expiration: values.expirationDate,
-      });
+      })
 
-      // setOpen is for the dialog to close.
-      setOpen(false);
     } catch (error) {
-      console.log("There was an error in creating brand", error);
+      console.log("There was an error in creating item", error);
     }
   }
 

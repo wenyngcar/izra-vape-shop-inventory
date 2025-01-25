@@ -4,12 +4,11 @@ import mongoose from "mongoose";
 const baseUrl = "http://localhost:3000/api/";
 
 // Function for fetching data.
-// url is required argument, _id is optional argument.
+// url is required argument, filter is optional argument.
+// filter is mostly used on fetching item base on brandId.
 export function getData(
-  url: string,
-  filter: {
-    brandId?: mongoose.Types.ObjectId; // For fetching item that belongs only to specific brand.
-  } = {}
+  url,
+  filter = {}
 ) {
   return axios.get(`${baseUrl}${url}`, {
     params: filter,
@@ -17,12 +16,12 @@ export function getData(
 }
 
 // Function for deleting data.
-export function deleteData(url: string, id: mongoose.Types.ObjectId) {
+export function deleteData(url, id) {
   return axios.delete(`${baseUrl}${url}?_id=${id}`);
 }
 
 // Function for creating data.
-export function postData(url: string, body: object) {
+export function postData(url, body) {
   return axios.post(
     `${baseUrl}${url}`,
     {
@@ -37,7 +36,7 @@ export function postData(url: string, body: object) {
 }
 
 // Function for editing data.
-export function patchData(url: string, body: object) {
+export function patchData(url, body) {
   return axios.patch(
     `${baseUrl}${url}`,
     {

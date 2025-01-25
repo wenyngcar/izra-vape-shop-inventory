@@ -1,23 +1,31 @@
-import { useEffect, useState } from "react";
-import { Brands, columns } from "../columns";
+import useFetchBrand from "@/hooks/useFetchBrands";
+import { columns } from "../columns";
 import { BrandTable } from "./brand-table";
-import { useFetchBrands } from "@/hooks/use-fetch-brands";
 
 export default function BrandPage() {
-  const [brandData, setBrandData] = useState<Brands[]>([]);
+  // Custom hook for fetching brand data
+  const { isPending, isError, data, error } = useFetchBrand()
 
-  // Fetching data
-  useEffect(() => {
-    async function fetchData() {
-      const brandResult = await useFetchBrands();
-      setBrandData(brandResult);
-    }
-    fetchData();
-  }, []);
+  // If data is still pending. 
+  if (isPending) {
+    return (
+      <div className="container mx-auto py-10">
+        Loading...
+      </div>)
+  }
+
+  // If there is error in fetching data.
+  if (isError) {
+    console.error("Error fetching sales:", error);
+    return (
+      <div className="container mx-auto py-10">
+        Error loading brand data
+      </div>)
+  }
 
   return (
     <div className="container mx-auto py-10">
-      <BrandTable columns={columns} data={brandData} />
+      <BrandTable columns={columns} data={data?.data} />
     </div>
   );
 }

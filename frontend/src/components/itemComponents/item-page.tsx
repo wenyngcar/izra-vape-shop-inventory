@@ -1,31 +1,33 @@
-import { useEffect, useState } from "react";
-import { Items, nestedColumns } from "../columns";
-import { UseFetchItems } from "@/hooks/use-fetch-items";
+import useFetchItems from "@/hooks/useFetchItems";
+import { MongooseId } from "@/utils/types";
+import { nestedColumns } from "../columns";
 import { ItemDataTable } from "./item-table";
-import mongoose from "mongoose";
 
-type BrandId = {
-  brandId: mongoose.Types.ObjectId;
-};
+export default function ItemPage({ _id }: MongooseId) {
+  const { isPending, isError, data, error } = useFetchItems(_id)
+  if (isPending) {
+    return (
+      <div className="container mx-auto py-10">
+        Loading...
+      </div>)
+  }
 
-export default function ItemPage({ brandId }: BrandId) {
-  const [itemData, setItemData] = useState<Items[]>([]);
-
-  // Fetching data
-  useEffect(() => {
-    async function fetchData() {
-      const itemResult = await UseFetchItems(brandId);
-      setItemData(itemResult);
-    }
-    fetchData();
-  }, []);
+  // If there is error in fetching data.
+  if (isError) {
+    console.error("Error fetching sales:", error);
+    return (
+      <div className="container mx-auto py-10">
+        Error loading brand data
+      </div>)
+  }
 
   return (
     <div className="container mx-auto pb-8">
       <ItemDataTable
         columns={nestedColumns}
-        data={itemData}
-        brandId={brandId}
+        data={data?.data}
+        // brandId is not necessary for displaying but need for sale button.
+        brandId={_id}
       />
     </div>
   );

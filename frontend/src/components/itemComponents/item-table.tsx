@@ -1,16 +1,14 @@
-"use client";
-
+import { Items } from "@/utils/types";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Items } from "../columns";
-import ItemEditFormDialog from "./form-dialog-edit-item";
+import mongoose from "mongoose";
 import DeleteItem from "./delete-single-product";
 import AddSaleDialog from "./form-dialog-create-sale";
-import mongoose from "mongoose";
+import ItemEditFormDialog from "./form-dialog-edit-item";
 
 interface ItemDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -59,9 +57,9 @@ export function ItemDataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </div>
                 );
               })}
@@ -82,19 +80,19 @@ export function ItemDataTable<TData, TValue>({
                 <div>{(row.original as Items).name}</div>
                 <div>{(row.original as Items).quantity}</div>
                 <div>&#8369;{(row.original as Items).price}</div>
-                <div>{formatDate((row.original as Items).date)}</div>
+                <div>{formatDate((row.original as Items).expiration)}</div>
                 <div className="space-x-2">
                   <ItemEditFormDialog
-                    itemId={(row.original as Items).id}
+                    itemId={(row.original as Items)._id}
                     itemName={(row.original as Items).name}
                     itemQuantity={(row.original as Items).quantity}
                     itemPrice={(row.original as Items).price}
-                    itemDate={(row.original as Items).date}
+                    itemDate={(row.original as Items).expiration}
                   />
-                  <DeleteItem itemId={(row.original as Items).id} />
+                  <DeleteItem _id={(row.original as Items)._id} />
                   <AddSaleDialog
                     brandId={brandId}
-                    productId={(row.original as Items).id}
+                    productId={(row.original as Items)._id}
                     quantity={(row.original as Items).quantity}
                   />
                 </div>

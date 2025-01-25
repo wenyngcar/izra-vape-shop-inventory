@@ -1,37 +1,54 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
 import {
   AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { deleteData } from "@/utils/api";
+import { MongooseId, Sales } from "@/utils/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LucideTrash2 } from "lucide-react";
-import { Sales } from "../columns";
-import { deleteData } from "@/utils/functions";
 import mongoose from "mongoose";
 
+
 export default function SalesTable({ salesData }: { salesData: Sales[] }) {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: (saleId: MongooseId) => {
+      // (1)Argument is url, (2)Argument is the id of the data to be deleted.
+      return deleteData("delete-sales", saleId)
+
+    }, onSuccess: () => {
+      // This refetches the item after deleting an sale.
+      queryClient.invalidateQueries({ queryKey: ['sales'] })
+
+    }, onError: (error) => {
+      console.error("There was an error in deleting sale.", error);
+    }
+  })
+
   async function handleDeleteSale(
     saleId: mongoose.Types.ObjectId
   ): Promise<void> {
     try {
-      // (1)Argument is url, (2)Argument is sale id.
-      await deleteData("delete-sales", saleId);
-      // console.log(`Successfully deleted sale with ID: ${saleId}`);
+      // Method to delete sale.
+      mutation.mutate(saleId)
     } catch (error) {
       console.error("Error deleting sale:", error);
     }
@@ -57,8 +74,8 @@ export default function SalesTable({ salesData }: { salesData: Sales[] }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {salesData.map((sale) => (
-                <TableRow key={sale.id.toString()}>
+              {salesData.map((sale, index) => (
+                <TableRow key={index}>
                   <TableCell>{sale.name}</TableCell>
                   <TableCell>{sale.category}</TableCell>
                   <TableCell>{sale.quantity}</TableCell>
@@ -87,7 +104,7 @@ export default function SalesTable({ salesData }: { salesData: Sales[] }) {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction asChild>
-                            <Button onClick={() => handleDeleteSale(sale.id)}>
+                            <Button onClick={() => handleDeleteSale(sale._id)}>
                               Delete
                             </Button>
                           </AlertDialogAction>
