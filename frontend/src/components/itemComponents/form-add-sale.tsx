@@ -1,10 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { patchData, postData } from "@/utils/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
-import { postData, patchData } from "@/utils/functions";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
@@ -25,6 +26,17 @@ export interface FormAddSaleDialogWithSetOpen extends FormAddSaleDialogProps {
   setOpen: (open: boolean) => void;
 }
 
+type Sale = {
+  brandId: mongoose.Types.ObjectId,
+  productId: mongoose.Types.ObjectId,
+  sale: number
+}
+
+type Item = {
+  id: mongoose.Types.ObjectId,
+  quantity: number
+}
+
 const formSchema = z.object({
   sale: z
     .number({ required_error: "Please enter a quantity" })
@@ -37,6 +49,34 @@ export default function AddSaleForm({
   quantity,
   setOpen,
 }: FormAddSaleDialogWithSetOpen) {
+
+  const queryClient = useQueryClient()
+
+  // Mutation hook for creting sale.
+  const mutationSale = useMutation({
+    mutationFn: (newSale: Sale) => {
+      // (1)Arugment is url, (2)Argument is the object data to be created.
+      return postData("create-sale", newSale)
+    },
+    onError: (error) => {
+      console.error("Error creating sale:", error);
+    },
+  })
+
+  // Mutation hook for editing item.
+  const mutationItem = useMutation({
+    mutationFn: (editedItem: Item) => {
+      // (1)Arugment is url, (2)Argument is the object data to be edited.
+      return patchData("subtract-quantity", editedItem)
+    }, onSuccess: () => {
+      // This refetches the item after creating a sale.
+      queryClient.invalidateQueries({ queryKey: ['item'] })
+    },
+    onError: (error) => {
+      console.error("Error subtracting quantity of sale to product :", error);
+    }
+  })
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,17 +90,18 @@ export default function AddSaleForm({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      // (1)Arugment is url, (2)Argument is the object data to be created.
-      postData("create-sale", {
+      // Method to create sale.
+      mutationSale.mutate({
         brandId: brandId,
         productId: productId,
         sale: values.sale,
-      });
-      // (1)Arugment is url, (2)Argument is the object data to be edited.
-      patchData("subtract-quantity", {
+      })
+
+      // Method to edit the item quantity.
+      mutationItem.mutate({
         id: productId,
         quantity: quantity - values.sale,
-      });
+      })
 
       setOpen(false);
     } catch (error) {

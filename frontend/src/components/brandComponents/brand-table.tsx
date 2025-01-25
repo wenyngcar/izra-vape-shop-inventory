@@ -1,8 +1,13 @@
-"use client";
-
 import * as React from "react";
 import InventoryFormDialog from "./form-dialog-add-brand";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,18 +19,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import { Input } from "@/components/ui/input";
-import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
-import { Brands } from "../columns";
+import { Brands, MongooseId } from "@/utils/types";
 import { ChevronDown } from "lucide-react";
+import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
 import ItemPage from "../itemComponents/item-page";
 
 interface BrandDataTableProps<TData, TValue> {
@@ -61,9 +59,9 @@ export function BrandTable<TData, TValue>({
       <div className="flex items-center justify-around space-x-4 py-4">
         <Input
           placeholder="Search brand here..."
-          value={(table.getColumn("brand")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("brand")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="min-w-sm w-full neon-input"
         />
@@ -84,9 +82,9 @@ export function BrandTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -108,7 +106,7 @@ export function BrandTable<TData, TValue>({
               >
                 <AccordionItem value={row.id} className="grid grid-cols-3 px-2">
                   <AccordionTrigger>
-                    {(row.original as Brands).brand}
+                    {(row.original as Brands).name}
                   </AccordionTrigger>
                   <AccordionTrigger>
                     {(row.original as Brands).category}
@@ -116,13 +114,13 @@ export function BrandTable<TData, TValue>({
                   </AccordionTrigger>
                   <div className="place-self-center">
                     <FormDialogAddItem
-                      brandId={(row.original as Brands).id}
-                      brandName={(row.original as Brands).brand}
+                      brandId={(row.original as Brands)._id}
+                      brandName={(row.original as Brands).name}
                       brandCategory={(row.original as Brands).category}
                     />
                   </div>
                   <AccordionContent className="col-span-3">
-                    <ItemPage brandId={(row.original as Brands).id} />
+                    <ItemPage _id={(row.original as MongooseId)._id} />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
