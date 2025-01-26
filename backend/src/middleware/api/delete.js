@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
+import Brand from "../../database/models/Brand.js"
 import Product from "../../database/models/Product.js"
 import Sale from "../../database/models/Sale.js"
-import Brand from "../../database/models/Brand.js"
 
 /**
  * Delete products based on productId
@@ -34,4 +34,13 @@ export async function deleteBrandById(id) {
   await Brand.findByIdAndDelete(id)
 
   console.log(`Brand with ID ${JSON.stringify(id)} successfully deleted.`)
+}
+
+/**
+ * Delete products based on brandId
+ * @param {mongoose.Types.ObjectId | string} id by brand.
+ */
+export async function deleteProductByBrandId(id) {
+  await Product.deleteMany(id)
+  console.log(`Products with Brand ID ${JSON.stringify(id)} successfully deleted.`)
 }
