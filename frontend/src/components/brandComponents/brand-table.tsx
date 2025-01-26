@@ -198,7 +198,7 @@ export function BrandTable<TData, TValue>({
             ))
           ) : (
             <div>
-              <div className="text-2xl p-14 text-center">No results.</div>
+              <div className="text-2xl p-14 text-center">No record of brands.</div>
             </div>
           )}
         </div>
