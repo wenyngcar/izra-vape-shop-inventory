@@ -1,6 +1,9 @@
 import express from "express";
 import { checkSchema, validationResult } from 'express-validator';
-import { createProduct, deleteProductById, editProductById, readProducts } from "../api/database.js";
+import { readProducts } from "../api/get.js";
+import { createProduct } from "../api/post.js"
+import { deleteProductById } from "../api/delete.js"
+import { editProductById } from "../api/edit.js"
 import * as message from "../utils/message.js";
 import { createProductValidationSchema } from "../utils/validationSchema.js";
 

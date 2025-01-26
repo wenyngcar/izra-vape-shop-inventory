@@ -1,5 +1,7 @@
 import express from "express";
-import { createSale, deleteSalesById, readSales } from "../api/database.js";
+import { createSale } from "../api/post.js";
+import { deleteSalesById } from "../api/delete.js";
+import { readSales } from "../api/get.js";
 import * as message from "../utils/message.js";
 
 const router = express.Router();
@@ -38,9 +40,9 @@ router.delete("/delete-sales", async (req, res) => {
     if (!_id) return res.json(message.failure("Sale ID (_id) is requried."))
 
     await deleteSalesById(_id)
-    res.json(message.success(`Product with ID ${JSON.stringify(_id)} successfully deleted.`));
+    res.json(message.success(`Sale with ID ${JSON.stringify(_id)} successfully deleted.`));
   } catch (error) {
-    console.error("Error deleting product:", error);
+    console.error("Error deleting sale:", error);
     res.json(message.failure(error.message));
   }
 })

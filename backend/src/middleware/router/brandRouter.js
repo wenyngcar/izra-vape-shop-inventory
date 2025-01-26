@@ -1,6 +1,7 @@
 import express from "express";
 import { checkSchema, validationResult } from 'express-validator';
-import { createBrand, readBrands } from "../api/database.js";
+import { readBrands } from "../api/get.js"
+import { createBrand } from "../api/post.js"
 import * as message from "../utils/message.js";
 import { createBrandValidationSchema } from "../utils/validationSchema.js";
 
