@@ -10,18 +10,18 @@ import Account from "../../database/models/Account.js";
  * @param {String} options.password The password of the account.
  */
 export async function createAccount(options) {
-    if (await hasAccount(options.username))
-        throw new Error(`Account ${options.username} already exists.`);
+  if (await hasAccount(options.username))
+    throw new Error(`Account ${options.username} already exists.`);
 
-    const account = new Account({
-        username: options.username,
-        password: options.password,
-    });
-    
-    await account.save();
-    console.log(`Created account for ${account.username}.`);
-    
-    return account;
+  const account = new Account({
+    username: options.username,
+    password: options.password,
+  });
+
+  await account.save();
+  console.log(`Created account for ${account.username}.`);
+
+  return account;
 }
 
 
@@ -31,8 +31,8 @@ export async function createAccount(options) {
  * @param {String} username The username of the account.
  */
 async function hasAccount(username) {
-    const existingAccounts = await Account.find({ username });
-    return existingAccounts.length !== 0;
+  const existingAccounts = await Account.find({ username });
+  return existingAccounts.length !== 0;
 }
 
 
@@ -44,10 +44,10 @@ async function hasAccount(username) {
  * @param {String} options.password The password of the account.
  */
 export async function verifyAccount(options) {
-    const accounts = await Account.find({
-        username: options.username,
-        password: options.password,
-    });
-    return accounts.length !== 0;
+  const accounts = await Account.find({
+    username: options.username,
+    password: options.password,
+  });
+  return accounts.length !== 0;
 }
 
