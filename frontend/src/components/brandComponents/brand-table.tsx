@@ -17,7 +17,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { deleteData } from "@/utils/api";
 import { Brands, MongooseId } from "@/utils/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -30,6 +32,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ChevronDown, LucideTrash2 } from "lucide-react";
+import mongoose from "mongoose";
 import * as React from "react";
 import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
 import ItemPage from "../itemComponents/item-page";
@@ -63,6 +66,33 @@ export function BrandTable<TData, TValue>({
       columnFilters,
     },
   });
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: (brandId: MongooseId) => {
+      // (1)Argument is url, (2)Argument is the id of the data to be deleted.
+      return deleteData("delete-brand", brandId)
+
+    }, onSuccess: () => {
+      // This refetches the brands after deleting an sale.
+      queryClient.invalidateQueries({ queryKey: ['brands'] })
+
+    }, onError: (error) => {
+      console.error("There was an error in deleting brand.", error);
+    }
+  })
+
+  async function handleDeleteBrand(
+    brandId: mongoose.Types.ObjectId
+  ): Promise<void> {
+    try {
+      // Method to delete sale.
+      mutation.mutate(brandId)
+    } catch (error) {
+      console.error("Error deleting brand:", error);
+    }
+  }
 
   return (
     <>
@@ -151,7 +181,11 @@ export function BrandTable<TData, TValue>({
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction>Continue</AlertDialogAction>
+                          <AlertDialogAction asChild>
+                            <Button onClick={() => handleDeleteBrand((row.original as Brands)._id)}>
+                              Delete
+                            </Button>
+                          </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
