@@ -4,6 +4,7 @@ import { readBrands } from "../api/get.js"
 import { createBrand } from "../api/post.js"
 import * as message from "../utils/message.js";
 import { createBrandValidationSchema } from "../utils/validationSchema.js";
+import { deleteBrandById } from "../api/delete.js";
 
 const router = express.Router();
 
@@ -37,5 +38,21 @@ router.post("/create-brand", checkSchema(createBrandValidationSchema),
     res.status(400).json(message.failure(result.array()));
   }
 );
+
+// For deleting brand.
+router.delete("/delete-brand", async (req, res) => {
+  try {
+    const _id = req.query
+
+    // Check if there are id pass in the query parameters.
+    if (!_id) return res.json(message.failure("Brand ID (_id) is requried."))
+
+    await deleteBrandById(_id)
+    res.json(message.success(`Brand with ID ${JSON.stringify(_id)} successfully deleted.`));
+  } catch (error) {
+    console.error("Error deleting brand:", error);
+    res.json(message.failure(error.message));
+  }
+})
 
 export default router
