@@ -46,12 +46,12 @@ interface BrandDataTableProps<TData, TValue> {
 }
 
 // Cannot add icon directly to description. This is needed for the icon
-const ToastWithIcon = () => (
+const ToastWithIcon = () => (
   <div className="flex space-x-3">
     <CircleCheckBig color="#00f513" />
     <span>Brand deleted successfully</span>
   </div>
-)
+);
 
 export function BrandTable<TData, TValue>({
   columns,
@@ -76,40 +76,41 @@ export function BrandTable<TData, TValue>({
     },
   });
 
-  const queryClient = useQueryClient()
-  const { toast } = useToast()
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const mutation = useMutation({
     mutationFn: (brandId: MongooseId) => {
       // (1)Argument is url, (2)Argument is the id of the data to be deleted.
-      return deleteData("delete-brand", brandId)
-
-    }, onSuccess: () => {
+      return deleteData("delete-brand", brandId);
+    },
+    onSuccess: () => {
       // Toast is the side notification.
-      toast({
+      toast({
         variant: "primary",
-        description: <ToastWithIcon />,
-      })
-      // This refetches the brands after deleting an sale.
-      queryClient.invalidateQueries({ queryKey: ['brands'] })
+        description: <ToastWithIcon />,
+      });
 
-    }, onError: (error) => {
+      // This refetches the brands after deleting an sale.
+      queryClient.invalidateQueries({ queryKey: ["brands"] });
+    },
+    onError: (error) => {
       // Toast is the side notification.
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      })
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
       console.error("There was an error in deleting brand.", error);
-    }
-  })
+    },
+  });
 
   async function handleDeleteBrand(
     brandId: mongoose.Types.ObjectId
   ): Promise<void> {
     try {
       // Method to delete sale.
-      mutation.mutate(brandId)
+      mutation.mutate(brandId);
     } catch (error) {
       console.error("Error deleting brand:", error);
     }
@@ -145,9 +146,9 @@ export function BrandTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   );
                 })}
@@ -193,9 +194,12 @@ export function BrandTable<TData, TValue>({
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Do you want to delete this brand?</AlertDialogTitle>
+                          <AlertDialogTitle>
+                            Do you want to delete this brand?
+                          </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. Do you wish to delete the brand &nbsp;
+                            This action cannot be undone. Do you wish to delete
+                            the brand &nbsp;
                             {(row.original as Brands).name}
                             &nbsp;from your inventory?
                           </AlertDialogDescription>
@@ -203,7 +207,11 @@ export function BrandTable<TData, TValue>({
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction asChild>
-                            <Button onClick={() => handleDeleteBrand((row.original as Brands)._id)}>
+                            <Button
+                              onClick={() =>
+                                handleDeleteBrand((row.original as Brands)._id)
+                              }
+                            >
                               Delete
                             </Button>
                           </AlertDialogAction>
@@ -219,7 +227,9 @@ export function BrandTable<TData, TValue>({
             ))
           ) : (
             <div>
-              <div className="text-2xl p-14 text-center">No record of brands.</div>
+              <div className="text-2xl p-14 text-center">
+                No record of brands.
+              </div>
             </div>
           )}
         </div>
