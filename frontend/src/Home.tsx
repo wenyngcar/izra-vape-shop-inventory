@@ -10,7 +10,7 @@ function Home() {
 
   return (
     <>
-      <header className="bg-dark-background py-6">
+      <header className="bg-dark-background p-6">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img
@@ -28,14 +28,13 @@ function Home() {
       <Tabs
         value={open}
         onValueChange={setOpen}
-        className="flex-grow container mx-auto p-8 space-y-2"
+        className="flex-grow container mx-auto p-8 space-y-2 h-screen"
       >
         <TabsList className="bg-gray-100 w-full grid-cols-2 justify-around">
           <TabsTrigger
             value="inventory"
-            className={`tab-trigger ${
-              open === "inventory" ? "active-tab" : ""
-            }`}
+            className={`tab-trigger ${open === "inventory" ? "active-tab" : ""
+              }`}
           >
             <ListChecks className="w-4 h-4 mr-2" /> Inventory
           </TabsTrigger>

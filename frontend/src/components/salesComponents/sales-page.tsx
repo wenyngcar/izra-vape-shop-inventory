@@ -72,7 +72,7 @@ export default function SalesPage() {
   if (isError) {
     console.error("Error fetching sales:", error);
     return (
-      <div className="container mx-auto py-10 px-10 space-y-4 h-[380px]">
+      <div className="container mx-auto py-10 px-10 space-y-4">
         <div className="flex space-x-3 text-4xl font-semibold">
           <AlertCircle color="red" size={43} />
           <div>
