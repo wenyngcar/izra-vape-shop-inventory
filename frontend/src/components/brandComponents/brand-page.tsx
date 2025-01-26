@@ -11,13 +11,12 @@ export default function BrandPage() {
   // If data is still pending. 
   if (isPending) {
     return (
-      <div className="container mx-auto py-10 space-y-8">
+      <div className="container mx-auto mt-10 py-10 px-5 space-y-8 border rounded-md drop-shadow-md">
         <div className="grid grid-cols-3 gap-x-5">
           <Skeleton className="h-10 col-span-2" />
           <Skeleton className=" h-10" />
         </div>
-        <div className="space-y-3">
-          <Skeleton className="h-10" />
+        <div className="space-y-4">
           <Skeleton className="h-10" />
           <Skeleton className="h-10" />
           <Skeleton className="h-10" />
