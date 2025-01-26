@@ -3,8 +3,6 @@ import useFetchBrand from "@/hooks/useFetchBrands";
 import { AlertCircle } from "lucide-react";
 import { columns } from "../columns";
 import { BrandTable } from "./brand-table";
-import { Skeleton } from "@/components/ui/skeleton"
-import { AlertCircle } from "lucide-react";
 
 export default function BrandPage() {
   // Custom hook for fetching brand data
