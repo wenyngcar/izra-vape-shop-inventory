@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { CircleCheckBig } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 import {
   Form,
@@ -37,6 +39,14 @@ type Item = {
   quantity: number
 }
 
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Sale created successfully</span>
+  </div>
+)
+
 const formSchema = z.object({
   sale: z
     .number({ required_error: "Please enter a quantity" })
@@ -51,14 +61,27 @@ export default function AddSaleForm({
 }: FormAddSaleDialogWithSetOpen) {
 
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   // Mutation hook for creting sale.
   const mutationSale = useMutation({
     mutationFn: (newSale: Sale) => {
       // (1)Arugment is url, (2)Argument is the object data to be created.
       return postData("create-sale", newSale)
+    }, onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
     },
     onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.error("Error creating sale:", error);
     },
   })

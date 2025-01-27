@@ -19,15 +19,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useToast } from "@/hooks/use-toast";
 import { deleteData } from "@/utils/api";
 import { MongooseId, Sales } from "@/utils/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LucideTrash2 } from "lucide-react";
+import { CircleCheckBig, LucideTrash2 } from "lucide-react";
 import mongoose from "mongoose";
 
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Sale deleted successfully</span>
+  </div>
+)
 
 export default function SalesTable({ salesData }: { salesData: Sales[] }) {
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   const mutation = useMutation({
     mutationFn: (saleId: MongooseId) => {
@@ -35,10 +44,21 @@ export default function SalesTable({ salesData }: { salesData: Sales[] }) {
       return deleteData("delete-sales", saleId)
 
     }, onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
       // This refetches the item after deleting an sale.
       queryClient.invalidateQueries({ queryKey: ['sales'] })
 
     }, onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.error("There was an error in deleting sale.", error);
     }
   })

@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useToast } from "@/hooks/use-toast";
+import { CircleCheckBig } from "lucide-react";
 
 import {
   Form,
@@ -23,6 +25,14 @@ export interface FormEditItemDialogProps {
   itemPrice: number;
   itemDate: Date;
 }
+
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Product edited successfully</span>
+  </div>
+)
 
 type Item = {
   id: mongoose.Types.ObjectId,
@@ -68,6 +78,7 @@ export default function FormEditItem({
 }: FormEditItemDialogWithSetOpen) {
 
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   // react-query hook that is use to create new brand.
   const mutation = useMutation({
@@ -76,10 +87,21 @@ export default function FormEditItem({
       // (1)Arugment is url, (2)Argument is the object data to be edited.
       return patchData("edit-product", editedItem)
     }, onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
       // This refetches the item after editing an item.
       queryClient.invalidateQueries({ queryKey: ['item'] })
     },
     onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.error("There was an error in editing item.", error);
     }, onSettled: () => {
       setOpen(false);

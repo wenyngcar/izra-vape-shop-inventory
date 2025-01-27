@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { CircleCheckBig } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 import {
   Form,
@@ -22,6 +24,14 @@ export interface FormAddItemDialogProps {
   brandName: string;
   brandCategory: string;
 }
+
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Product created successfully</span>
+  </div>
+)
 
 export interface FormAddItemDialogWithSetOpen extends FormAddItemDialogProps {
   setOpen: (open: boolean) => void;
@@ -70,6 +80,7 @@ export default function FormAddItem({
 }: FormAddItemDialogWithSetOpen) {
 
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   // react-query hook that is use to create new brand.
   const mutation = useMutation({
@@ -79,16 +90,27 @@ export default function FormAddItem({
       return postData("create-product", newItem)
     },
     onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
       // This refetches the items after adding an item .
       queryClient.invalidateQueries({ queryKey: ['item'] })
     },
     onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.error("Error creating item:", error);
     },
     onSettled: () => {
       // setOpen is for the dialog to close.
       setOpen(false);
-    }
+    },
   })
 
   // Define form.
