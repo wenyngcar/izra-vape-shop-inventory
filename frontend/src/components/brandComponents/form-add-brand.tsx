@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import { postData } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CircleCheckBig } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -38,6 +40,14 @@ const formSchema = z.object({
   category: z.enum(["E-liquid", "Device"], { required_error: "Please select a category" })
 });
 
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Brand created successfully</span>
+  </div>
+)
+
 export default function BrandInventoryForm({
   setOpen,
 }: {
@@ -45,6 +55,7 @@ export default function BrandInventoryForm({
 }) {
 
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   // react-query hook that is use to create new brand.
   const mutation = useMutation({
@@ -54,10 +65,21 @@ export default function BrandInventoryForm({
       return postData("create-brand", newBrand)
     },
     onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
       // This refetches the brands after adding a brand.
       queryClient.invalidateQueries({ queryKey: ['brands'] })
     },
     onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.error("Error creating brand:", error);
     },
     onSettled: () => {
@@ -128,6 +150,6 @@ export default function BrandInventoryForm({
         />
         <Button type="submit">Submit</Button>
       </form>
-    </Form>
+    </Form >
   );
 }

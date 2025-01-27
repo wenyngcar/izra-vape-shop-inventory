@@ -9,15 +9,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Button } from "../ui/button";
-import { Trash2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { deleteData } from "@/utils/api";
 import { MongooseId } from "@/utils/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CircleCheckBig, Trash2 } from "lucide-react";
+import { Button } from "../ui/button";
+
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Product deleted successfully</span>
+  </div>
+)
 
 export default function DeleteItem({ _id }: MongooseId) {
 
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   // react-query hook that is use to delete item.
   const mutation = useMutation({
@@ -26,10 +36,21 @@ export default function DeleteItem({ _id }: MongooseId) {
       return deleteData("delete-product", itemId)
 
     }, onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
       // This refetches the item after deleting an item.
       queryClient.invalidateQueries({ queryKey: ['item'] })
 
     }, onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.log("There was an error on deleting product", error);
     }
   })

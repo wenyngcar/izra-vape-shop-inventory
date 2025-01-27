@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useToast } from "@/hooks/use-toast";
 import { deleteData } from "@/utils/api";
 import { Brands, MongooseId } from "@/utils/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -31,7 +32,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown, LucideTrash2 } from "lucide-react";
+import { ChevronDown, CircleCheckBig, LucideTrash2 } from "lucide-react";
 import mongoose from "mongoose";
 import * as React from "react";
 import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
@@ -43,6 +44,14 @@ interface BrandDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
+
+// Cannot add icon directly to description. This is needed for the icon
+const ToastWithIcon = () => (
+  <div className="flex space-x-3">
+    <CircleCheckBig color="#00f513" />
+    <span>Brand deleted successfully</span>
+  </div>
+)
 
 export function BrandTable<TData, TValue>({
   columns,
@@ -68,6 +77,7 @@ export function BrandTable<TData, TValue>({
   });
 
   const queryClient = useQueryClient()
+  const { toast } = useToast()
 
   const mutation = useMutation({
     mutationFn: (brandId: MongooseId) => {
@@ -75,10 +85,21 @@ export function BrandTable<TData, TValue>({
       return deleteData("delete-brand", brandId)
 
     }, onSuccess: () => {
+      // Toast is the side notification.
+      toast({
+        variant: "primary",
+        description: <ToastWithIcon />,
+      })
       // This refetches the brands after deleting an sale.
       queryClient.invalidateQueries({ queryKey: ['brands'] })
 
     }, onError: (error) => {
+      // Toast is the side notification.
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
       console.error("There was an error in deleting brand.", error);
     }
   })
