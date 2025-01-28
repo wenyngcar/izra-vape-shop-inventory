@@ -15,6 +15,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
@@ -32,7 +39,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown, CircleCheckBig, LucideTrash2 } from "lucide-react";
+import {
+  ChevronDown,
+  CircleCheckBig,
+  LucideTrash2,
+  Filter,
+} from "lucide-react";
 import mongoose from "mongoose";
 import * as React from "react";
 import FormDialogAddItem from "../itemComponents/form-dialog-add-item";
@@ -126,9 +138,25 @@ export function BrandTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="min-w-sm w-full neon-input"
+          className="min-w-sm w-full neon-input flex-2"
         />
-
+        <Select
+          onValueChange={(value) =>
+            table
+              .getColumn("category")
+              ?.setFilterValue(value === "none" ? "" : value)
+          }
+        >
+          <SelectTrigger className="flex-1 space-x-2">
+            <Filter size={"18px"} />
+            <SelectValue placeholder="Select a category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="none">None</SelectItem>
+            <SelectItem value="Device">Device</SelectItem>
+            <SelectItem value="E-liquid">E-liquid</SelectItem>
+          </SelectContent>
+        </Select>
         {/* Button for adding brand. */}
         <InventoryFormDialog />
       </div>
