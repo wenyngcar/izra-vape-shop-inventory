@@ -107,8 +107,39 @@ export default function SalesTable<TData, TValue>({
     }
   }
 
+  // Function to get all values of a specific column
+  const getColumnValues = (columnId: string): string[] => {
+    return table
+      .getRowModel()
+      .rows.map((row) => row.getValue(columnId) as string);
+  };
+
+  // Function to calculate the total value of a specific column
+  const calculateTotalValue = (columnId: string): number => {
+    const values = getColumnValues(columnId);
+    const total = values.reduce((acc: number, value: string) => {
+      // Remove currency symbol and commas, then convert to number
+      const numericValue = parseFloat(value.replace(/[₱,]/g, ""));
+      return acc + numericValue;
+    }, 0);
+    return total;
+  };
+
+  // Example usage of the function
+  const totalValues = calculateTotalValue("total");
   return (
     <div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-3xl">Total Sales</CardTitle>
+        </CardHeader>
+        <CardContent className="px-10 space-y-2">
+          <div>
+            Total Products Sold: {table.getPrePaginationRowModel().rows.length}
+          </div>
+          <div>Total: ₱{totalValues.toLocaleString()}</div>
+        </CardContent>
+      </Card>
       <div className="flex items-center py-4">
         <Input
           placeholder="Enter name of product here..."
