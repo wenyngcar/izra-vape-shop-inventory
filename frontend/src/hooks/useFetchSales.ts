@@ -10,6 +10,8 @@ export default function useFetchSales() {
 
   const saleData = data?.data.map((sale: Sales) => ({
     ...sale,
+    price: `₱${sale.price.toLocaleString()}`,
+    total: `₱${sale.total.toLocaleString()}`,
     date: new Date(sale.date).toLocaleString("en-US", {
       year: "numeric",
       month: "2-digit",
