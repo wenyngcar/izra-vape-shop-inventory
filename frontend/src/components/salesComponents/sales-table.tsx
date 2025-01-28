@@ -159,7 +159,11 @@ export default function SalesTable<TData, TValue>({
                     <TableCell>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            // className="bg-red-600"
+                          >
                             <LucideTrash2 size={16} />
                           </Button>
                         </AlertDialogTrigger>
@@ -176,7 +180,10 @@ export default function SalesTable<TData, TValue>({
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction asChild>
+                              {/* variant prop doesn't work here as it is wrap in AlertDialogAction.
+                              manual className is needed to style the button. */}
                               <Button
+                                className=" bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 "
                                 onClick={() =>
                                   handleDeleteSale((row.original as Sales)._id)
                                 }
