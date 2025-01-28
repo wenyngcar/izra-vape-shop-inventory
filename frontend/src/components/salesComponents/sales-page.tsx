@@ -79,10 +79,18 @@ export default function SalesPage() {
           <AlertCircle color="red" size={43} />
           <div>Error</div>
         </div>
+        <div className="font-semibold">
+          This problems might be the cause of the error:
+        </div>
         <ul className="list-disc px-10">
           <li> Cannot load sale data from the server. </li>
-          <li> Please contact the developers if this error still persist. </li>
+          <li>Server might be having a connection timeout.</li>
+          <li>There is a problem in your network connection.</li>
         </ul>
+        <div>
+          Try reloading the page. Please contact the developers if this error
+          still persist.
+        </div>
       </div>
     );
   }
