@@ -33,8 +33,9 @@ function Home() {
         <TabsList className="bg-gray-100 w-full grid-cols-2 justify-around">
           <TabsTrigger
             value="inventory"
-            className={`tab-trigger ${open === "inventory" ? "active-tab" : ""
-              }`}
+            className={`tab-trigger ${
+              open === "inventory" ? "active-tab" : ""
+            }`}
           >
             <ListChecks className="w-4 h-4 mr-2" /> Inventory
           </TabsTrigger>
@@ -57,7 +58,7 @@ function Home() {
         </TabsContent>
       </Tabs>
 
-      <footer className="bg-dark-background text-gray-300 py-6 min-h-5">
+      {/* <footer className="bg-dark-background text-gray-300 py-6 min-h-5">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold neon-white-text mb-4">
             Izra Vapeshop Inventory System
@@ -78,7 +79,7 @@ function Home() {
             </a>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </>
   );
 }
