@@ -67,4 +67,14 @@ export const columns_sale: ColumnDef<Sales>[] = [
     accessorKey: "date",
     header: "Solt at",
   },
+  {
+    // This column is not needed for display but is used for filtering.
+    accessorKey: "month",
+    header: "Month",
+  },
+  {
+    // This column is not needed for display but is used for filtering.
+    accessorKey: "year",
+    header: "Year",
+  },
 ];
