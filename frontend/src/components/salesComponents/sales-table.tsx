@@ -19,6 +19,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   ColumnDef,
   ColumnFiltersState,
   flexRender,
@@ -36,6 +43,8 @@ import mongoose from "mongoose";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Filter } from "lucide-react";
+import { Label } from "../ui/label";
 
 // Cannot add icon directly to description. This is needed for the icon
 const ToastWithIcon = () => (
@@ -66,7 +75,21 @@ export default function SalesTable<TData, TValue>({
     state: {
       columnFilters,
     },
+    initialState: {
+      columnVisibility: {
+        month: false,
+        year: false
+      }
+    }
   });
+
+  // Array of years. Ensures that there are +10 available years from current year.
+  const years = []
+  for (let year = 2025; year < (new Date().getFullYear() + 10); year++) {
+    years.push(year.toString())
+  }
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -108,48 +131,95 @@ export default function SalesTable<TData, TValue>({
   }
 
   // Function to get all values of a specific column
-  const getColumnValues = (columnId: string): string[] => {
-    return table
-      .getRowModel()
-      .rows.map((row) => row.getValue(columnId) as string);
-  };
+  // const getColumnValues = (columnId: string): string[] => {
+  //   return table
+  //     .getRowModel()
+  //     .rows.map((row) => row.getValue(columnId) as string);
+  // };
+  //
+  // // Function to calculate the total value of a specific column
+  // const calculateTotalValue = (columnId: string): number => {
+  //   const values = getColumnValues(columnId);
+  //   const total = values.reduce((acc: number, value: string) => {
+  //     // Remove currency symbol and commas, then convert to number
+  //     const numericValue = parseFloat(value.replace(/[₱,]/g, ""));
+  //     return acc + numericValue;
+  //   }, 0);
+  //   return total;
+  // };
 
-  // Function to calculate the total value of a specific column
-  const calculateTotalValue = (columnId: string): number => {
-    const values = getColumnValues(columnId);
-    const total = values.reduce((acc: number, value: string) => {
-      // Remove currency symbol and commas, then convert to number
-      const numericValue = parseFloat(value.replace(/[₱,]/g, ""));
-      return acc + numericValue;
-    }, 0);
-    return total;
-  };
+  // Argument is name of the column.
+  // const totalValues = calculateTotalValue("total");
 
-  // Example usage of the function
-  const totalValues = calculateTotalValue("total");
   return (
     <div>
+      {/* Total Sales */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-3xl">Total Sales</CardTitle>
+          <CardTitle className="text-2xl">Total Sales</CardTitle>
         </CardHeader>
-        <CardContent className="px-10 space-y-2">
-          <div>
-            Total Products Sold: {table.getPrePaginationRowModel().rows.length}
-          </div>
-          <div>Total: ₱{totalValues.toLocaleString()}</div>
+        <CardContent className="px-10 grid grid-cols-4 gap-3">
+          {/* <div> */}
+          {/*   Total Products Sold: {table.getPrePaginationRowModel().rows.length} */}
+          {/* </div> */}
+          {/* <div>Total: ₱{totalValues.toLocaleString()}</div> */}
         </CardContent>
       </Card>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Enter name of product here..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+
+      <div className="flex py-4 space-x-4 items-center">
+        {/* Search Bar */}
+        <div className="space-y-1 flex-1">
+          <Label className="text-primary/70">Search bar</Label>
+          {/* <div className="text-primary/70">Search bar</div> */}
+          <Input
+            placeholder="Enter name of product here..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+
+        {/* Filter by Month */}
+        <div className="space-y-1 flex-2">
+          <Label className="text-primary/70">Filter by Month</Label>
+          {/* <div className="text-primary/70">Filter by Month</div> */}
+          <Select onValueChange={(value) => table.getColumn("month")?.setFilterValue(value === "none" ? "" : value)} >
+            <SelectTrigger className="max-w-xs space-x-2">
+              <Filter size={"18px"} color="#171717b3" />
+              <SelectValue placeholder="Select Month" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">None</SelectItem>
+              {months.map((month) => {
+                return <SelectItem key={month} value={months.indexOf(month).toString()}>{month}</SelectItem>
+              })}
+            </SelectContent>
+          </Select>
+        </div>
+
+
+        {/* Filter by Year */}
+        <div className="space-y-1 flex-2">
+          <Label className="text-primary/70">Filter by Year</Label>
+          {/* <div className="text-primary/70">Filter by Year</div> */}
+          <Select onValueChange={(value) => table.getColumn("year")?.setFilterValue(value === "none" ? "" : value)} >
+            <SelectTrigger className="max-w-xs space-x-2">
+              <Filter size={"18px"} color="#171717b3" />
+              <SelectValue placeholder="Select Year" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">None</SelectItem>
+              {years.map((year) => {
+                return <SelectItem key={year} value={year}>{year}</SelectItem>
+              })}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
+
+      {/* Table of sales */}
       <Card>
         <CardHeader>
           <CardTitle>Sales Records</CardTitle>
@@ -165,9 +235,9 @@ export default function SalesTable<TData, TValue>({
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </TableHead>
                     );
                   })}
@@ -195,7 +265,6 @@ export default function SalesTable<TData, TValue>({
                           <Button
                             variant="destructive"
                             size="sm"
-                            // className="bg-red-600"
                           >
                             <LucideTrash2 size={16} />
                           </Button>
