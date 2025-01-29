@@ -1,9 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "./ui/button";
-import { Brands, Items } from "@/utils/types";
+import { Brands, Items, Sales } from "@/utils/types";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-
 
 // For the table headers
 export const columns: ColumnDef<Brands>[] = [
@@ -41,54 +39,42 @@ export const nestedColumns: ColumnDef<Items>[] = [
   {
     accessorKey: "action",
     header: "Action",
-    cell: () => (
-      // <FormDialogAddItem
-      //   brandId={row.original.id}
-      //   brandName={row.original.brand}
-      //   brandCategory={row.original.category}
-      // />
-      <div className="space-x-2">
-        <Button>Edit</Button>
-        <Button>Delete</Button>
-      </div>
-    ),
   },
 ];
 
-// export const columns_sale: ColumnDef<Sales>[] = [
-//   {
-//     accessorKey: "name",
-//     header: "Name",
-//   },
-//   {
-//     accessorKey: "category",
-//     header: "Category",
-//   },
-//   {
-//     accessorKey: "quantity",
-//     header: "Quantity",
-//   },
-//   {
-//     accessorKey: "price",
-//     header: "Price",
-//   },
-//   {
-//     accessorKey: "total",
-//     header: "Total",
-//   },
-//   {
-//     accessorKey: "date",
-//     header: "Date",
-//   },
-//   // {
-//   //   id: "actions",
-//   //   header: "Actions",
-//   //   // cell: ({ row }) => (
-//   //   //   <Button onClick={() => handleDelete(row.original)}>Delete</Button>
-//   //   // ),
-//   // },
-// ];
-
-// const handleDelete = (item: SaleItem) => {
-//   // Implement delete functionality here
-// };
+export const columns_sale: ColumnDef<Sales>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+  },
+  {
+    accessorKey: "quantity",
+    header: "Quantity",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
+    accessorKey: "total",
+    header: "Total",
+  },
+  {
+    accessorKey: "date",
+    header: "Solt at",
+  },
+  {
+    // This column is not needed for display but is used for filtering.
+    accessorKey: "month",
+    header: "Month",
+  },
+  {
+    // This column is not needed for display but is used for filtering.
+    accessorKey: "year",
+    header: "Year",
+  },
+];

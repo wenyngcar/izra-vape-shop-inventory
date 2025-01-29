@@ -2,12 +2,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import useFetchSales from "@/hooks/useFetchSales";
 import { AlertCircle } from "lucide-react";
 import SalesTable from "./sales-table";
+import { columns_sale } from "../columns";
 
 export default function SalesPage() {
   // Fetching data using useQuery.
-  const { isPending, isError, data, error } = useFetchSales()
+  const { isPending, isError, saleData, error } = useFetchSales();
 
-  // If data is still pending. 
+  // If data is still pending.
   if (isPending) {
     return (
       <div className="container mx-auto mt-10 py-10 space-y-8 border px-5 rounded-md drop-shadow-md">
@@ -65,7 +66,8 @@ export default function SalesPage() {
           <Skeleton className="h-6" />
           <Skeleton className="h-6 col-span-2" />
         </div>
-      </div>)
+      </div>
+    );
   }
 
   // If there is error in fetching data.
@@ -75,20 +77,27 @@ export default function SalesPage() {
       <div className="container mx-auto py-10 px-10 space-y-4">
         <div className="flex space-x-3 text-4xl font-semibold">
           <AlertCircle color="red" size={43} />
-          <div>
-            Error
-          </div>
+          <div>Error</div>
+        </div>
+        <div className="font-semibold">
+          This problems might be the cause of the error:
         </div>
         <ul className="list-disc px-10">
           <li> Cannot load sale data from the server. </li>
-          <li> Please contact the developers if this error still persist. </li>
+          <li>Server might be having a connection timeout.</li>
+          <li>There is a problem in your network connection.</li>
         </ul>
-      </div>)
+        <div>
+          Try reloading the page. Please contact the developers if this error
+          still persist.
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="container mx-auto py-10">
-      <SalesTable salesData={data?.data} />
+      <SalesTable columns={columns_sale} data={saleData} />
     </div>
   );
 }
