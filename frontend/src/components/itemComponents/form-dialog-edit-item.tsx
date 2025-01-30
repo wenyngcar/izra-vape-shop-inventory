@@ -25,8 +25,8 @@ export default function ItemEditFormDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="hover:bg-gray-200">
-          <PencilLine className="w-6 h-8 mr-2" />
+        <Button variant="outline">
+          <PencilLine />
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
