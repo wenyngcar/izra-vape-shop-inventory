@@ -237,8 +237,7 @@ export function BrandTable<TData, TValue>({
                             <Button
                               onClick={() =>
                                 handleDeleteBrand((row.original as Brands)._id)
-                              }
-                            >
+                              } >
                               Delete
                             </Button>
                           </AlertDialogAction>
