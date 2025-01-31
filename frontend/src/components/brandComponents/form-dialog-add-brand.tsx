@@ -18,9 +18,9 @@ export default function InventoryFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="flex items-center">
-        <Button className="bg-[#1a1a2e] text-white hover:bg-[#33334d] focus:ring-2 focus:ring-[#1a1a2e]">
-          <Plus className="h-4 w-4 text-white" />
-          <span className="text-white">Add Brand</span>
+        <Button>
+          <Plus color="white" />
+          <span className="">Add Brand</span>
         </Button>
       </DialogTrigger>
       {/* onInteractOutside function prevents the dialog from closing when click outside of content. */}

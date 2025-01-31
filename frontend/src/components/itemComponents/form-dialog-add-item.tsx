@@ -25,9 +25,9 @@ export default function InventoryFormDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-[#1a1a2e] text-white hover:bg-[#33334d] focus:ring-2 focus:ring-[#1a1a2e]">
-          <Plus />
-          <span className="text-white">Add Item</span>
+        <Button variant="outline">
+          <Plus color="#171717b3" />
+          <span className="text-primary/70">Add Item</span>
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>

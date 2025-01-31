@@ -1,9 +1,21 @@
-import { getData } from "@/utils/api"
-import { useQuery } from "@tanstack/react-query"
+import { getData } from "@/utils/api";
+import { useQuery } from "@tanstack/react-query";
+import { Sales } from "@/utils/types";
 
 export default function useFetchSales() {
-  const { isPending, isError, data, error } = useQuery({ queryKey: ['sales'], queryFn: () => getData('sales') })
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ["sales"],
+    queryFn: () => getData("sales"),
+  });
 
+  const saleData = data?.data.map((sale: Sales) => ({
+    ...sale,
+    date: new Date(sale.date).toLocaleString(),
 
-  return { isPending, isError, data, error }
+    // These properties is needed for filtering year
+    month: new Date(sale.date).getMonth().toString(),
+    year: new Date(sale.date).getFullYear().toString()
+  }));
+
+  return { isPending, isError, saleData, error };
 }

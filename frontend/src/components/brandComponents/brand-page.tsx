@@ -6,9 +6,9 @@ import { BrandTable } from "./brand-table";
 
 export default function BrandPage() {
   // Custom hook for fetching brand data
-  const { isPending, isError, data, error } = useFetchBrand()
+  const { isPending, isError, data, error } = useFetchBrand();
 
-  // If data is still pending. 
+  // If data is still pending.
   if (isPending) {
     return (
       <div className="container mx-auto mt-10 py-10 px-5 space-y-8 border rounded-md drop-shadow-md">
@@ -24,7 +24,8 @@ export default function BrandPage() {
           <Skeleton className="h-10" />
           <Skeleton className="h-10" />
         </div>
-      </div>)
+      </div>
+    );
   }
 
   // If there is error in fetching data.
@@ -34,15 +35,22 @@ export default function BrandPage() {
       <div className="container mx-auto py-10 px-10 space-y-4">
         <div className="flex space-x-3 text-4xl font-semibold">
           <AlertCircle color="red" size={43} />
-          <div>
-            Error
-          </div>
+          <div>Error</div>
+        </div>
+        <div className="font-semibold">
+          This problems might be the cause of the error:
         </div>
         <ul className="list-disc px-10">
           <li> Cannot load brand data from the server. </li>
-          <li> Please contact the developers if this error still persist. </li>
+          <li>Server might be having a connection timeout.</li>
+          <li>There is a problem in your network connection.</li>
         </ul>
-      </div>)
+        <div>
+          Try reloading the page. Please contact the developers if this error
+          still persist.
+        </div>
+      </div>
+    );
   }
 
   return (

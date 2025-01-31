@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { CircleCheckBig } from "lucide-react";
+import { CircleCheckBig, LoaderCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 import {
@@ -84,6 +84,9 @@ export default function AddSaleForm({
       })
       console.error("Error creating sale:", error);
     },
+    onSettled: () => {
+      setOpen(false);
+    }
   })
 
   // Mutation hook for editing item.
@@ -126,7 +129,6 @@ export default function AddSaleForm({
         quantity: quantity - values.sale,
       })
 
-      setOpen(false);
     } catch (error) {
       console.error("Error adding sale:", error);
     }
@@ -159,7 +161,12 @@ export default function AddSaleForm({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        {mutationSale.isPending ? (
+          <Button disabled>
+            <LoaderCircle className="animate-spin" />
+            Processing
+          </Button>) :
+          (<Button type="submit">Submit</Button>)}
       </form>
     </Form>
   );

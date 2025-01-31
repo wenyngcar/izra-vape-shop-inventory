@@ -82,6 +82,11 @@ export function ItemDataTable<TData, TValue>({
                 <div>&#8369;{(row.original as Items).price}</div>
                 <div>{formatDate((row.original as Items).expiration)}</div>
                 <div className="space-x-2">
+                  <AddSaleDialog
+                    brandId={brandId}
+                    productId={(row.original as Items)._id}
+                    quantity={(row.original as Items).quantity}
+                  />
                   <ItemEditFormDialog
                     itemId={(row.original as Items)._id}
                     itemName={(row.original as Items).name}
@@ -90,11 +95,6 @@ export function ItemDataTable<TData, TValue>({
                     itemDate={(row.original as Items).expiration}
                   />
                   <DeleteItem _id={(row.original as Items)._id} />
-                  <AddSaleDialog
-                    brandId={brandId}
-                    productId={(row.original as Items)._id}
-                    quantity={(row.original as Items).quantity}
-                  />
                 </div>
               </div>
             ))

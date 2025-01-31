@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { CircleCheckBig } from "lucide-react";
+import { CircleCheckBig, LoaderCircle } from "lucide-react";
 
 import {
   Form,
@@ -237,7 +237,12 @@ export default function FormEditItem({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        {mutation.isPending ? (
+          <Button disabled>
+            <LoaderCircle className="animate-spin" />
+            Processing
+          </Button>) :
+          (<Button type="submit">Submit</Button>)}
       </form>
     </Form>
   );
