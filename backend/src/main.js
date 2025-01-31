@@ -28,6 +28,8 @@ const database = {
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 const mongodbString = `mongodb+srv://${database.username}:${database.password}@${database.cluster}.n4rnz.mongodb.net/${database.name}?retryWrites=true&w=majority&appName=${database.cluster}`;
+// For Local Connection.
+// const mongodbString = "mongodb://localhost:27017/"
 
 // Automatically converts request body to JSON.
 server.application.use(express.json());
