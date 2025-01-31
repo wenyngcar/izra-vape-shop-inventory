@@ -130,26 +130,27 @@ export default function SalesTable<TData, TValue>({
     }
   }
 
-  // Function to get all values of a specific column
-  // const getColumnValues = (columnId: string): string[] => {
-  //   return table
-  //     .getRowModel()
-  //     .rows.map((row) => row.getValue(columnId) as string);
-  // };
-  //
-  // // Function to calculate the total value of a specific column
-  // const calculateTotalValue = (columnId: string): number => {
-  //   const values = getColumnValues(columnId);
-  //   const total = values.reduce((acc: number, value: string) => {
-  //     // Remove currency symbol and commas, then convert to number
-  //     const numericValue = parseFloat(value.replace(/[₱,]/g, ""));
-  //     return acc + numericValue;
-  //   }, 0);
-  //   return total;
-  // };
+  // Function to get all values of a specific column.
+  // This function assumes the table is in pagination.
+  const getColumnValues = (columnId: string): string[] => {
+    return table
+      .getPrePaginationRowModel()
+      .rows.map((row) => row.getValue(columnId) as string);
+  };
 
-  // Argument is name of the column.
-  // const totalValues = calculateTotalValue("total");
+  // Function for adding for the reduce method.
+  function getSum(total: number, num: number) {
+    return total + num
+  }
+
+  // Computes all the values of column. This applies to Number only.
+  function columnValuesTotal(columnId: string) {
+    // Stores all the column values.
+    const columnArray = getColumnValues(columnId)
+
+    // Sum of columnArray
+    return columnArray.map(Number).reduce(getSum, 0)
+  }
 
   return (
     <div>
@@ -159,10 +160,8 @@ export default function SalesTable<TData, TValue>({
           <CardTitle className="text-2xl">Total Sales</CardTitle>
         </CardHeader>
         <CardContent className="px-10 grid grid-cols-4 gap-3">
-          {/* <div> */}
-          {/*   Total Products Sold: {table.getPrePaginationRowModel().rows.length} */}
-          {/* </div> */}
-          {/* <div>Total: ₱{totalValues.toLocaleString()}</div> */}
+          <div> Total Products Sold: {columnValuesTotal('quantity').toLocaleString()} </div>
+          <div>Total: ₱{columnValuesTotal('total').toLocaleString()}</div>
         </CardContent>
       </Card>
 

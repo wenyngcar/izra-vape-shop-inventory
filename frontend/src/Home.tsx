@@ -33,9 +33,8 @@ function Home() {
         <TabsList className="bg-gray-100 w-full grid-cols-2 justify-around">
           <TabsTrigger
             value="inventory"
-            className={`tab-trigger ${
-              open === "inventory" ? "active-tab" : ""
-            }`}
+            className={`tab-trigger ${open === "inventory" ? "active-tab" : ""
+              }`}
           >
             <ListChecks className="w-4 h-4 mr-2" /> Inventory
           </TabsTrigger>
