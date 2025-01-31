@@ -10,8 +10,6 @@ export default function useFetchSales() {
 
   const saleData = data?.data.map((sale: Sales) => ({
     ...sale,
-    price: `₱${sale.price.toLocaleString()}`,
-    total: `₱${sale.total.toLocaleString()}`,
     date: new Date(sale.date).toLocaleString(),
 
     // These properties is needed for filtering year
