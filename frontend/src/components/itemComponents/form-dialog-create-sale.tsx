@@ -24,8 +24,8 @@ export default function AddSaleDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="hover:bg-gray-200">
-          <PhilippinePeso className="w-6 h-8 mr-2" />
+        <Button variant="outline">
+          <PhilippinePeso />
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>

@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CircleCheckBig } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { LoaderCircle } from "lucide-react";
 
 import {
   Form,
@@ -247,7 +248,12 @@ export default function FormAddItem({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        {mutation.isPending ? (
+          <Button disabled>
+            <LoaderCircle className="animate-spin" />
+            Processing
+          </Button>) :
+          (<Button type="submit">Submit</Button>)}
       </form>
     </Form>
   );

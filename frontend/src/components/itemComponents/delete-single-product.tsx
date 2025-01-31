@@ -69,8 +69,8 @@ export default function DeleteItem({ _id }: MongooseId) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="hover:bg-gray-200">
-          <Trash2 className="w-6 h-8 mr-2" />
+        <Button variant="destructive" >
+          <Trash2 />
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={(event) => event.preventDefault()}>
@@ -82,7 +82,7 @@ export default function DeleteItem({ _id }: MongooseId) {
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
+            <Button variant="outline">
               Close
             </Button>
           </DialogClose>

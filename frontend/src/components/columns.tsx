@@ -58,10 +58,14 @@ export const columns_sale: ColumnDef<Sales>[] = [
   {
     accessorKey: "price",
     header: "Price",
+    cell: ({ row }) => `₱${Number(row.getValue('price')).toLocaleString()}`
+    // cell: ({ row }) => `₱${row.getValue('price')}`
   },
   {
     accessorKey: "total",
     header: "Total",
+    cell: ({ row }) => `₱${Number(row.getValue('total')).toLocaleString()}`
+    // cell: ({ row }) => `₱${row.getValue('total')}`
   },
   {
     accessorKey: "date",

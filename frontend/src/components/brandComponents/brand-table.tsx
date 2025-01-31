@@ -138,7 +138,7 @@ export function BrandTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="min-w-sm w-full neon-input flex-2"
+          className="min-w-sm w-full flex-2"
         />
         <Select
           onValueChange={(value) =>
@@ -148,7 +148,7 @@ export function BrandTable<TData, TValue>({
           }
         >
           <SelectTrigger className="flex-1 space-x-2">
-            <Filter size={"18px"} />
+            <Filter size={"18px"} color="#171717b3" />
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
@@ -215,9 +215,8 @@ export function BrandTable<TData, TValue>({
                     {/* Button for deleting brand. */}
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="outline">
+                        <Button variant="destructive">
                           <LucideTrash2 />
-                          Delete
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
@@ -238,8 +237,7 @@ export function BrandTable<TData, TValue>({
                             <Button
                               onClick={() =>
                                 handleDeleteBrand((row.original as Brands)._id)
-                              }
-                            >
+                              } >
                               Delete
                             </Button>
                           </AlertDialogAction>
