@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { patchData, postData } from "@/utils/api";
+import { deleteData, patchData, postData } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CircleCheckBig, LoaderCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { MongooseId } from "@/utils/types";
 
 import {
   Form,
@@ -103,6 +104,20 @@ export default function AddSaleForm({
     }
   })
 
+  // Mutation for deleting product.  
+  const mutationDeleteItem = useMutation({
+    mutationFn: (item: MongooseId) => {
+      // (1)Arugment is url, (2)Argument is the object data to be edited.
+      return deleteData("delete-product", item)
+    }, onSuccess: () => {
+      // This refetches the item after creating a sale.
+      queryClient.invalidateQueries({ queryKey: ['item'] })
+    },
+    onError: (error) => {
+      console.error("Error deleting the product", error);
+    }
+  })
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -123,14 +138,21 @@ export default function AddSaleForm({
         sale: values.sale,
       })
 
-      // Method to edit the item quantity.
-      mutationItem.mutate({
-        id: productId,
-        quantity: quantity - values.sale,
-      })
+      // If quantity is less than 1 after sale is created,
+      // Then delete the item.
+      if ((quantity - values.sale) < 1) {
+        mutationDeleteItem.mutate(productId)
+      }
+      else {
+        // Method to edit the item quantity.
+        mutationItem.mutate({
+          id: productId,
+          quantity: quantity - values.sale,
+        })
+      }
 
     } catch (error) {
-      console.error("Error adding sale:", error);
+      console.error("Error creating sale:", error);
     }
   }
 
