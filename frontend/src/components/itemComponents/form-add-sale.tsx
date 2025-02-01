@@ -5,10 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mongoose from "mongoose";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { CircleCheckBig, LoaderCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { MongooseId } from "@/utils/types";
 
 import {
   Form,
@@ -66,7 +65,7 @@ export default function AddSaleForm({
 
   // Mutation hook for creting sale.
   const mutationSale = useMutation({
-    mutationFn: (newSale: Sale) => {
+    mutationFn: async (newSale: Sale) => {
       // (1)Arugment is url, (2)Argument is the object data to be created.
       return postData("create-sale", newSale)
     }, onSuccess: () => {
@@ -94,7 +93,14 @@ export default function AddSaleForm({
   const mutationItem = useMutation({
     mutationFn: (editedItem: Item) => {
       // (1)Arugment is url, (2)Argument is the object data to be edited.
-      return patchData("subtract-quantity", editedItem)
+      // If quantity is 0 then delete the product. 
+      if (editedItem.quantity == 0) {
+        return deleteData("delete-product", editedItem.id)
+      }
+      // Else, just edit the quantity of the product.
+      else {
+        return patchData("subtract-quantity", editedItem)
+      }
     }, onSuccess: () => {
       // This refetches the item after creating a sale.
       queryClient.invalidateQueries({ queryKey: ['item'] })
@@ -104,19 +110,9 @@ export default function AddSaleForm({
     }
   })
 
-  // Mutation for deleting product.  
-  const mutationDeleteItem = useMutation({
-    mutationFn: (item: MongooseId) => {
-      // (1)Arugment is url, (2)Argument is the object data to be edited.
-      return deleteData("delete-product", item)
-    }, onSuccess: () => {
-      // This refetches the item after creating a sale.
-      queryClient.invalidateQueries({ queryKey: ['item'] })
-    },
-    onError: (error) => {
-      console.error("Error deleting the product", error);
-    }
-  })
+  // This schema ensures that the sale to be created will not exceed the remaining quantity of the product.
+  const nonNegativeSaleSchema = z.number().refine((sale) => sale >= 0,
+    { message: "Cannot create sale more than the quantity of product." })
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -131,27 +127,31 @@ export default function AddSaleForm({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
+      // Ensures sale does not exceed product quantity.
+      nonNegativeSaleSchema.parse(quantity - values.sale)
+
       // Method to create sale.
-      mutationSale.mutate({
+      await mutationSale.mutateAsync({
         brandId: brandId,
         productId: productId,
         sale: values.sale,
       })
 
-      // If quantity is less than 1 after sale is created,
-      // Then delete the item.
-      if ((quantity - values.sale) < 1) {
-        mutationDeleteItem.mutate(productId)
-      }
-      else {
-        // Method to edit the item quantity.
-        mutationItem.mutate({
-          id: productId,
-          quantity: quantity - values.sale,
-        })
-      }
+      // Method to edit the item quantity.
+      mutationItem.mutate({
+        id: productId,
+        quantity: quantity - values.sale,
+      })
 
     } catch (error) {
+      // If the error was from nonNegativeSalesSchema.
+      if (error instanceof ZodError) {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Sale must not exceed the remaining quantity of product.",
+        })
+      }
       console.error("Error creating sale:", error);
     }
   }
