@@ -164,7 +164,6 @@ export default function SalesTable<TData, TValue>({
           <div>Total: ₱{columnValuesTotal('total').toLocaleString()}</div>
         </CardContent>
       </Card>
-
       <div className="flex py-4 space-x-4 items-center">
         {/* Search Bar */}
         <div className="space-y-1 flex-1">
@@ -179,7 +178,6 @@ export default function SalesTable<TData, TValue>({
             className="max-w-sm"
           />
         </div>
-
         {/* Filter by Month */}
         <div className="space-y-1 flex-2">
           <Label className="text-primary/70">Filter by Month</Label>
@@ -197,8 +195,6 @@ export default function SalesTable<TData, TValue>({
             </SelectContent>
           </Select>
         </div>
-
-
         {/* Filter by Year */}
         <div className="space-y-1 flex-2">
           <Label className="text-primary/70">Filter by Year</Label>
@@ -217,7 +213,6 @@ export default function SalesTable<TData, TValue>({
           </Select>
         </div>
       </div>
-
       {/* Table of sales */}
       <Card>
         <CardHeader>
